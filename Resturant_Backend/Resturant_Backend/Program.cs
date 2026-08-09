@@ -5,7 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Resturant_Backend.Data;
 using Resturant_Backend.Helpers;
+using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
+using Resturant_Backend.Repository;
 using Resturant_Backend.Services;
 using System.Text;
 
@@ -60,7 +62,8 @@ namespace Resturant_Backend
                 op.Password.RequireLowercase = true;
                 op.Password.RequireUppercase = true;
                 op.Password.RequireNonAlphanumeric = true;
-            }).AddEntityFrameworkStores<AppDbContext>();
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
 
             builder.Services.AddAuthentication(o =>
             {
@@ -87,6 +90,17 @@ namespace Resturant_Backend
             //add automapper
             builder.Services.AddAutoMapper(cfg => { },
                           typeof(Program).Assembly);
+
+
+            // 1. ربط كلاس الـ EmailSettings بملف appsettings.json
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
+            // 2. تسجيل EmailService و AuthService
+            builder.Services.AddTransient<IEmailService, EmailService>();
+            builder.Services.AddScoped<IAuthService, Authservice>();
+
+
+
             // add DbContext
 
             builder.Services.AddDbContext<AppDbContext>(op =>
@@ -98,6 +112,8 @@ namespace Resturant_Backend
             // add scoped services
 
             builder.Services.AddScoped<IAuthService, Authservice>();
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWorkRepo>();
 
 
 

@@ -9,7 +9,44 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "Resturant_Backend.DTO.AddRoleDto",
+        "Type": "Resturant_Backend.DTO.User.AddRoleDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.AccountController",
+    "Method": "ConfirmEmailAsync",
+    "RelativePath": "api/Account/ConfirmEmail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Token",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.AccountController",
+    "Method": "ForgetPasswordAsync",
+    "RelativePath": "api/Account/ForgetPassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Resturant_Backend.DTO.User.ForgetPasswordDto",
         "IsRequired": true
       }
     ],
@@ -25,7 +62,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "Resturant_Backend.DTO.TokenRequestModel",
+        "Type": "Resturant_Backend.DTO.User.TokenRequestModel",
         "IsRequired": true
       }
     ],
@@ -51,7 +88,23 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "Resturant_Backend.DTO.RegisterModel",
+        "Type": "Resturant_Backend.DTO.User.RegisterModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.AccountController",
+    "Method": "ResetPasswordAsync",
+    "RelativePath": "api/Account/ResetPassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Resturant_Backend.DTO.User.ResetPasswordDto",
         "IsRequired": true
       }
     ],
@@ -67,16 +120,100 @@
     "Parameters": [
       {
         "Name": "Dto",
-        "Type": "Resturant_Backend.DTO.RevokeToken",
+        "Type": "Resturant_Backend.DTO.User.RevokeToken",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Resturant_Backend.Controller.HelloController",
-    "Method": "hi",
-    "RelativePath": "api/Hello/hi",
+    "ContainingType": "Resturant_Backend.Controller.AccountController",
+    "Method": "UpdateProfileAsync",
+    "RelativePath": "api/Account/UpdateProfile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Resturant_Backend.DTO.User.UpdateProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CartController",
+    "Method": "AddToCart",
+    "RelativePath": "api/Cart/AddToCart/{productId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Resturant_Backend.DTO.Cart.EditCartItemDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CartController",
+    "Method": "ClearCart",
+    "RelativePath": "api/Cart/ClearCart",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CartController",
+    "Method": "Delete",
+    "RelativePath": "api/Cart/DeleteCartItem/{cartItemId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cartItemId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CartController",
+    "Method": "EditCartItem",
+    "RelativePath": "api/Cart/EditCartItem/{cartItemId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cartItemId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Resturant_Backend.DTO.Cart.EditCartItemDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CartController",
+    "Method": "GetCart",
+    "RelativePath": "api/Cart/GetCart",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -84,13 +221,419 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "TestJwt.Controller.SecureController",
-    "Method": "Get",
-    "RelativePath": "api/Secure",
+    "ContainingType": "Resturant_Backend.Controller.CategoriesController",
+    "Method": "Add",
+    "RelativePath": "api/Categories/Add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "category",
+        "Type": "Resturant_Backend.DTO.Categories.AddCategoriesDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CategoriesController",
+    "Method": "Delete",
+    "RelativePath": "api/Categories/Delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CategoriesController",
+    "Method": "Edit",
+    "RelativePath": "api/Categories/Edit/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "editCategoriesDto",
+        "Type": "Resturant_Backend.DTO.Categories.EditCategoriesDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CategoriesController",
+    "Method": "GetAll",
+    "RelativePath": "api/Categories/GetAll",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CategoriesController",
+    "Method": "GetById",
+    "RelativePath": "api/Categories/GetById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CouponController",
+    "Method": "GetAllCoupons",
+    "RelativePath": "api/Coupon",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CouponController",
+    "Method": "GetCouponById",
+    "RelativePath": "api/Coupon/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CouponController",
+    "Method": "DeleteCoupon",
+    "RelativePath": "api/Coupon/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CouponController",
+    "Method": "AddCoupon",
+    "RelativePath": "api/Coupon/Add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Resturant_Backend.DTO.Coupon.AddCouponDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CouponController",
+    "Method": "EditCoupon",
+    "RelativePath": "api/Coupon/Edit/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Resturant_Backend.DTO.Coupon.EditCouponDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.CouponController",
+    "Method": "ValidateCoupon",
+    "RelativePath": "api/Coupon/Validate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Amount",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.OrderController",
+    "Method": "UpdateStatus",
+    "RelativePath": "api/Order/{id}/status",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Resturant_Backend.DTO.Order.StatusResponseDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.OrderController",
+    "Method": "AddOrder",
+    "RelativePath": "api/Order/Add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Resturant_Backend.DTO.Order.AddOrderDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.OrderController",
+    "Method": "GetOrders",
+    "RelativePath": "api/Order/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.OrderController",
+    "Method": "GetOrder",
+    "RelativePath": "api/Order/Get{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.OrderController",
+    "Method": "GetMyOrders",
+    "RelativePath": "api/Order/MyOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ProductController",
+    "Method": "Add",
+    "RelativePath": "api/Product/Add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productDto",
+        "Type": "Resturant_Backend.DTO.Products.AddProductDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ProductController",
+    "Method": "Delete",
+    "RelativePath": "api/Product/Delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ProductController",
+    "Method": "Edit",
+    "RelativePath": "api/Product/Edit/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "editProductsDto",
+        "Type": "Resturant_Backend.DTO.Products.EditProductDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ProductController",
+    "Method": "GetAll",
+    "RelativePath": "api/Product/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ProductController",
+    "Method": "GetById",
+    "RelativePath": "api/Product/GetById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ReviewController",
+    "Method": "Edit",
+    "RelativePath": "api/Review/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Resturant_Backend.DTO.Review.EditReviewDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ReviewController",
+    "Method": "Delete",
+    "RelativePath": "api/Review/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ReviewController",
+    "Method": "Add",
+    "RelativePath": "api/Review/Add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Resturant_Backend.DTO.Review.AddReviewDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ReviewController",
+    "Method": "GetReviews",
+    "RelativePath": "api/Review/Get/{ProductId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ProductId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ReviewController",
+    "Method": "Get",
+    "RelativePath": "api/Review/getById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

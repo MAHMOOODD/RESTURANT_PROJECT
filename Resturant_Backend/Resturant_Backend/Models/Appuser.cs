@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 
 namespace Resturant_Backend.Models
 {
     public class Appuser : IdentityUser
     {
-        [MaxLength(50)]
-        public required string FirstName { get; set; }
-        [MaxLength(50)]
-        public required string LastName { get; set; }
 
+        public string? FullName { get; set; }
+
+
+        public string? Address { get; set; }
+        public List<Order> Orders { get; set; }
+        public List<Review> Reviews { get; set; }
+        public List<Cart_Item> CartItems { get; set; }
         public List<RefreshToken>? RefreshTokens { get; set; }
     }
 }

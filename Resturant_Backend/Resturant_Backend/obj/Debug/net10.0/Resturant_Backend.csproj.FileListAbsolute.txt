@@ -164,3 +164,6 @@ D:\COLLEGE\RESTURANT_PROJECT\Resturant_Backend\Resturant_Backend\obj\Debug\net10
 D:\COLLEGE\RESTURANT_PROJECT\Resturant_Backend\Resturant_Backend\obj\Debug\net10.0\Resturant_Backend.pdb
 D:\COLLEGE\RESTURANT_PROJECT\Resturant_Backend\Resturant_Backend\obj\Debug\net10.0\Resturant_Backend.genruntimeconfig.cache
 D:\COLLEGE\RESTURANT_PROJECT\Resturant_Backend\Resturant_Backend\obj\Debug\net10.0\ref\Resturant_Backend.dll
+D:\COLLEGE\RESTURANT_PROJECT\Resturant_Backend\Resturant_Backend\bin\Debug\net10.0\BouncyCastle.Cryptography.dll
+D:\COLLEGE\RESTURANT_PROJECT\Resturant_Backend\Resturant_Backend\bin\Debug\net10.0\MailKit.dll
+D:\COLLEGE\RESTURANT_PROJECT\Resturant_Backend\Resturant_Backend\bin\Debug\net10.0\MimeKit.dll

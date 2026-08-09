@@ -5,15 +5,16 @@ namespace Resturant_Backend.Models
     [Owned]
     public class RefreshToken
     {
-        public string Token { get; set; }
+        public string Token { get; set; } = string.Empty;
         public DateTime ExpiresOn { get; set; }
 
-        public bool IsExpires => DateTime.Now >= ExpiresOn;
+        // 🔴 التعديل الأول: استخدام UtcNow وتصحيح الاسم لـ IsExpired
+        public bool IsExpired => DateTime.UtcNow >= ExpiresOn;
 
         public DateTime CreatedOn { get; set; }
         public DateTime? RevokeOn { get; set; }
 
-        public bool IsActive => RevokeOn is null && !IsExpires;
-
+        // 🔴 التعديل الثاني: الاعتماد على IsExpired المعدلة
+        public bool IsActive => RevokeOn is null && !IsExpired;
     }
 }
