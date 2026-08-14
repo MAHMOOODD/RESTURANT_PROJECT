@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_Backend.Common.Exceptions;
+using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Categories;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
@@ -29,19 +31,16 @@ namespace Resturant_Backend.Controller
 
             var categories = await _unitOfWork.CategoreisRepo.GetAllAsync();
             var res = _mapper.Map<List<GetCategoriesDto>>(categories);
-            return Ok(res);
+            return this.Success(res);
         }
         [HttpGet("GetById/{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
 
             var category = await _unitOfWork.CategoreisRepo.GetAsync(id);
-            if(category is null)
-            {
-                return NotFound("Category Not Found");
-            }
+            Ensure.NotNull(category, "Category Not Found");
             var res = _mapper.Map<GetCategoriesDto>(category);
-            return Ok(res);
+            return this.Success(res);
         }
 
 
@@ -53,17 +52,15 @@ namespace Resturant_Backend.Controller
             var categoryToAdd = _mapper.Map<Category>(category);
 
             var Cat = await _unitOfWork.CategoreisRepo.AddAsync(categoryToAdd);
+            Ensure.NotNull(Cat, "Cant Add This Category Please Try Again");
 
             await _unitOfWork.SaveChangesAsync();
 
 
-            if(Cat is null)
-            {
-                return BadRequest("Cant Add This Category Please Try Again ");
-            }
+
             var catToShow = _mapper.Map<GetCategoriesDto>(Cat);
 
-            return CreatedAtAction(nameof(GetById), new { id = Cat.Id }, catToShow);
+            return this.Success(catToShow);
         }
         [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
 
@@ -74,16 +71,15 @@ namespace Resturant_Backend.Controller
 
             var categoryToEdit = await _unitOfWork.CategoreisRepo.GetAsync(id);
 
-            if(categoryToEdit is null)
-            {
-                return NotFound("Category Not Found");
-            }
+
+
+            Ensure.NotNull(categoryToEdit, "Category Not Found");
 
             _mapper.Map(editCategoriesDto, categoryToEdit);
             await _unitOfWork.SaveChangesAsync();
             var catToShow = _mapper.Map<GetCategoriesDto>(categoryToEdit);
 
-            return Ok(editCategoriesDto);
+            return this.Success(catToShow);
 
         }
 
@@ -94,14 +90,12 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> Delete(int id)
         {
             var categoryToDelete = await _unitOfWork.CategoreisRepo.DeleteAsync(id);
-            if(categoryToDelete is null)
-            {
-                return NotFound("Category Not Found");
-            }
+
+            Ensure.NotNull(categoryToDelete, "Category Not Found");
 
             await _unitOfWork.SaveChangesAsync();
 
-            return NoContent();
+            return this.SuccessMessage("Category deleted successfully.");
         }
 
     }

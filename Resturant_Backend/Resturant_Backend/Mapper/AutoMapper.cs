@@ -55,6 +55,13 @@ namespace Resturant_Backend.Mapper
 
             // Order Details Mapping
             CreateMap<OrderDetails, GetDetailsDto>();
+
+
+
+            //user Mapping
+
+
+            CreateMap<Appuser, GetUserInfo>();
         }
 
 

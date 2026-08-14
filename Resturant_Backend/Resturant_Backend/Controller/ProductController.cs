@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_Backend.Common.Exceptions;
+using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Products;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
@@ -12,8 +14,8 @@ namespace Resturant_Backend.Controller
     [ApiController]
     public class ProductController : ControllerBase
     {
-        public readonly IUnitOfWork _unitOfWork;
-        public readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
         public ProductController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -27,20 +29,19 @@ namespace Resturant_Backend.Controller
         {
 
             var products = await _unitOfWork.ProductsRepo.GetAllAsync();
+
             var res = _mapper.Map<List<GetProductDto>>(products);
-            return Ok(res);
+            return this.Success(res);
         }
         [HttpGet("GetById/{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
 
             var product = await _unitOfWork.ProductsRepo.GetAsync(id);
-            if(product is null)
-            {
-                return NotFound("Product Not Found");
-            }
+            Ensure.NotNull(product, "Product Not Found");
+
             var res = _mapper.Map<GetProductDto>(product);
-            return Ok(res);
+            return this.Success(res);
         }
 
 
@@ -49,27 +50,23 @@ namespace Resturant_Backend.Controller
 
         public async Task<IActionResult> Add(AddProductDto productDto)
         {
-            var ProductToAdd = _mapper.Map<Product>(productDto);
 
             var catExist = await _unitOfWork.CategoreisRepo.GetAsync(productDto.CategoryId);
-            if(catExist is null)
-            {
-                return NotFound("Category Not Found");
-            }
+            Ensure.NotNull(catExist, "Category Not Found");
 
+
+            var ProductToAdd = _mapper.Map<Product>(productDto);
             var Pro = await _unitOfWork.ProductsRepo.AddAsync(ProductToAdd);
+            Ensure.NotNull(Pro, "Cant Add This Product Please Try Again ");
 
             await _unitOfWork.SaveChangesAsync();
 
 
-            if(Pro is null)
-            {
-                return BadRequest("Cant Add This Product Please Try Again ");
-            }
+
 
             var proToShow = _mapper.Map<GetProductDto>(Pro);
 
-            return CreatedAtAction(nameof(GetById), new { id = Pro.Id }, proToShow);
+            return this.Success(proToShow);
         }
 
 
@@ -82,10 +79,7 @@ namespace Resturant_Backend.Controller
 
             var ProToEdit = await _unitOfWork.ProductsRepo.GetAsync(id);
 
-            if(ProToEdit is null)
-            {
-                return NotFound("Product Not Found");
-            }
+            Ensure.NotNull(ProToEdit, "Product Not Found");
 
             _mapper.Map(editProductsDto, ProToEdit);
             await _unitOfWork.SaveChangesAsync();
@@ -93,7 +87,7 @@ namespace Resturant_Backend.Controller
             var proToShow = _mapper.Map<GetProductDto>(ProToEdit);
 
 
-            return Ok(proToShow);
+            return this.Success(proToShow);
 
         }
 
@@ -104,14 +98,11 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> Delete(int id)
         {
             var productToDelete = await _unitOfWork.ProductsRepo.DeleteAsync(id);
-            if(productToDelete is null)
-            {
-                return NotFound("Product Not Found");
-            }
+            Ensure.NotNull(productToDelete, "Product Not Found");
 
             await _unitOfWork.SaveChangesAsync();
 
-            return NoContent();
+            return this.SuccessMessage("Product Deleted Successfully");
         }
 
     }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_Backend.Common.Exceptions;
+using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Coupon;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
@@ -29,12 +31,12 @@ namespace Resturant_Backend.Controller
         {
 
             var coupons = await _unitOfWork.CouponRepo.GetAllAsync();
-            if(coupons is null)
-            {
-                return NotFound("No Coupons Found");
-            }
 
-            return Ok(coupons);
+            Ensure.NotNull(coupons, "No Coupons Found");
+
+            var couponsToShow = _mapper.Map<List<GetCouponDto>>(coupons);
+
+            return this.Success(couponsToShow);
 
         }
         [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
@@ -43,11 +45,11 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> GetCouponById(int id)
         {
             var coupon = await _unitOfWork.CouponRepo.GetAsync(id);
-            if(coupon is null)
-            {
-                return NotFound("No Coupon Found");
-            }
-            return Ok(coupon);
+
+            Ensure.NotNull(coupon, "No Coupon Found");
+            var couponsToShow = _mapper.Map<GetCouponDto>(coupon);
+
+            return this.Success(couponsToShow);
         }
 
 
@@ -61,16 +63,15 @@ namespace Resturant_Backend.Controller
             var coupon = _mapper.Map<Coupon>(dto);
 
             var addedCoupon = await _unitOfWork.CouponRepo.AddAsync(coupon);
+            Ensure.NotNull(addedCoupon, "Cannot Add This Coupon");
             await _unitOfWork.SaveChangesAsync();
 
-            if(addedCoupon is null)
-            {
-                return BadRequest("Cannot Add This Coupon");
-            }
+
+
 
             var couponShow = _mapper.Map<GetCouponDto>(addedCoupon);
 
-            return CreatedAtAction(nameof(GetCouponById), new { id = addedCoupon.Id }, couponShow);
+            return this.Success(couponShow);
 
         }
         [Authorize(Roles = $"{Role.Admin}")]
@@ -81,32 +82,28 @@ namespace Resturant_Backend.Controller
         {
             var Coupon = await _unitOfWork.CouponRepo.GetAsync(id);
 
-            if(Coupon is null)
-                return NotFound($"Coupon with id : {id} is not found ");
 
+
+            Ensure.NotNull(Coupon, "No Coupon Found");
             _mapper.Map(dto, Coupon);
 
             await _unitOfWork.SaveChangesAsync();
 
             var couponShow = _mapper.Map<GetCouponDto>(Coupon);
-            return Ok(couponShow);
+            return this.Success(couponShow);
         }
         [Authorize(Roles = $"{Role.Admin}")]
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult> DeleteCoupon(int id)
+        public async Task<IActionResult> DeleteCoupon(int id)
         {
             var coupon = await _unitOfWork.CouponRepo.DeleteAsync(id);
-
+            Ensure.NotNull(coupon, "Can not Delete This Coupon");
             await _unitOfWork.SaveChangesAsync();
 
-            if(coupon is null)
-            {
-                return BadRequest("Can not Delete This Coupon");
-            }
 
 
-            return NoContent();
+            return this.SuccessMessage("Coupon deleted successfully.");
 
         }
 
@@ -115,15 +112,12 @@ namespace Resturant_Backend.Controller
         [HttpPost("Validate")]
         public async Task<IActionResult> ValidateCoupon(string code, decimal Amount)
         {
-            var (message, isvalid, dicount) = await _unitOfWork.CouponRepo.ValidateCoupon(code, Amount);
+            var (message, isvalid, discount) = await _unitOfWork.CouponRepo.ValidateCoupon(code, Amount);
 
 
-            if(isvalid == false)
-            {
-                return BadRequest(message);
-            }
+            Ensure.Check(!isvalid, message);
 
-            return Ok(message);
+            return this.Success(new { Message = message, Discount = discount });
         }
     }
 }

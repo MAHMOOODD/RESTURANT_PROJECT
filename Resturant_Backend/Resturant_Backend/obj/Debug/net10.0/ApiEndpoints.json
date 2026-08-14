@@ -119,9 +119,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Dto",
+        "Name": "dto",
         "Type": "Resturant_Backend.DTO.User.RevokeToken",
-        "IsRequired": true
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -634,6 +634,42 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.TestController",
+    "Method": "Get",
+    "RelativePath": "api/Test/get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.UserController",
+    "Method": "CheckAuth",
+    "RelativePath": "api/User/IsAuth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.UserController",
+    "Method": "GetUserInfo",
+    "RelativePath": "api/User/UserInfo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

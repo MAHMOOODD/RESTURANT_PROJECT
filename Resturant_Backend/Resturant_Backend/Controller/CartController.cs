@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_Backend.Common.Exceptions;
+using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Cart;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
@@ -17,7 +19,6 @@ namespace Resturant_Backend.Controller
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-
         public CartController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -26,40 +27,34 @@ namespace Resturant_Backend.Controller
 
         [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
         [HttpGet("GetCart")]
-
         public async Task<IActionResult> GetCart()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
             var cartItems = _unitOfWork.CartRepo.GetAllCartItems(userId!);
 
-            if(cartItems is null || !cartItems.Any())
-            {
-                return NotFound("Make sure you have items in your cart.");
-            }
+            Ensure.NotNull(cartItems, "Cart was not found.");
+            Ensure.Check(!cartItems.Any(), "Make sure you have items in your cart.");
+
             var cartItemsToShow = _mapper.Map<List<GetCartDto>>(cartItems);
-            return Ok(cartItemsToShow);
+            return this.Success(cartItemsToShow);
         }
 
         [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
-
         [HttpPost("AddToCart/{productId:int}")]
         public async Task<IActionResult> AddToCart(int productId, EditCartItemDto dto)
         {
-
-
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var product = await _unitOfWork.ProductsRepo.GetAsync(productId);
-            var exist = await _unitOfWork.CartRepo.IsItemExist(productId, userId!);
-            if(exist)
-            {
+            Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
-                return BadRequest("Item already exist in your cart.");
-            }
-            if(product is null)
-            {
-                return NotFound("Product Not Found");
-            }
+            // التحقق أولاً من وجود المنتج في قاعدة البيانات
+            var product = await _unitOfWork.ProductsRepo.GetAsync(productId);
+            Ensure.NotNull(product, "Product Not Found");
+
+            // التحقق من عدم وجود المنتج مسبقاً في السلة
+            var exist = await _unitOfWork.CartRepo.IsItemExist(productId, userId!);
+            Ensure.Check(exist, "Item already exist in your cart.");
 
             var addDto = new AddToCartDto
             {
@@ -72,49 +67,32 @@ namespace Resturant_Backend.Controller
             await _unitOfWork.CartRepo.AddAsync(cartItem);
             await _unitOfWork.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCart), new { id = cartItem.Id }, addDto);
-
-
+            return this.Success(addDto);
         }
-        [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
 
+        [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
         [HttpPut("EditCartItem/{cartItemId:int}")]
         public async Task<IActionResult> EditCartItem(int cartItemId, EditCartItemDto dto)
         {
             var cartitem = await _unitOfWork.CartRepo.GetAsync(cartItemId);
-            if(cartitem is null)
-            {
-                return NotFound("Cart Item Is Not Exist");
-
-            }
+            Ensure.NotNull(cartitem, "Cart Item Not Found");
 
             cartitem.Quantity = dto.Quantity;
-
             await _unitOfWork.SaveChangesAsync();
 
-
-            return Ok(dto);
-
-
+            return this.Success(dto);
         }
+
         [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
-
-
         [HttpDelete("DeleteCartItem/{cartItemId:int}")]
         public async Task<IActionResult> Delete(int cartItemId)
         {
-
-
             var cartItem = await _unitOfWork.CartRepo.DeleteAsync(cartItemId);
+            Ensure.NotNull(cartItem, "Failed to delete cart item");
+
             await _unitOfWork.SaveChangesAsync();
 
-            if(cartItem is null)
-            {
-                return BadRequest("Failed to delete cart item");
-            }
-
-            return NoContent();
-
+            return this.SuccessMessage("Cart item deleted successfully.");
         }
 
         [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
@@ -122,14 +100,12 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> ClearCart()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
             var deleted = await _unitOfWork.CartRepo.ClearCart(userId!);
+            Ensure.Check(!deleted, "cart is already empty");
 
-            if(!deleted)
-            {
-                return BadRequest("cart is already empty");
-            }
-            return NoContent();
+            return this.SuccessMessage("Cart cleared successfully.");
         }
     }
 }

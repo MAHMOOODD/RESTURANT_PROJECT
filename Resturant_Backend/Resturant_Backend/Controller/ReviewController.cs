@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_Backend.Common.Exceptions;
+using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Review;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
@@ -27,21 +29,15 @@ namespace Resturant_Backend.Controller
 
             var product = await _unitOfWork.ProductsRepo.GetAsync(ProductId);
 
-            if(product is null)
-            {
-                return BadRequest("Product Not Found");
-
-            }
+            Ensure.NotNull(product, "Product Not Found");
 
             var reviews = _unitOfWork.ReviewRepo.GetAllReviews(ProductId);
+            Ensure.NotNull(reviews, "No Reviews Found");
 
-            if(reviews is null)
-            {
-                return NotFound("No Reviews Found");
-            }
+
 
             var reviewToShow = _mapper.Map<List<GetReviewDto>>(reviews);
-            return Ok(reviewToShow);
+            return this.Success(reviewToShow);
         }
 
 
@@ -51,15 +47,12 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> Get(int id)
         {
             var review = await _unitOfWork.ReviewRepo.GetAsync(id);
+            Ensure.NotNull(review, "Review Not Found");
 
-            if(review is null)
-            {
-                return NotFound("Try Again with Right Id");
-            }
 
             var reviewToShow = _mapper.Map<GetReviewDto>(review);
 
-            return Ok(reviewToShow);
+            return this.Success(reviewToShow);
         }
 
         [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
@@ -67,25 +60,21 @@ namespace Resturant_Backend.Controller
         [HttpPost("Add")]
         public async Task<IActionResult> Add(AddReviewDto dto)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Ensure.Unauthorized(userId, " يجب تسجيل الدخول أولا");
 
             var reviewToAdd = _mapper.Map<Review>(dto);
+            reviewToAdd.AppuserId = userId;
             var review = await _unitOfWork.ReviewRepo.AddAsync(reviewToAdd);
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if(userId is null)
-            {
-                return Unauthorized("You are not authorized to edit this review");
-            }
-            review.AppuserId = userId;
+
+
+            Ensure.NotNull(review, "Review Not Added");
+
 
             await _unitOfWork.SaveChangesAsync();
-            if(review is null)
-            {
-                return BadRequest("Can not Add This Reviwe");
 
-
-            }
             GetReviewDto reviewToShow = _mapper.Map<GetReviewDto>(review);
-            return CreatedAtAction(nameof(Get), new { id = review.Id }, reviewToShow);
+            return this.Success(reviewToShow);
         }
 
         [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
@@ -93,22 +82,20 @@ namespace Resturant_Backend.Controller
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Edit(int id, EditReviewDto dto)
         {
-            var review = await _unitOfWork.ReviewRepo.GetAsync(id);
-            if(review is null)
-            {
-                return NotFound("cannot found this review");
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            }
+            Ensure.Unauthorized(userId, " يجب تسجيل الدخول أولا");
+
+            var review = await _unitOfWork.ReviewRepo.GetAsync(id);
+            Ensure.NotNull(review, "Review Not Found");
+
+
             _mapper.Map(dto, review);
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if(userId is null)
-            {
-                return Unauthorized("You are not authorized to edit this review");
-            }
+
             review.AppuserId = userId;
             await _unitOfWork.SaveChangesAsync();
             var reviewToShow = _mapper.Map<GetReviewDto>(review);
-            return Ok(reviewToShow);
+            return this.Success(reviewToShow);
         }
         [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
 
@@ -117,15 +104,13 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> Delete(int id)
         {
             var deletedReview = await _unitOfWork.ReviewRepo.DeleteAsync(id);
+            Ensure.NotNull(deletedReview, "Review Not Found");
             await _unitOfWork.SaveChangesAsync();
 
 
-            if(deletedReview is null)
-            {
-                return BadRequest("Error happen when Delete this review");
-            }
 
-            return NoContent();
+
+            return this.SuccessMessage("Review deleted successfully");
         }
     }
 }

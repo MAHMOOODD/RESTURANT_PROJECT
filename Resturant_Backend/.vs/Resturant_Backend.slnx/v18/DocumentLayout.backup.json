@@ -3,56 +3,144 @@
   "WorkspaceRootPath": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\models\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\models\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\models\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\models\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\getuserinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\getuserinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\mapper\\automapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\mapper\\automapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\helpers\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\helpers\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\models\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\models\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\usercreatedmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\usercreatedmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\interfaces\\iuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\interfaces\\iuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\repository\\userrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\repository\\userrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\registermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\registermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\services\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\services\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\responselogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\responselogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\helpers\\emailsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\helpers\\emailsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\responseregister.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\responseregister.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\common\\helpers\\ensure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\common\\helpers\\ensure.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\common\\responses\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\common\\responses\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\common\\exceptions\\controllerextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\common\\exceptions\\controllerextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\forgetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\forgetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\resetpassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\confirmemaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\confirmemaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\common\\responses\\apierror.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\common\\responses\\apierror.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\responselogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\responselogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\services\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\services\\iemailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\couponcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\couponcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\common\\exceptions\\appexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\common\\exceptions\\appexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\controller\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\controller\\testcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\middlewares\\globalexceptionhandlermiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\middlewares\\globalexceptionhandlermiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\resturant_backend.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\resturant_backend.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\dto\\user\\tokenrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\dto\\user\\tokenrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|d:\\college\\resturant_project\\resturant_backend\\resturant_backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D021528D-F7D2-1605-397D-005070C09055}|Resturant_Backend\\Resturant_Backend.csproj|solutionrelative:resturant_backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,97 +150,84 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Appuser.cs",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Models\\Appuser.cs",
-              "RelativeDocumentMoniker": "Resturant_Backend\\Models\\Appuser.cs",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Models\\Appuser.cs",
-              "RelativeToolTip": "Resturant_Backend\\Models\\Appuser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T22:35:43.168Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\appsettings.json",
-              "RelativeDocumentMoniker": "Resturant_Backend\\appsettings.json",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\appsettings.json",
-              "RelativeToolTip": "Resturant_Backend\\appsettings.json",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-08-08T21:27:38.223Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Program.cs",
-              "RelativeDocumentMoniker": "Resturant_Backend\\Program.cs",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Program.cs",
-              "RelativeToolTip": "Resturant_Backend\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T21:33:48.74Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "RefreshToken.cs",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Models\\RefreshToken.cs",
-              "RelativeDocumentMoniker": "Resturant_Backend\\Models\\RefreshToken.cs",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Models\\RefreshToken.cs",
-              "RelativeToolTip": "Resturant_Backend\\Models\\RefreshToken.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAiwAYAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T22:34:48.246Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "AutoMapper.cs",
               "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Mapper\\AutoMapper.cs",
               "RelativeDocumentMoniker": "Resturant_Backend\\Mapper\\AutoMapper.cs",
               "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Mapper\\AutoMapper.cs",
               "RelativeToolTip": "Resturant_Backend\\Mapper\\AutoMapper.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwBIAAABGAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAA2wD8AAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T22:27:24.42Z",
+              "WhenOpened": "2026-08-13T17:30:54.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Appuser.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Models\\Appuser.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Models\\Appuser.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Models\\Appuser.cs",
+              "RelativeToolTip": "Resturant_Backend\\Models\\Appuser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T17:21:33.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserRepo.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Repository\\UserRepo.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Repository\\UserRepo.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Repository\\UserRepo.cs",
+              "RelativeToolTip": "Resturant_Backend\\Repository\\UserRepo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T17:12:56.975Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ResponseLoginDto.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ResponseLoginDto.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\ResponseLoginDto.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ResponseLoginDto.cs",
+              "RelativeToolTip": "Resturant_Backend\\DTO\\User\\ResponseLoginDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T17:11:21.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GetUserInfo.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\GetUserInfo.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\GetUserInfo.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\GetUserInfo.cs*",
+              "RelativeToolTip": "Resturant_Backend\\DTO\\User\\GetUserInfo.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T17:11:08.675Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\AccountController.cs",
-              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\AccountController.cs",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\AccountController.cs",
-              "RelativeToolTip": "Resturant_Backend\\Controller\\AccountController.cs",
-              "ViewState": "AgIAAHcAAAAAAAAAAAAuwI0AAAABAAAAAAAAAA==",
+              "Title": "IUser.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Interfaces\\IUser.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Interfaces\\IUser.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Interfaces\\IUser.cs",
+              "RelativeToolTip": "Resturant_Backend\\Interfaces\\IUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T20:37:10.274Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "EmailService.cs",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Helpers\\EmailService.cs",
-              "RelativeDocumentMoniker": "Resturant_Backend\\Helpers\\EmailService.cs",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Helpers\\EmailService.cs",
-              "RelativeToolTip": "Resturant_Backend\\Helpers\\EmailService.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAiwCgAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T21:30:21.116Z",
+              "WhenOpened": "2026-08-13T17:10:37.776Z",
               "EditorCaption": ""
             },
             {
@@ -163,75 +238,355 @@
               "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\RegisterModel.cs",
               "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\RegisterModel.cs",
               "RelativeToolTip": "Resturant_Backend\\DTO\\User\\RegisterModel.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAA2wBMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T21:59:52.31Z",
+              "WhenOpened": "2026-08-10T20:15:18.666Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IEmailService.cs",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\IEmailService.cs",
-              "RelativeDocumentMoniker": "Resturant_Backend\\Services\\IEmailService.cs",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\IEmailService.cs",
-              "RelativeToolTip": "Resturant_Backend\\Services\\IEmailService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "UserCreatedModel.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\UserCreatedModel.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\UserCreatedModel.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\UserCreatedModel.cs",
+              "RelativeToolTip": "Resturant_Backend\\DTO\\User\\UserCreatedModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T21:29:35.917Z",
+              "WhenOpened": "2026-08-10T21:19:44.874Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\AccountController.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\AccountController.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\AccountController.cs",
+              "RelativeToolTip": "Resturant_Backend\\Controller\\AccountController.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAA1wEMAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-10T20:03:32.942Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
-              "Title": "EmailSettings.cs",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Helpers\\EmailSettings.cs",
-              "RelativeDocumentMoniker": "Resturant_Backend\\Helpers\\EmailSettings.cs",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Helpers\\EmailSettings.cs",
-              "RelativeToolTip": "Resturant_Backend\\Helpers\\EmailSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Title": "ResponseRegister.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ResponseRegister.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\ResponseRegister.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ResponseRegister.cs",
+              "RelativeToolTip": "Resturant_Backend\\DTO\\User\\ResponseRegister.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T21:28:56.385Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ResponseLoginDto.cs",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ResponseLoginDto.cs",
-              "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\ResponseLoginDto.cs",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ResponseLoginDto.cs",
-              "RelativeToolTip": "Resturant_Backend\\DTO\\User\\ResponseLoginDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T21:23:57.624Z",
+              "WhenOpened": "2026-08-13T17:11:19.812Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "IAuthService.cs",
-              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\IAuthService.cs",
-              "RelativeDocumentMoniker": "Resturant_Backend\\Services\\IAuthService.cs",
-              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\IAuthService.cs",
-              "RelativeToolTip": "Resturant_Backend\\Services\\IAuthService.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAmwA4AAAAyAAAAAAAAAA==",
+              "Title": "Ensure.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Helpers\\Ensure.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Common\\Helpers\\Ensure.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Helpers\\Ensure.cs",
+              "RelativeToolTip": "Resturant_Backend\\Common\\Helpers\\Ensure.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T21:22:18.253Z",
+              "WhenOpened": "2026-08-10T22:36:49.265Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\UserController.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\UserController.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\UserController.cs",
+              "RelativeToolTip": "Resturant_Backend\\Controller\\UserController.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAIwC4AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T16:53:54.769Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\CartController.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\CartController.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\CartController.cs",
+              "RelativeToolTip": "Resturant_Backend\\Controller\\CartController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAIBAwDwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-11T22:33:27.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ApiError.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Responses\\ApiError.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Common\\Responses\\ApiError.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Responses\\ApiError.cs",
+              "RelativeToolTip": "Resturant_Backend\\Common\\Responses\\ApiError.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-10T22:20:41.249Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "Authservice.cs",
               "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\Authservice.cs",
               "RelativeDocumentMoniker": "Resturant_Backend\\Services\\Authservice.cs",
               "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\Authservice.cs",
               "RelativeToolTip": "Resturant_Backend\\Services\\Authservice.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAUwFkAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-08T20:37:22.577Z",
+              "WhenOpened": "2026-08-11T21:57:06.849Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\IAuthService.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Services\\IAuthService.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\IAuthService.cs",
+              "RelativeToolTip": "Resturant_Backend\\Services\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-12T17:09:22.644Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "IEmailService.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\IEmailService.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Services\\IEmailService.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Services\\IEmailService.cs",
+              "RelativeToolTip": "Resturant_Backend\\Services\\IEmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-12T17:09:31.456Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ResetPasswordDto.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ResetPasswordDto.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\ResetPasswordDto.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ResetPasswordDto.cs",
+              "RelativeToolTip": "Resturant_Backend\\DTO\\User\\ResetPasswordDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-12T18:21:55.722Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ConfirmEmailDto.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ConfirmEmailDto.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\ConfirmEmailDto.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ConfirmEmailDto.cs",
+              "RelativeToolTip": "Resturant_Backend\\DTO\\User\\ConfirmEmailDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-12T18:21:19.509Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ApiResponse.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Responses\\ApiResponse.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Common\\Responses\\ApiResponse.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Responses\\ApiResponse.cs",
+              "RelativeToolTip": "Resturant_Backend\\Common\\Responses\\ApiResponse.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA0wAoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-10T22:21:16.658Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ControllerExtensions.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Exceptions\\ControllerExtensions.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Common\\Exceptions\\ControllerExtensions.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Exceptions\\ControllerExtensions.cs",
+              "RelativeToolTip": "Resturant_Backend\\Common\\Exceptions\\ControllerExtensions.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAIAywB8AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-10T22:38:11.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ForgetPasswordDto.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ForgetPasswordDto.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\ForgetPasswordDto.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\ForgetPasswordDto.cs",
+              "RelativeToolTip": "Resturant_Backend\\DTO\\User\\ForgetPasswordDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-10T20:17:02.481Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\ProductController.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\ProductController.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\ProductController.cs",
+              "RelativeToolTip": "Resturant_Backend\\Controller\\ProductController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAA0wD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-11T23:47:10.4Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ReviewController.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\ReviewController.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\ReviewController.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\ReviewController.cs",
+              "RelativeToolTip": "Resturant_Backend\\Controller\\ReviewController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-09T19:04:59.452Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "AppException.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Exceptions\\AppException.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Common\\Exceptions\\AppException.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Common\\Exceptions\\AppException.cs",
+              "RelativeToolTip": "Resturant_Backend\\Common\\Exceptions\\AppException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-10T22:22:32.714Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "CategoriesController.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\CategoriesController.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\CategoriesController.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\CategoriesController.cs",
+              "RelativeToolTip": "Resturant_Backend\\Controller\\CategoriesController.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAA+wGYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-11T23:23:16.897Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "CouponController.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\CouponController.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\CouponController.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\CouponController.cs",
+              "RelativeToolTip": "Resturant_Backend\\Controller\\CouponController.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAxwHkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-11T23:27:12.015Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\OrderController.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\OrderController.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\OrderController.cs",
+              "RelativeToolTip": "Resturant_Backend\\Controller\\OrderController.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAiwEMAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-11T23:32:56.947Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "TestController.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\TestController.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Controller\\TestController.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Controller\\TestController.cs",
+              "RelativeToolTip": "Resturant_Backend\\Controller\\TestController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAIA1wBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-09T19:05:16.331Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "GlobalExceptionHandlerMiddleware.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Middlewares\\GlobalExceptionHandlerMiddleware.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Middlewares\\GlobalExceptionHandlerMiddleware.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Middlewares\\GlobalExceptionHandlerMiddleware.cs",
+              "RelativeToolTip": "Resturant_Backend\\Middlewares\\GlobalExceptionHandlerMiddleware.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAcwAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-10T22:23:50.915Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Program.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Program.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Program.cs",
+              "RelativeToolTip": "Resturant_Backend\\Program.cs",
+              "ViewState": "AgIAAJEAAAAAAAAAAAAAAKcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-09T18:49:04.473Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Resturant_Backend.csproj",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Resturant_Backend.csproj",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Resturant_Backend.csproj",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Resturant_Backend.csproj",
+              "RelativeToolTip": "Resturant_Backend\\Resturant_Backend.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-08-10T22:20:00.419Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "TokenRequestModel.cs",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\TokenRequestModel.cs",
+              "RelativeDocumentMoniker": "Resturant_Backend\\DTO\\User\\TokenRequestModel.cs",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\DTO\\User\\TokenRequestModel.cs",
+              "RelativeToolTip": "Resturant_Backend\\DTO\\User\\TokenRequestModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-10T20:16:47.128Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Resturant_Backend\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Resturant_Backend\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-09T19:31:17.026Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\appsettings.json",
+              "RelativeDocumentMoniker": "Resturant_Backend\\appsettings.json",
+              "ToolTip": "D:\\COLLEGE\\RESTURANT_PROJECT\\Resturant_Backend\\Resturant_Backend\\appsettings.json",
+              "RelativeToolTip": "Resturant_Backend\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-09T18:51:00.289Z"
             }
           ]
         }

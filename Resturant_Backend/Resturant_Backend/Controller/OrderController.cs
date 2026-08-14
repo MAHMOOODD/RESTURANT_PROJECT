@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_Backend.Common.Exceptions;
+using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Order;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
@@ -27,23 +29,19 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> AddOrder(AddOrderDto dto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
             var (address, found) = await _unitOfWork.UserRepo.GetUserAddressAsync(userId);
 
 
-            if(found == false && dto.UserAddress is null)
-            {
-                return BadRequest("you must provide an address");
-            }
+            Ensure.Check(!found && string.IsNullOrEmpty(dto.UserAddress), "You must provide an address.");
 
 
 
             var cartItems = _unitOfWork.CartRepo.GetAllCartItems(userId);
 
-            if(cartItems is null || cartItems.Count < 1)
-            {
-                return BadRequest("Cart is Empty");
-            }
+            Ensure.Check(!cartItems.Any(), "Cart is Empty");
+
 
             var totalPrice = cartItems.Sum(c => c.Quantity * c.Product.Price);
             var priceAfterDiscount = 0M;
@@ -53,10 +51,9 @@ namespace Resturant_Backend.Controller
             {
                 var (message, coupon, discount) = await _unitOfWork.CouponRepo.ValidateCoupon(dto.Coupon, totalPrice);
 
-                if(coupon == false)
-                    return BadRequest(message);
+                Ensure.Check(coupon == false, message);
 
-                if(coupon == true)
+                if(coupon)
                 {
                     priceAfterDiscount = totalPrice - ( ( discount / 100 ) * totalPrice );
                     Discount = discount;
@@ -68,7 +65,7 @@ namespace Resturant_Backend.Controller
             var Order = new Order
             {
                 AppuserId = userId,
-                UserAddress = address == "" ? dto.UserAddress : address,
+                UserAddress = string.IsNullOrEmpty(address) ? dto.UserAddress : address,
                 TotalPrice = totalPrice,
                 Discount = Discount,
                 CouponId = Coupon?.Id ?? null,
@@ -97,7 +94,7 @@ namespace Resturant_Backend.Controller
             OrderToshow.PriceAfterDiscount = priceAfterDiscount == 0 ? totalPrice : priceAfterDiscount;
             OrderToshow.Coupon = dto.Coupon ?? "";
 
-            return Ok(OrderToshow);
+            return this.Success(OrderToshow);
 
         }
 
@@ -108,17 +105,15 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> GetMyOrders()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Ensure.Unauthorized(userId, "يجب تسجيل الدخول اولا");
 
             var orders = _unitOfWork.OrderRepo.GetUserOrders(userId);
 
-            if(orders is null || orders.Count < 1)
-            {
-                return BadRequest("Make an order First");
+            Ensure.Check(orders is null || orders.Count < 1, "Make an order First");
 
-            }
             var ordersToShow = _mapper.Map<List<GetOrderDto>>(orders);
 
-            return Ok(ordersToShow);
+            return this.Success(ordersToShow);
         }
 
         [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
@@ -127,14 +122,11 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> GetOrder(int id)
         {
             var order = await _unitOfWork.OrderRepo.GetAsync(id);
-            if(order is null)
-            {
-                return NotFound("Order does not Exist");
-            }
+            Ensure.NotNull(order, "Order does not Exist");
 
             var orderToShow = _mapper.Map<GetOrderDto>(order);
 
-            return Ok(orderToShow);
+            return this.Success(orderToShow);
         }
         [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
 
@@ -142,14 +134,11 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> GetOrders()
         {
             var orders = await _unitOfWork.OrderRepo.GetAllAsync();
-            if(orders is null)
-            {
-                return NotFound("There is no orders in the system");
-            }
+            Ensure.NotNull(orders, "There is no orders in the system");
 
             var ordersToShow = _mapper.Map<List<GetOrderDto>>(orders);
 
-            return Ok(ordersToShow);
+            return this.Success(ordersToShow);
         }
 
 
@@ -159,8 +148,7 @@ namespace Resturant_Backend.Controller
         {
             var order = await _unitOfWork.OrderRepo.GetAsync(id);
 
-            if(order is null)
-                return NotFound($"Order with ID {id} was not found.");
+            Ensure.NotNull(order, $"Order with ID {id} was not found.");
 
             bool wasOrderActive = order.Status != OrderStatus.Cancelled
                                && order.PaymentStatus != PaymentStatus.Failed;
@@ -192,11 +180,7 @@ namespace Resturant_Backend.Controller
 
             var orderToShow = _mapper.Map<GetOrderDto>(order);
 
-            return Ok(new
-            {
-                Message = "Order status updated successfully",
-                Order = orderToShow
-            });
+            return this.Success(orderToShow);
         }
 
     }

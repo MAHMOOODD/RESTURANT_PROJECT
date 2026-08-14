@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Resturant_Backend.Common.Exceptions;
+using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.User;
 using Resturant_Backend.Services;
 using System.Security.Claims;
@@ -26,20 +28,19 @@ public class AccountController : ControllerBase
         var origin = $"{Request.Scheme}://{Request.Host}";
         var result = await _authService.RegisterAsync(model, origin);
 
-        if(!result.IsAuth)
-            return BadRequest(result.Message);
+        Ensure.Check(!result.IsAuth, result?.Message ?? "Registration failed.");
 
         if(!string.IsNullOrEmpty(result.RefreshToken))
             SetRefreshTokenInCookie(result.RefreshToken, result.RefreshTokenExpiration);
 
-        return Ok(_mapper.Map<ResponseRegister>(result));
+        return this.Success(_mapper.Map<ResponseRegister>(result));
     }
 
     [HttpGet("ConfirmEmail")]
     public async Task<IActionResult> ConfirmEmailAsync([FromQuery] ConfirmEmailDto model)
     {
-        var result = await _authService.ConfirmEmailAsync(model);
-        return string.IsNullOrEmpty(result) ? Ok(new { Message = "Email confirmed successfully!" }) : BadRequest(result);
+        await _authService.ConfirmEmailAsync(model);
+        return this.SuccessMessage("Email confirmed successfully!");
     }
 
     [HttpPost("Login")]
@@ -47,31 +48,28 @@ public class AccountController : ControllerBase
     {
         var result = await _authService.GetTokenAsync(model);
 
-        if(!result.IsAuth)
-            return BadRequest(result.Message);
+        Ensure.Check(!result.IsAuth, result?.Message ?? "Invalid email or password.");
 
         if(!string.IsNullOrEmpty(result.RefreshToken))
             SetRefreshTokenInCookie(result.RefreshToken, result.RefreshTokenExpiration);
 
-        return Ok(_mapper.Map<ResponseLogin>(result));
+        return this.Success(_mapper.Map<ResponseLogin>(result));
     }
 
     [HttpPost("ForgetPassword")]
     public async Task<IActionResult> ForgetPasswordAsync([FromBody] ForgetPasswordDto model)
     {
         var origin = $"{Request.Scheme}://{Request.Host}";
-        var result = await _authService.ForgetPasswordAsync(model, origin);
+        await _authService.ForgetPasswordAsync(model, origin);
 
-        return string.IsNullOrEmpty(result)
-            ? Ok(new { Message = "Password reset link has been sent to your email." })
-            : BadRequest(result);
+        return this.SuccessMessage("Password reset link has been sent to your email.");
     }
 
     [HttpPost("ResetPassword")]
     public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordDto model)
     {
-        var result = await _authService.ResetPasswordAsync(model);
-        return string.IsNullOrEmpty(result) ? Ok(new { Message = "Password reset successfully!" }) : BadRequest(result);
+        await _authService.ResetPasswordAsync(model);
+        return this.SuccessMessage("Password reset successfully!");
     }
 
     [Authorize]
@@ -79,52 +77,44 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> UpdateProfileAsync([FromBody] UpdateProfileDto model)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if(userId is null)
-            return Unauthorized();
+        Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
-        var result = await _authService.UpdateProfileAsync(userId, model);
-        return string.IsNullOrEmpty(result) ? Ok(new { Message = "Profile updated successfully!" }) : BadRequest(result);
+        await _authService.UpdateProfileAsync(userId!, model);
+        return this.SuccessMessage("Profile updated successfully!");
     }
 
     [Authorize(Roles = "Admin")]
     [HttpPost("AddRole")]
     public async Task<IActionResult> AddRoleAsync([FromBody] AddRoleDto model)
     {
-        var result = await _authService.AddRoleAsync(model);
-        return string.IsNullOrEmpty(result) ? Ok(model) : BadRequest(result);
+        await _authService.AddRoleAsync(model);
+        return this.SuccessMessage("Role added successfully!");
     }
 
     [HttpPost("RefreshToken")]
     public async Task<IActionResult> RefreshToken()
     {
         var refreshToken = Request.Cookies["refreshToken"];
-        if(string.IsNullOrEmpty(refreshToken))
-            return BadRequest("Refresh token is required!");
+        Ensure.NotNullOrEmpty(refreshToken, "Refresh token is required!");
 
-        var result = await _authService.RefreshTokenAsync(refreshToken);
-
-        if(!result.IsAuth)
-            return BadRequest(result.Message);
+        var result = await _authService.RefreshTokenAsync(refreshToken!);
+        Ensure.Check(!result.IsAuth, result?.Message ?? "Invalid refresh token.");
 
         SetRefreshTokenInCookie(result.RefreshToken!, result.RefreshTokenExpiration);
 
-        return Ok(result);
+        return this.Success(result);
     }
 
     [HttpPost("RevokeToken")]
-    public async Task<IActionResult> RevokeToken([FromBody] RevokeToken Dto)
+    public async Task<IActionResult> RevokeToken([FromBody] RevokeToken? dto)
     {
-        var token = Dto.Token ?? Request.Cookies["refreshToken"];
+        var token = dto?.Token ?? Request.Cookies["refreshToken"];
+        Ensure.NotNullOrEmpty(token, "Token is required!");
 
-        if(string.IsNullOrEmpty(token))
-            return BadRequest("Token is required!");
+        var isRevoked = await _authService.RevokeTokenAsync(token!);
+        Ensure.Check(!isRevoked, "Token is invalid!");
 
-        var result = await _authService.RevokeTokenAsync(token);
-
-        if(!result)
-            return BadRequest("Token is invalid!");
-
-        return Ok(new { Message = "Token revoked successfully." });
+        return this.SuccessMessage("Token revoked successfully.");
     }
 
     private void SetRefreshTokenInCookie(string refreshToken, DateTime expires)

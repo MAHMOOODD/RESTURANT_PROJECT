@@ -6,5 +6,8 @@ namespace Resturant_Backend.Interfaces
     {
 
         Task<(string address, bool found)> GetUserAddressAsync(string userId);
+
+
+        Task<Appuser?> GetUserInformationAsync(string userId);
     }
 }

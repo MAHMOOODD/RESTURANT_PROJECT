@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.User;
 using Resturant_Backend.Helpers;
 using Resturant_Backend.Models;
@@ -38,10 +39,14 @@ public class Authservice : IAuthService
     public async Task<UserCreatedModel> RegisterAsync(RegisterModel model, string origin)
     {
         if(await _userManager.FindByEmailAsync(model.Email) is not null)
-            return new UserCreatedModel { Message = "Email is already registered!" };
+        {
+            Ensure.FieldError(nameof(model.Email), "Email is already registered.");
+        }
 
         if(await _userManager.FindByNameAsync(model.UserName) is not null)
-            return new UserCreatedModel { Message = "Username is already registered!" };
+        {
+            Ensure.FieldError(nameof(model.UserName), "Username is already registered.");
+        }
 
         var user = new Appuser
         {
@@ -55,20 +60,27 @@ public class Authservice : IAuthService
 
         if(!result.Succeeded)
         {
-            var errors = string.Empty;
+            // تجميع أخطاء Identity وإرجاعها بشكل دقيق ومناسب للـ Frontend
+            var errorsDict = new Dictionary<string, List<string>>();
             foreach(var error in result.Errors)
-                errors += $"{error.Description},\n";
+            {
+                string? fieldKey = error.Code.Contains("Password") ? "Password" :
+                               error.Code.Contains("Email") ? "Email" :
+                               error.Code.Contains("UserName") ? "UserName" : "General";
 
-            return new UserCreatedModel { Message = errors };
+                if(!errorsDict.ContainsKey(fieldKey))
+                    errorsDict[fieldKey] = new List<string>();
+
+                errorsDict[fieldKey].Add(error.Description);
+            }
+            Ensure.Validation(errorsDict, "Registration failed due to validation errors.");
         }
 
         await _userManager.AddToRoleAsync(user, "User");
 
-        // ✉️ توليد وإرسال إيميل التفعيل المنسق
         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
         var encodedCode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
         var confirmationUrl = $"{origin}/api/Account/ConfirmEmail?userId={user.Id}&token={encodedCode}";
-
 
         var messageBody = $@"
             <div style='font-family: Arial, sans-serif; padding: 20px; color: #333;'>
@@ -77,8 +89,6 @@ public class Authservice : IAuthService
                 <a href='{confirmationUrl}' style='display: inline-block; padding: 10px 20px; color: #fff; background-color: #28a745; text-decoration: none; border-radius: 5px;'>تأكيد البريد الإلكتروني</a>
             </div>";
 
-        // ابقي شيلها 
-        Console.WriteLine(confirmationUrl);
         await _emailService.SendEmailAsync(user.Email, "Confirm Your Email", messageBody);
 
         return new UserCreatedModel
@@ -93,52 +103,47 @@ public class Authservice : IAuthService
 
     public async Task<UserCreatedModel> GetTokenAsync(TokenRequestModel model)
     {
-        var authModel = new UserCreatedModel();
-
         var user = await _userManager.FindByEmailAsync(model.Email);
 
         if(user is null)
         {
-            authModel.Message = "Email or Password is incorrect!";
-            return authModel;
+            Ensure.FieldError(nameof(model.Email), "Email or Password is incorrect!");
         }
 
-
-        // 🔒 التحقق من تأكيد البريد الإلكتروني
         if(!user.EmailConfirmed)
         {
-            authModel.Message = "Email is not confirmed yet. Please check your inbox.";
-            return authModel;
+            Ensure.FieldError(nameof(model.Email), "Email is not confirmed yet. Please check your inbox.");
         }
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
 
         if(result.IsLockedOut)
         {
-            authModel.Message = "Account is locked. Try again after 5 minutes.";
-            return authModel;
+            Ensure.BadRequest("Account is locked. Try again after 5 minutes.");
         }
 
         if(!result.Succeeded)
         {
-            authModel.Message = "Email or Password is incorrect!";
-            return authModel;
+            Ensure.FieldError(nameof(model.Password), "Email or Password is incorrect!");
         }
 
         var jwtSecurityToken = await CreateJwtToken(user);
         var rolesList = await _userManager.GetRolesAsync(user);
 
-        authModel.IsAuth = true;
-        authModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-        authModel.Email = user.Email;
-        authModel.UserName = user.UserName;
-        authModel.ExpiredOn = jwtSecurityToken.ValidTo;
-        authModel.Roles = rolesList.ToList();
+        var authModel = new UserCreatedModel
+        {
+            IsAuth = true,
+            Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
+            Email = user.Email,
+            UserName = user.UserName,
+            ExpiredOn = jwtSecurityToken.ValidTo,
+            Roles = rolesList.ToList()
+        };
 
         if(user.RefreshTokens.Any(t => t.IsActive))
         {
-            var activeRefreshToken = user.RefreshTokens.FirstOrDefault(t => t.IsActive);
-            authModel.RefreshToken = activeRefreshToken!.Token;
+            var activeRefreshToken = user.RefreshTokens.First(t => t.IsActive);
+            authModel.RefreshToken = activeRefreshToken.Token;
             authModel.RefreshTokenExpiration = activeRefreshToken.ExpiresOn;
         }
         else
@@ -156,22 +161,21 @@ public class Authservice : IAuthService
     public async Task<string> ConfirmEmailAsync(ConfirmEmailDto model)
     {
         var user = await _userManager.FindByIdAsync(model.UserId);
-        if(user is null)
-            return "User not found";
+        Ensure.NotNull(user, "User not found");
 
         var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
         var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
 
-        return result.Succeeded ? string.Empty : "Failed to confirm email";
+        Ensure.Check(!result.Succeeded, "Failed to confirm email");
+
+        return string.Empty;
     }
 
     public async Task<string> ForgetPasswordAsync(ForgetPasswordDto model, string origin)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
-        if(user is null)
-            return "Email does not exist";
+        Ensure.NotNull(user, "Email does not exist");
 
-        // ✉️ توليد وإرسال إيميل إعادة تعيين كلمة المرور المنسق
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
         var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
         var resetUrl = $"{origin}/reset-password?email={user.Email}&token={encodedToken}";
@@ -191,62 +195,54 @@ public class Authservice : IAuthService
     public async Task<string> ResetPasswordAsync(ResetPasswordDto model)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
-        if(user is null)
-            return "User not found";
+        Ensure.NotNull(user, "User not found");
 
         var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
         var result = await _userManager.ResetPasswordAsync(user, decodedToken, model.NewPassword);
 
-        return result.Succeeded ? string.Empty : string.Join(", ", result.Errors.Select(e => e.Description));
+        Ensure.Check(!result.Succeeded, string.Join(", ", result.Errors.Select(e => e.Description)));
+
+        return string.Empty;
     }
 
     public async Task<string> UpdateProfileAsync(string userId, UpdateProfileDto model)
     {
         var user = await _userManager.FindByIdAsync(userId);
-        if(user is null)
-            return "User not found";
+        Ensure.NotNull(user, "User not found");
 
         user.FullName = model.FullName ?? user.FullName;
         user.Address = model.Address ?? user.Address;
 
         var result = await _userManager.UpdateAsync(user);
-        return result.Succeeded ? string.Empty : "Failed to update profile";
+        Ensure.Check(!result.Succeeded, "Failed to update profile");
+
+        return string.Empty;
     }
 
     public async Task<string> AddRoleAsync(AddRoleDto model)
     {
         var user = await _userManager.FindByIdAsync(model.UserId);
+        Ensure.NotNull(user, "Invalid user ID");
 
-        if(user is null || !await _roleManager.RoleExistsAsync(model.RoleName))
-            return "Invalid user ID or Role";
+        var roleExists = await _roleManager.RoleExistsAsync(model.RoleName);
+        Ensure.Check(!roleExists, "Role does not exist");
 
-        if(await _userManager.IsInRoleAsync(user, model.RoleName))
-            return "User already assigned to this role";
+        var isInRole = await _userManager.IsInRoleAsync(user, model.RoleName);
+        Ensure.Check(isInRole, "User already assigned to this role");
 
         var result = await _userManager.AddToRoleAsync(user, model.RoleName);
+        Ensure.Check(!result.Succeeded, "Something went wrong");
 
-        return result.Succeeded ? string.Empty : "Something went wrong";
+        return string.Empty;
     }
 
     public async Task<UserCreatedModel> RefreshTokenAsync(string token)
     {
-        var authModel = new UserCreatedModel();
-
         var user = await _userManager.Users.SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
-
-        if(user == null)
-        {
-            authModel.Message = "Invalid token";
-            return authModel;
-        }
+        Ensure.NotNull(user, "Invalid token");
 
         var refreshToken = user.RefreshTokens.Single(t => t.Token == token);
-
-        if(!refreshToken.IsActive)
-        {
-            authModel.Message = "Inactive token";
-            return authModel;
-        }
+        Ensure.Check(!refreshToken.IsActive, "Inactive token");
 
         refreshToken.RevokeOn = DateTime.UtcNow;
 
@@ -255,32 +251,31 @@ public class Authservice : IAuthService
         await _userManager.UpdateAsync(user);
 
         var jwtToken = await CreateJwtToken(user);
-        authModel.IsAuth = true;
-        authModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
-        authModel.Email = user.Email;
-        authModel.UserName = user.UserName;
         var roles = await _userManager.GetRolesAsync(user);
-        authModel.Roles = roles.ToList();
-        authModel.RefreshToken = newRefreshToken.Token;
-        authModel.RefreshTokenExpiration = newRefreshToken.ExpiresOn;
 
-        return authModel;
+        return new UserCreatedModel
+        {
+            IsAuth = true,
+            Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
+            Email = user.Email,
+            UserName = user.UserName,
+            Roles = roles.ToList(),
+            RefreshToken = newRefreshToken.Token,
+            RefreshTokenExpiration = newRefreshToken.ExpiresOn
+        };
     }
 
     public async Task<bool> RevokeTokenAsync(string token)
     {
         var user = await _userManager.Users.SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
-
         if(user == null)
             return false;
 
         var refreshToken = user.RefreshTokens.Single(t => t.Token == token);
-
         if(!refreshToken.IsActive)
             return false;
 
         refreshToken.RevokeOn = DateTime.UtcNow;
-
         await _userManager.UpdateAsync(user);
 
         return true;
@@ -290,10 +285,7 @@ public class Authservice : IAuthService
     {
         var userClaims = await _userManager.GetClaimsAsync(user);
         var roles = await _userManager.GetRolesAsync(user);
-        var roleClaims = new List<Claim>();
-
-        foreach(var role in roles)
-            roleClaims.Add(new Claim(ClaimTypes.Role, role));
+        var roleClaims = roles.Select(role => new Claim(ClaimTypes.Role, role)).ToList();
 
         var claims = new[]
         {
@@ -308,14 +300,12 @@ public class Authservice : IAuthService
         var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtHelper.Key));
         var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
-        var jwtSecurityToken = new JwtSecurityToken(
+        return new JwtSecurityToken(
             issuer: _jwtHelper.Issuer,
             audience: _jwtHelper.Audience,
             claims: claims,
             expires: DateTime.UtcNow.AddMinutes(_jwtHelper.DurationInMinutes),
             signingCredentials: signingCredentials);
-
-        return jwtSecurityToken;
     }
 
     private RefreshToken GenerateRefreshToken()
