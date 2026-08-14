@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Flame, ShoppingBag, User, Menu, X, ArrowLeft } from "lucide-react";
-import LanguageSwitcher from "@/components/my/Language Switcher";
+import LanguageSwitcher from "@/components/my/LanguageSwitcher";
 import { ThemeToggle } from "@/components/my/ThemeToggle";
 
 export default function Navbar() {

@@ -72,6 +72,25 @@
     "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
 
 
+
+
+    "almost_there": "خطوة واحدة أخيرة!",
+    "check_your_inbox": "تفقد بريدك الإلكتروني 📩",
+    "verification_sent_desc": "أرسلنا رابط التأكيد إلى البريد التالي:",
+    "open_email_app": "فتح البريد الإلكتروني",
+    "wrong_email": "تعديل البيانات أو إعادة الإرسال",
+
+
+
+
+    "confirmingEmail": "جاري تأكيد حسابك...",
+    "emailConfirmedTitle": "تم تأكيد الحساب بنجاح!",
+    "emailConfirmedSubtitle": "أهلاً بك في أكلني! حسابك جاهز الآن للبدء واستكشاف أشهى الوجبات.",
+    "goToLogin": "تسجيل الدخول الآن",
+    "confirmFailedTitle": "فشل تأكيد الحساب",
+    "confirmFailedSubtitle": "الرابط المنقضية صلاحيته أو غير صالح. يرجى طلب رابط تأكيد جديد.",
+
+
      "username_exists": "اسم المستخدم موجود بالفعل",
    
     "email_exists": "البريد الإلكتروني موجود بالفعل",

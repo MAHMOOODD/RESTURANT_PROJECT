@@ -72,6 +72,24 @@
     "passwordsDoNotMatch": "Passwords do not match",
 
 
+
+
+    "almost_there": "One last step!",
+    "check_your_inbox": "Check your inbox 📩",
+    "verification_sent_desc": "We sent a confirmation link to:",
+    "open_email_app": "Open Email App",
+    "wrong_email": "Edit details or resend",
+
+
+
+    "confirmingEmail": "Confirming your account...",
+    "emailConfirmedTitle": "Account Confirmed Successfully!",
+    "emailConfirmedSubtitle": "Welcome to Aklny! Your account is now ready to explore delicious meals.",
+    "goToLogin": "Log In Now",
+    "confirmFailedTitle": "Account Confirmation Failed",
+    "confirmFailedSubtitle": "The link has expired or is invalid. Please request a new confirmation link.",
+
+
     "username_exists": "Username already exists",
 
     "email_exists": "Email already exists",

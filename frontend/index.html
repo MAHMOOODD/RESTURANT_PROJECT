@@ -5,14 +5,35 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>frontend</title>
+
     <script>
-      (function () {
+      (() => {
         try {
-          var savedLang = localStorage.getItem('i18nextLng') || 'ar';
-          var isRtl = savedLang.startsWith('ar');
-          document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
-          document.documentElement.lang = savedLang.startsWith('ar') ? 'ar' : 'en';
-        } catch (e) {}
+          // =========================
+          // Theme
+          // =========================
+
+          const savedTheme = localStorage.getItem("theme");
+
+          // Default = Dark
+          const isDark = savedTheme ? savedTheme === "dark" : true;
+
+          document.documentElement.classList.toggle("dark", isDark);
+
+          // =========================
+          // Language
+          // =========================
+
+          const savedLang = localStorage.getItem("i18nextLng");
+
+          // Default = English
+          const lang = savedLang?.startsWith("ar") ? "ar" : "en";
+
+          document.documentElement.lang = lang;
+          document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        } catch (error) {
+          // Ignore localStorage errors
+        }
       })();
     </script>
   </head>

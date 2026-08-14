@@ -80,7 +80,7 @@ public class Authservice : IAuthService
 
         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
         var encodedCode = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-        var confirmationUrl = $"{origin}/api/Account/ConfirmEmail?userId={user.Id}&token={encodedCode}";
+        var confirmationUrl = $"{origin}/auth/confirm-email?userId={user.Id}&token={encodedCode}";
 
         var messageBody = $@"
             <div style='font-family: Arial, sans-serif; padding: 20px; color: #333;'>
@@ -178,7 +178,7 @@ public class Authservice : IAuthService
 
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
         var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-        var resetUrl = $"{origin}/reset-password?email={user.Email}&token={encodedToken}";
+        var resetUrl = $"{origin}/auth/reset-password?email={user.Email}&token={encodedToken}";
 
         var messageBody = $@"
             <div style='font-family: Arial, sans-serif; padding: 20px; color: #333;'>

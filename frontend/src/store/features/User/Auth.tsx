@@ -47,8 +47,9 @@ export const authApi = createApi({
     ConfirmEmail: builder.mutation<void ,ConfirmEmailDto>({
       query : (credentials) =>( {
         url : "Account/ConfirmEmail",
-        method : "POST",
-        body : credentials
+        method : "GET",
+        params : credentials
+        
       })
     }),
    

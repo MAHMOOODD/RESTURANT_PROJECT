@@ -1,64 +1,85 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef} from "react";
+import {useSearchParams} from "react-router-dom";
+import { useConfirmEmailMutation } from "@/store/features/User/Auth";
 import { useTranslation } from "react-i18next";
+import { MdError } from "react-icons/md"
+import {BiHappyHeartEyes } from "react-icons/bi"
 
 export default function ConfirmEmail() {
-  const { t} = useTranslation();
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+  const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    // TODO: Call GET /api/Account/ConfirmEmail?userId=...&token=...
-    const timer = setTimeout(() => {
-      setStatus("success");
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, []);
+
+  const {t} = useTranslation();
+
+  const [confirmEmail, { isLoading ,isSuccess , isError }] = useConfirmEmailMutation();
+const called = useRef(false);
+
+const userId=searchParams.get("userId");
+const token = searchParams.get("token");
+
+useEffect(() => {
+    // لو تم الاستدعاء قبل كده أو الـ params مش كاملين متنفذش
+    if (called.current || !userId || !token) return;
+
+    called.current = true; // 👈 علم إن الطلب اتدبّس خلاص
+
+    confirmEmail({ UserId: userId, Token: token })
+      .unwrap()
+      .then((res) => console.log("Email confirmation response:", res))
+      .catch((err) => console.error("Email confirmation error:", err));
+    
+  }, [userId, token, confirmEmail]);
+
+   
+
+  
 
   return (
     <div  className="min-h-screen flex items-center justify-center bg-background px-4 py-12">
       <div className="w-full max-w-md text-center bg-card p-8 rounded-2xl border border-border shadow-2xl space-y-6">
-        {status === "loading" && (
+        {isLoading && (
           <div className="space-y-4">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary animate-pulse">
               <i className="fa-solid fa-spinner text-3xl animate-spin"></i>
             </div>
             <h2 className="text-2xl font-bold text-foreground">
-              {t("Auth.confirmingEmail", "جاري تأكيد حسابك...")}
+              {t("auth.confirmingEmail", "جاري تأكيد حسابك...")}
             </h2>
           </div>
         )}
 
-        {status === "success" && (
+        {isSuccess && (
           <div className="space-y-4">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500">
-              <i className="fa-solid fa-circle-check text-4xl"></i>
+              <BiHappyHeartEyes className="text-4xl" />
             </div>
             <h2 className="text-3xl font-black text-foreground">
-              {t("Auth.emailConfirmedTitle", "تم تأكيد الحساب بنجاح!")}
+              {t("auth.emailConfirmedTitle", "تم تأكيد الحساب بنجاح!")}
             </h2>
             <p className="text-muted-foreground text-sm">
-              {t("Auth.emailConfirmedSubtitle", "أهلاً بك في أكلني! حسابك جاهز الآن للبدء واستكشاف أشهى الوجبات.")}
+              {t("auth.emailConfirmedSubtitle", "أهلاً بك في أكلني! حسابك جاهز الآن للبدء واستكشاف أشهى الوجبات.")}
             </p>
             <div className="pt-4">
               <a
                 href="/login"
                 className="inline-block w-full py-3.5 px-4 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary/90 active:scale-[0.98] transition-all shadow-lg hover:shadow-primary/25"
               >
-                {t("Auth.goToLogin", "تسجيل الدخول الآن")}
+                {t("auth.goToLogin", "تسجيل الدخول الآن")}
               </a>
             </div>
           </div>
         )}
 
-        {status === "error" && (
+        {isError && (
           <div className="space-y-4">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-destructive/10 text-destructive">
-              <i className="fa-solid fa-triangle-exclamation text-3xl"></i>
+              <MdError className="text-3xl" />
             </div>
             <h2 className="text-2xl font-bold text-foreground">
-              {t("Auth.confirmFailedTitle", "فشل تأكيد الحساب")}
+              {t("auth.confirmFailedTitle", "فشل تأكيد الحساب")}
             </h2>
             <p className="text-muted-foreground text-sm">
-              {t("Auth.confirmFailedSubtitle", "الرابط المنقضية صلاحيته أو غير صالح. يرجى طلب رابط تأكيد جديد.")}
+              {t("auth.confirmFailedSubtitle", "الرابط المنقضية صلاحيته أو غير صالح. يرجى طلب رابط تأكيد جديد.")}
             </p>
           </div>
         )}

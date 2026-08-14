@@ -24,7 +24,7 @@ type ApiErrorResponse<TFields = Record<string, string[]>> = {
 };
 
 const rawBaseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_API_BASE_URL || "https://localhost:7165/api",
+  baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5153/api",
 });
 
 // 3. تحويل baseQuery لدالة تقبل Generic Type TFields بدلاً من any

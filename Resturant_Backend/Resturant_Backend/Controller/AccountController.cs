@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Resturant_Backend.Common.Exceptions;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.User;
+using Resturant_Backend.Helpers;
 using Resturant_Backend.Services;
 using System.Security.Claims;
 
@@ -15,17 +17,19 @@ public class AccountController : ControllerBase
 {
     private readonly IAuthService _authService;
     private readonly IMapper _mapper;
+    private readonly IOptions<JwtHelper> _jwtOptions;
 
-    public AccountController(IAuthService authService, IMapper mapper)
+    public AccountController(IAuthService authService, IMapper mapper, IOptions<JwtHelper> jwtOptions)
     {
         _authService = authService;
         _mapper = mapper;
+        _jwtOptions = jwtOptions;
     }
 
     [HttpPost("Register")]
     public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel model)
     {
-        var origin = $"{Request.Scheme}://{Request.Host}";
+        var origin = _jwtOptions.Value.Audience?.TrimEnd('/');
         var result = await _authService.RegisterAsync(model, origin);
 
         Ensure.Check(!result.IsAuth, result?.Message ?? "Registration failed.");
@@ -36,7 +40,7 @@ public class AccountController : ControllerBase
         return this.Success(_mapper.Map<ResponseRegister>(result));
     }
 
-    [HttpGet("ConfirmEmail")]
+    [HttpPost("ConfirmEmail")]
     public async Task<IActionResult> ConfirmEmailAsync([FromQuery] ConfirmEmailDto model)
     {
         await _authService.ConfirmEmailAsync(model);
@@ -59,7 +63,7 @@ public class AccountController : ControllerBase
     [HttpPost("ForgetPassword")]
     public async Task<IActionResult> ForgetPasswordAsync([FromBody] ForgetPasswordDto model)
     {
-        var origin = $"{Request.Scheme}://{Request.Host}";
+        var origin = _jwtOptions.Value.Audience;
         await _authService.ForgetPasswordAsync(model, origin);
 
         return this.SuccessMessage("Password reset link has been sent to your email.");

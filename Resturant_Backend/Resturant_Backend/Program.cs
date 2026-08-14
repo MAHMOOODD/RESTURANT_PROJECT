@@ -81,6 +81,9 @@ namespace Resturant_Backend
                 op.Lockout.MaxFailedAccessAttempts = 3;
                 op.Lockout.AllowedForNewUsers = true;
 
+                op.User.AllowedUserNameCharacters =
+         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ أبتثجحخدذرزسشصضطظعغفقكلمنهويةىءآأإؤئ";
+
                 op.Password.RequireDigit = true;
                 op.Password.RequireLowercase = true;
                 op.Password.RequireUppercase = true;
@@ -155,7 +158,7 @@ namespace Resturant_Backend
             }
 
             app.UseCors("AllowAll");
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
