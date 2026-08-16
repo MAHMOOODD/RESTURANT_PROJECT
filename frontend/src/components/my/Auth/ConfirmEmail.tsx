@@ -1,5 +1,5 @@
 import { useEffect, useRef} from "react";
-import {useSearchParams} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import { useConfirmEmailMutation } from "@/store/features/User/Auth";
 import { useTranslation } from "react-i18next";
 import { MdError } from "react-icons/md"
@@ -60,12 +60,12 @@ useEffect(() => {
               {t("auth.emailConfirmedSubtitle", "أهلاً بك في أكلني! حسابك جاهز الآن للبدء واستكشاف أشهى الوجبات.")}
             </p>
             <div className="pt-4">
-              <a
-                href="/login"
+              <Link
+                to="/auth"
                 className="inline-block w-full py-3.5 px-4 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary/90 active:scale-[0.98] transition-all shadow-lg hover:shadow-primary/25"
               >
                 {t("auth.goToLogin", "تسجيل الدخول الآن")}
-              </a>
+              </Link>
             </div>
           </div>
         )}
