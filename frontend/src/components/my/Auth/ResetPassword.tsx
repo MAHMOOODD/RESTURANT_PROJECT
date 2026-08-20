@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,7 +6,9 @@ import { z } from "zod";
 import { useSearchParams } from "react-router-dom";
 import { useResetPasswordMutation } from "@/store/features/User/Auth";
 import type { ApiError } from "@/services/baseQuery";
-import { Eye, EyeOff, KeyRoundIcon } from "lucide-react";
+import { CheckCircle2, Eye, EyeOff, KeyRoundIcon } from "lucide-react";
+
+import { useNavigate } from "react-router-dom";
 
 export default function ResetPassword() {
   const [searchParams] = useSearchParams();
@@ -15,8 +17,10 @@ export default function ResetPassword() {
   // 👁️ حالة التحكم في إظهار وإخفاء كلمة السر
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
+
+const navigate = useNavigate();
+
 
   const resetPasswordSchema = z
     .object({
@@ -41,14 +45,23 @@ export default function ResetPassword() {
 
   // استخراج البيانات من الـ URL
   const Email = searchParams.get("email") ;
-  const Token = searchParams.get("token");
 
-  const [resetPassword, { isLoading, error }] = useResetPasswordMutation();
+  const tokenFromUrl = searchParams.get('token');
+
+// استبدال المسافات بـ +
+const cleanToken = tokenFromUrl?.replace(/ /g, '+');
+
+  const [resetPassword, { isLoading, error, isSuccess }] = useResetPasswordMutation();
   const APiError = error as ApiError | undefined;
+
+
+
+   
 
   const {
     register,
     handleSubmit,
+    
     formState: { errors },
   } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
@@ -60,12 +73,21 @@ export default function ResetPassword() {
 
   const onSubmit = async (data: ResetPasswordFormData) => {
 
-    const response = await resetPassword({
-      Email: Email??"",
-      Token: Token??"",
-      NewPassword: data.NewPassword,
+   await resetPassword({
+      email: Email??"",
+      token: cleanToken??"",
+      newPassword: data.NewPassword,
+    }).unwrap()
+    .then((res) => {
+      console.log("Reset Password Response:", res);
+
+      setTimeout(() => {
+              navigate("/auth"); // Redirect to login page after 3 seconds
+      }, 3000); // Redirect after 3 seconds
+    })
+    .catch((err) => {
+      console.error("Reset Password Error:", err);
     });
-    console.log("Reset Password Response:", response);
    
   };
 
@@ -86,6 +108,20 @@ export default function ResetPassword() {
             )}
           </p>
         </div>
+
+        {isSuccess && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4 animate-in fade-in duration-300">
+  <div className="w-full max-w-md p-6 bg-white dark:bg-zinc-900 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-sm rounded-2xl flex flex-col items-center justify-center gap-3 text-center font-medium shadow-2xl animate-in zoom-in-95 duration-300">
+    <CheckCircle2 className="w-12 h-12 text-emerald-500 shrink-0 animate-bounce" />
+    <span className="text-base leading-relaxed">
+      {t(
+        "auth.resetPasswordSuccess",
+        "تم إعادة تعيين كلمة المرور بنجاح! سيتم توجيهك إلى صفحة تسجيل الدخول خلال 3 ثوانٍ.",
+      )}
+    </span>
+  </div>
+</div>
+        )}
 
         {APiError?.status && (
           <div className="p-3 bg-destructive/10 text-destructive text-sm rounded-xl text-center">

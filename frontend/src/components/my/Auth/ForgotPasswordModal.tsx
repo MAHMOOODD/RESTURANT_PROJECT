@@ -29,7 +29,7 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
   const form = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
     mode: "onBlur",
-    defaultValues: { Email: "" },
+    defaultValues: { email: "" },
   });
 
   if (!isOpen) return null;
@@ -82,16 +82,16 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
                   <Mail className={`w-4 h-4 absolute ${isRtl ? "right-3.5" : "left-3.5"} top-1/2 -translate-y-1/2 text-muted-foreground`} />
                   <input
                     type="email"
-                    {...form.register("Email")}
+                    {...form.register("email")}
                     placeholder="name@example.com"
                     className={`w-full ${isRtl ? "pr-10 pl-4" : "pl-10 pr-4"} py-2.5 rounded-xl bg-muted/50 border ${
-                      form.formState.errors.Email ? "border-rose-500" : "border-input"
+                      form.formState.errors.email  ? "border-rose-500" : "border-input"
                     } text-foreground text-sm`}
                   />
                 </div>
-                {form.formState.errors.Email && (
+                {form.formState.errors.email && (
                   <p className="text-[11px] text-rose-500 font-medium">
-                    {form.formState.errors.Email.message}
+                    {form.formState.errors.email.message}
                   </p>
                 )}
                 {apiError?.message && (

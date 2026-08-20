@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.Common.Responses;
 using Resturant_Backend.Data;
 using Resturant_Backend.Helpers;
@@ -13,6 +14,7 @@ using Resturant_Backend.Models;
 using Resturant_Backend.Repository;
 using Resturant_Backend.Services;
 using System.Text;
+using System.Text.Json;
 
 namespace Resturant_Backend
 {
@@ -24,7 +26,7 @@ namespace Resturant_Backend
 
             // Add services to the container.
 
-            // [تعديل]: توحيد أخطاء الـ Model Validation التلقائية لترجع داخل ApiResponse الموحد
+            // توحيد أخطاء الـ Model Validation التلقائية لترجع داخل ApiResponse الموحد
             builder.Services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
                 {
@@ -33,7 +35,7 @@ namespace Resturant_Backend
                         var errors = context.ModelState
                             .Where(e => e.Value != null && e.Value.Errors.Count > 0)
                             .ToDictionary(
-                                kvp => char.ToLowerInvariant(kvp.Key[0]) + kvp.Key.Substring(1), // camelCase
+                                kvp => StringExtensions.ToCamelCase(kvp.Key),
                                 kvp => kvp.Value!.Errors.Select(e => e.ErrorMessage).ToList()
                             );
 
@@ -47,12 +49,11 @@ namespace Resturant_Backend
                     };
                 });
 
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddEndpointsApiExplorer();
 
+            // Swagger Config
             builder.Services.AddSwaggerGen(options =>
             {
-                // تعريف طريقة التوثيق (JWT Bearer)
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -63,26 +64,25 @@ namespace Resturant_Backend
                     Description = "ادخل التوكن بتاعك هنا مباشرة (بدون كلمة Bearer)"
                 });
 
-                // تطبيق التوثيق على كل الـ Endpoints في سواجر
                 options.AddSecurityRequirement(document => new OpenApiSecurityRequirement{
                     {
-                    new OpenApiSecuritySchemeReference("Bearer", document),
-                    new List<string>()
+                        new OpenApiSecuritySchemeReference("Bearer", document),
+                        new List<string>()
                     }
                 });
             });
 
             builder.Services.Configure<JwtHelper>(builder.Configuration.GetSection("JWT"));
 
-            //add identity
+            // Identity Config
             builder.Services.AddIdentity<Appuser, IdentityRole>(op =>
             {
                 op.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 op.Lockout.MaxFailedAccessAttempts = 3;
                 op.Lockout.AllowedForNewUsers = true;
 
-                op.User.AllowedUserNameCharacters =
-         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ أبتثجحخدذرزسشصضطظعغفقكلمنهويةىءآأإؤئ";
+                // ⚠️ التعديل هنا: سماح بالأحرف والأرقام والرموز الشائعة واللغة العربية بآمان
+                op.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ أبتثجحخدذرزسشصضطظعغفقكلمنهوي";
 
                 op.Password.RequireDigit = true;
                 op.Password.RequireLowercase = true;
@@ -90,6 +90,7 @@ namespace Resturant_Backend
                 op.Password.RequireNonAlphanumeric = true;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
+            // Authentication & JwtBearer Config
             builder.Services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -106,50 +107,64 @@ namespace Resturant_Backend
 
                     ValidIssuer = builder.Configuration["JWT:Issuer"],
                     ValidAudience = builder.Configuration["JWT:Audience"],
-                    IssuerSigningKey =
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]!))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]!))
+                };
+
+                // ✅ التعديل هنا: التعامل مع أخطاء التوكن من الـ Framework بنفس شكل الـ ApiResponse
+                o.Events = new JwtBearerEvents
+                {
+                    OnChallenge = async context =>
+                    {
+                        context.HandleResponse(); // إلغاء الاستجابة الافتراضية للـ Framework
+                        context.Response.StatusCode = 401;
+                        context.Response.ContentType = "application/json";
+
+                        var response = ApiResponse<object>.FailureResponse(401, "غير مصرح لك بالوصول، يرجى تسجيل الدخول أولاً.");
+
+                        var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                        await context.Response.WriteAsync(JsonSerializer.Serialize(response, jsonOptions));
+                    },
+                    OnForbidden = async context =>
+                    {
+                        context.Response.StatusCode = 403;
+                        context.Response.ContentType = "application/json";
+
+                        var response = ApiResponse<object>.FailureResponse(403, "ليس لديك الصلاحيات الكافية لإتمام هذا الإجراء.");
+
+                        var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                        await context.Response.WriteAsync(JsonSerializer.Serialize(response, jsonOptions));
+                    }
                 };
             });
 
-            //add cors
+            // CORS Config
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll",
-                    builder =>
-                    {
-                        builder
-                            .AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader();
-                    });
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5174")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .AllowCredentials();
+                });
             });
 
-            //add automapper
-            builder.Services.AddAutoMapper(cfg => { },
-                          typeof(Program).Assembly);
-
-            // 1. ربط كلاس الـ EmailSettings بملف appsettings.json
+            builder.Services.AddAutoMapper(cfg => { }, typeof(Program).Assembly);
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-
-            // 2. تسجيل EmailService و AuthService
             builder.Services.AddTransient<IEmailService, EmailService>();
 
-            // add DbContext
             builder.Services.AddDbContext<AppDbContext>(op =>
             {
                 op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            // add scoped services
             builder.Services.AddScoped<IAuthService, Authservice>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWorkRepo>();
 
             var app = builder.Build();
 
-            // تسجيل الـ Middleware الموحدة للأخطاء
             app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
-            // Configure the HTTP request pipeline.
             if(app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
@@ -157,8 +172,7 @@ namespace Resturant_Backend
                 app.UseSwaggerUI();
             }
 
-            app.UseCors("AllowAll");
-            //app.UseHttpsRedirection();
+            app.UseCors("AllowFrontend");
 
             app.UseAuthentication();
             app.UseAuthorization();

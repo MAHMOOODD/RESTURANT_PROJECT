@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, Lock, Eye, EyeOff, ArrowRight, ArrowLeft, AlertCircle } from "lucide-react";
-import { useAuthSchemas,type LoginFormData } from "./useAuthSchemas";
+import {
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  ArrowRight,
+  ArrowLeft,
+  AlertCircle,
+} from "lucide-react";
+import { useAuthSchemas, type LoginFormData } from "./useAuthSchemas";
 import type { ApiError } from "@/services/baseQuery";
-import type { ResponseLogin } from "@/store/types/types";
+import type { ResponseLogin } from "@/types/types";
 
 interface LoginFormProps {
   onSubmit: (data: LoginFormData) => Promise<void>;
@@ -28,7 +36,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     mode: "onBlur",
-    defaultValues: { Email: "", Password: "", remember: false },
+    defaultValues: { email: "", password: "", remember: false },
   });
 
   return (
@@ -46,19 +54,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           {t("auth.email_address")}
         </label>
         <div className="relative">
-          <Mail className={`w-4 h-4 absolute ${isRtl ? "right-3.5" : "left-3.5"} top-1/2 -translate-y-1/2 text-muted-foreground`} />
+          <Mail
+            className={`w-4 h-4 absolute ${isRtl ? "right-3.5" : "left-3.5"} top-1/2 -translate-y-1/2 text-muted-foreground`}
+          />
           <input
             type="email"
-            {...form.register("Email")}
+            {...form.register("email")}
             placeholder={t("auth.email_placeholder")}
             className={`w-full ${isRtl ? "pr-10 pl-4" : "pl-10 pr-4"} py-2.5 rounded-xl bg-muted/50 border ${
-              form.formState.errors.Email ? "border-rose-500" : "border-input"
+              form.formState.errors.email ? "border-rose-500" : "border-input"
             } text-foreground text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary`}
           />
         </div>
-        {form.formState.errors.Email && (
+        {form.formState.errors.email && (
           <p className="text-[11px] text-rose-500 font-medium">
-            {form.formState.errors.Email.message}
+            {form.formState.errors.email.message}
           </p>
         )}
       </div>
@@ -78,13 +88,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </button>
         </div>
         <div className="relative">
-          <Lock className={`w-4 h-4 absolute ${isRtl ? "right-3.5" : "left-3.5"} top-1/2 -translate-y-1/2 text-muted-foreground`} />
+          <Lock
+            className={`w-4 h-4 absolute ${isRtl ? "right-3.5" : "left-3.5"} top-1/2 -translate-y-1/2 text-muted-foreground`}
+          />
           <input
             type={showPassword ? "text" : "password"}
-            {...form.register("Password")}
+            {...form.register("password")}
             placeholder="••••••••"
             className={`w-full ${isRtl ? "pr-10 pl-10" : "pl-10 pr-10"} py-2.5 rounded-xl bg-muted/50 border ${
-              form.formState.errors.Password ? "border-rose-500" : "border-input"
+              form.formState.errors.password
+                ? "border-rose-500"
+                : "border-input"
             } text-foreground text-sm focus:outline-none focus:border-primary`}
           />
           <button
@@ -92,12 +106,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             onClick={() => setShowPassword(!showPassword)}
             className={`absolute ${isRtl ? "left-3.5" : "right-3.5"} top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer`}
           >
-            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            {showPassword ? (
+              <EyeOff className="w-4 h-4" />
+            ) : (
+              <Eye className="w-4 h-4" />
+            )}
           </button>
         </div>
-        {form.formState.errors.Password && (
+        {form.formState.errors.password && (
           <p className="text-[11px] text-rose-500 font-medium">
-            {form.formState.errors.Password.message}
+            {form.formState.errors.password.message}
           </p>
         )}
       </div>
@@ -108,7 +126,11 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         className="w-full mt-2 py-3 px-6 rounded-xl bg-gradient-to-r from-rose-600 via-orange-500 to-amber-500 text-white font-bold text-sm shadow-lg shadow-rose-500/20 hover:shadow-rose-500/35 disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer"
       >
         <span>{t("auth.sign_in")}</span>
-        {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+        {isRtl ? (
+          <ArrowLeft className="w-4 h-4" />
+        ) : (
+          <ArrowRight className="w-4 h-4" />
+        )}
       </button>
     </form>
   );

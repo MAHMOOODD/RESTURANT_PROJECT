@@ -9,8 +9,8 @@ namespace Resturant_Backend.DTO.Coupon
 
         public decimal MinimumAmount { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public DateTime ExpiryDate { get; set; } = DateTime.Now.AddDays(7);
+        public DateTime CreatedAt { get; set; }
+        public DateTime ExpiryDate { get; set; }
 
         public bool IsActive { get; set; }
         public List<GetOrderDto> Orders { get; set; } = new();

@@ -35,7 +35,7 @@ namespace Resturant_Backend.Controller
             var cartItems = _unitOfWork.CartRepo.GetAllCartItems(userId!);
 
             Ensure.NotNull(cartItems, "Cart was not found.");
-            Ensure.Check(!cartItems.Any(), "Make sure you have items in your cart.");
+            Ensure.Check(cartItems.Any(), "Make sure you have items in your cart.");
 
             var cartItemsToShow = _mapper.Map<List<GetCartDto>>(cartItems);
             return this.Success(cartItemsToShow);
@@ -54,7 +54,7 @@ namespace Resturant_Backend.Controller
 
             // التحقق من عدم وجود المنتج مسبقاً في السلة
             var exist = await _unitOfWork.CartRepo.IsItemExist(productId, userId!);
-            Ensure.Check(exist, "Item already exist in your cart.");
+            Ensure.Check(!exist, "Item already exist in your cart.");
 
             var addDto = new AddToCartDto
             {
@@ -103,7 +103,7 @@ namespace Resturant_Backend.Controller
             Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
             var deleted = await _unitOfWork.CartRepo.ClearCart(userId!);
-            Ensure.Check(!deleted, "cart is already empty");
+            Ensure.Check(deleted, "cart is already empty");
 
             return this.SuccessMessage("Cart cleared successfully.");
         }

@@ -12,7 +12,9 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'Products', element: <Products /> },
+      { path: 'Products', children: [
+        { index: true, element: <Products /> },
+      ] },
       { path: 'auth', children: [
         { index: true, element: <Auth /> },
         { path: 'confirm-email', element: <ConfirmEmail /> },

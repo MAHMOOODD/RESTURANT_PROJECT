@@ -8,7 +8,8 @@
     "about": "قصتنا",
     "account": "حسابي",
     "cart": "السلة",
-    "order_now": "اطلب الآن"
+    "order_now": "اطلب الآن",
+    "log_out": "تسجيل الخروج"
   },
   "auth": {
     "brand_tagline": "أسرع خدمة توصيل في أسرع وقت 🚀",
@@ -24,7 +25,7 @@
     "sign_in_subtitle": "يرجى إدخال بياناتك لتسجيل الدخول.",
     "sign_up_subtitle": "انضم إلى أكلني اليوم واحصل على خصم 20% على طلبك الأول!",
     "full_name": "الاسم الكامل",
-    "full_name_placeholder": "محمود صلاح",
+    "full_name_placeholder": "اكتب اسمك ",
     "username": "اسم المستخدم",
     "address": "العنوان",
     "address_placeholder": "المدينة، الشارع، رقم الشقة",
@@ -55,9 +56,6 @@
     "reset_sent_desc": "إذا كان هذا البريد مسجلاً لدينا، فستتلقى تعليمات إعادة تعيين كلمة المرور خلال لحظات.",
     "close": "إغلاق",
 
-
-  
-
     "resetPasswordTitle": "تعيين كلمة سر جديدة",
     "resetPasswordSubtitle": "أدخل كلمة السر الجديدة لحسابك في أكلني",
     "newPassword": "كلمة السر الجديدة",
@@ -71,17 +69,13 @@
     "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
     "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
 
-
-
+    "resetPasswordSuccess": "تم إعادة تعيين كلمة المرور بنجاح! سيتم توجيهك إلى صفحة تسجيل الدخول خلال 3 ثوانٍ.",
 
     "almost_there": "خطوة واحدة أخيرة!",
     "check_your_inbox": "تفقد بريدك الإلكتروني 📩",
     "verification_sent_desc": "أرسلنا رابط التأكيد إلى البريد التالي:",
     "open_email_app": "فتح البريد الإلكتروني",
     "wrong_email": "تعديل البيانات أو إعادة الإرسال",
-
-
-
 
     "confirmingEmail": "جاري تأكيد حسابك...",
     "emailConfirmedTitle": "تم تأكيد الحساب بنجاح!",
@@ -90,17 +84,53 @@
     "confirmFailedTitle": "فشل تأكيد الحساب",
     "confirmFailedSubtitle": "الرابط المنقضية صلاحيته أو غير صالح. يرجى طلب رابط تأكيد جديد.",
 
+    "username_exists": "اسم المستخدم موجود بالفعل",
 
-     "username_exists": "اسم المستخدم موجود بالفعل",
-   
+    "server_error": "حدث خطأ في الخادم، يرجى المحاولة لاحقاً",
+
     "email_exists": "البريد الإلكتروني موجود بالفعل",
-    "login_error" : "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "login_error": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
     "forget_password_error": "البريد الإلكتروني غير مسجل لدينا"
-  },"HeroSection" : {
+  },
+  "HeroSection": {
     "hero_title": "بتدور علي اكلة",
     "hero_subtitle": "متتنسيش ؟",
     "hero_description": "سخن، طازج، وبيوصل بسرعة. رضاك مضمون في كل لقمة.",
     "order_now": "استكشف المنيو"
+  },
+  "products": {
+    "all": "الكل",
+    "previousPage": "الصفحة السابقة",
+    "nextPage": "الصفحة التالية",
+    "chefPick": "اختيار الشيف",
+    "featured": "مميز",
+    "minutes": "دقيقة",
+    "currency": "ج.م",
+    "addedToCart": "تمت الإضافة للسلة",
+    "addToCart": "إضافة للسلة",
+    "noProductsFound": "لا توجد منتجات تطابق بحثك حالياً.",
+    "searchPlaceholder": "ابحث عن وجبة، صوص، أو مكونات...",
+    "clearSearch": "مسح البحث",
+    "filterAndSort": "تصفية وترتيب",
+    "filterPriceAndSort": "تصفية بالسعر والترتيب",
+    "reset": "إعادة ضبط",
+    "priceRange": "نطاق السعر (ج.م)",
+    "minPrice": "الأقل",
+    "maxPrice": "الأعلى",
+    "sortBy": "ترتيب حسب",
+    "sortPopular": "الأكثر شعبية (الأكثر مبيعاً)",
+    "sortPriceAsc": "السعر: من الأقل للأعلى",
+    "sortPriceDesc": "السعر: من الأعلى للأقل",
+    "applyFilter": "تطبيق التصفية",
+    "showing": "عرض",
+    "ofTotal": "من إجمالي",
+    "itemsCount": "وجبة",
+    "details": "تفاصيل الوجبة",
+    "loadingDetails": "جاري تحضير تفاصيل الوجبة...",
+    "errorLoading": "حدث خطأ أثناء جلب التفاصيل",
+    "reviews": "تقييمات العملاء",
+    "verifiedPurchase": "مشتري مأكولات",
+    "noReviews": "لا توجد تقييمات لهذه الوجبة بعد. كن أول من يشارك رأيه!"
   },
   "footer": {
     "tagline": "طعم يرفع مزاجك. طازج يومياً، محضّر بأعلى معايير الجودة.",

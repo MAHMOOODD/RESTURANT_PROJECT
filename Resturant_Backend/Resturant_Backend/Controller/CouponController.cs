@@ -115,7 +115,7 @@ namespace Resturant_Backend.Controller
             var (message, isvalid, discount) = await _unitOfWork.CouponRepo.ValidateCoupon(code, Amount);
 
 
-            Ensure.Check(!isvalid, message);
+            Ensure.Check(isvalid, message);
 
             return this.Success(new { Message = message, Discount = discount });
         }

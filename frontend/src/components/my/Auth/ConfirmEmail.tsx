@@ -23,7 +23,7 @@ useEffect(() => {
 
     called.current = true; // 👈 علم إن الطلب اتدبّس خلاص
 
-    confirmEmail({ UserId: userId, Token: token })
+    confirmEmail({ userId: userId, token: token })
       .unwrap()
       .then((res) => console.log("Email confirmation response:", res))
       .catch((err) => console.error("Email confirmation error:", err));

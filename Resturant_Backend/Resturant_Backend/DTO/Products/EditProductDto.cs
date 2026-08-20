@@ -7,13 +7,21 @@ namespace Resturant_Backend.DTO.Products
 
         [Required(ErrorMessage = "Name Is Required")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Name Is Required")]
+        public string NameAr { get; set; } = "";
 
         [Required(ErrorMessage = "Description Is Required")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "Description Is Required")]
+        public string DescriptionAr { get; set; } = "";
+
 
         [Required(ErrorMessage = "Price Is Required")]
         public decimal Price { get; set; }
+
+        public int PreparingTime { get; set; } // in minutes
+
 
         [Required(ErrorMessage = "Image URL Is Required")]
         [RegularExpression(pattern: @".+\.(jpg|jpeg|png|gif|webp)$", ErrorMessage = "Invalid Image Format")]

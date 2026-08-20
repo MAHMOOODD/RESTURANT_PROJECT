@@ -1,21 +1,23 @@
+import type { UserCreatedModel } from "@/types/types";
 import {
   fetchBaseQuery,
   type BaseQueryFn,
   type FetchArgs,
   type FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
+import type { RootState } from "@/store/index";
+import { setCredentials, logout } from "@/store/features/User/authSlice";
 
-// 1. تعريف شكل الـ ApiError ليدعم Generic
 export type ApiError<TFields = Record<string, string[]>> = {
   status: number;
   message: string;
   errors: TFields | null;
 };
 
-// 2. تعريف شكل الـ Response القادم من السيرفر
 type ApiErrorResponse<TFields = Record<string, string[]>> = {
   isSuccess: boolean;
   data: unknown | null;
+  message: string;
   error: {
     statusCode: number;
     message: string;
@@ -25,16 +27,73 @@ type ApiErrorResponse<TFields = Record<string, string[]>> = {
 
 const rawBaseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5153/api",
+  credentials: "include",
+  prepareHeaders: (headers, { getState }) => {
+    const token = (getState() as RootState).auth.token;
+    if (token) {
+      headers.set("authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
 });
 
-// 3. تحويل baseQuery لدالة تقبل Generic Type TFields بدلاً من any
 export const baseQuery = <TFields = Record<string, string[]>>(): BaseQueryFn<
   string | FetchArgs,
   unknown,
   ApiError<TFields>
 > => {
   return async (args, api, extraOptions) => {
-    const result = await rawBaseQuery(args, api, extraOptions);
+    let result = await rawBaseQuery(args, api, extraOptions);
+
+    if (result.error && result.error.status === 401) {
+      const url = typeof args === "string" ? args : args.url;
+      const isAuthEndpoint =
+        url.includes("Account/RefreshToken") || url.includes("Account/Login");
+
+      if (!isAuthEndpoint) {
+        const refreshResult = await rawBaseQuery(
+          {
+            url: "Account/RefreshToken",
+            method: "POST",
+          },
+          api,
+          extraOptions,
+        );
+
+        if (refreshResult.data) {
+          const res = refreshResult.data as UserCreatedModel;
+          const newToken = res?.token;
+
+          if (newToken) {
+            // 🎯 1. تحديث Redux State مع localStorage
+            api.dispatch(setCredentials({ token: newToken }));
+
+            if (typeof args === "string") {
+              args = {
+                url: args,
+                headers: { authorization: `Bearer ${newToken}` },
+              };
+            } else {
+              args = {
+                ...args,
+                headers: {
+                  ...(args.headers as Record<string, string>),
+                  authorization: `Bearer ${newToken}`,
+                },
+              };
+            }
+
+            result = await rawBaseQuery(args, api, extraOptions);
+          } else {
+            // 🎯 2. تفريغ الـ Redux State في حال عدم وجود توكن
+            api.dispatch(logout());
+          }
+        } else {
+          // 🎯 3. تسجيل الخروج فوراً عند فشل الـ Refresh
+          api.dispatch(logout());
+        }
+      }
+    }
 
     if (result.error) {
       return {
@@ -49,14 +108,12 @@ export const baseQuery = <TFields = Record<string, string[]>>(): BaseQueryFn<
   };
 };
 
-// 4. تحويل دالة normalizeError لتكون Generic أيضاً
 const normalizeError = <TFields = Record<string, string[]>>(
-  error: FetchBaseQueryError
+  error: FetchBaseQueryError,
 ): ApiError<TFields> => {
   const status = typeof error.status === "number" ? error.status : 500;
   const data = error.data;
 
-  // لو الـ API راجع بتفاصيل خطأ مرتبة
   if (typeof data === "object" && data !== null && "error" in data) {
     const response = data as ApiErrorResponse<TFields>;
 
@@ -69,7 +126,6 @@ const normalizeError = <TFields = Record<string, string[]>>(
     }
   }
 
-  // لو الـ API راجع بنص رسالة خطأ مباشرة
   if (typeof data === "string") {
     return {
       status,
@@ -78,7 +134,6 @@ const normalizeError = <TFields = Record<string, string[]>>(
     };
   }
 
-  // رسائل افتراضية حسب الـ Status Code
   const messages: Record<number, string> = {
     400: "Bad request",
     401: "Unauthorized",

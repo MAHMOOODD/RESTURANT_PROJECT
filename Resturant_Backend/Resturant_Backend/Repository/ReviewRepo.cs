@@ -1,4 +1,5 @@
-﻿using Resturant_Backend.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Resturant_Backend.Data;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
 
@@ -14,7 +15,7 @@ namespace Resturant_Backend.Repository
 
         public List<Review> GetAllReviews(int productId)
         {
-            var reviews = _context.Reviews.Where(r => r.ProductId == productId).ToList();
+            var reviews = _context.Reviews.Include(c => c.Appuser).Where(r => r.ProductId == productId).ToList();
             return reviews;
         }
     }

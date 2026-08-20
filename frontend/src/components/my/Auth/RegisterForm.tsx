@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { useAuthSchemas, type RegisterFormData } from "./useAuthSchemas";
 import type { ApiError } from "@/services/baseQuery";
-import type { ResponseRegister } from "@/store/types/types";
+import type { ResponseRegister } from "@/types/types";
 
 interface RegisterFormProps {
   onSubmit: (data: RegisterFormData) => Promise<void>;
@@ -41,18 +41,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     resolver: zodResolver(registerSchema),
     mode: "onBlur",
     defaultValues: {
-      FullName: "",
-      Address: "",
-      UserName: "",
-      Email: "",
-      Password: "",
+      fullName: "",
+      address: "",
+      userName: "",
+      email: "",
+      password: "",
     },
   });
 
   const handleFormSubmit = async (data: RegisterFormData) => {
     try {
       await onSubmit(data);
-      setSubmittedEmail(data.Email);
+      setSubmittedEmail(data.email);
       setIsSuccess(true);
     } catch (err) {
       // Handling errors handled via apiError prop
@@ -110,7 +110,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-3">
       {/* Full Name */}
 
-      
       <div className="space-y-1">
         <label className="text-xs font-bold text-foreground">
           {t("auth.full_name")}{" "}
@@ -124,10 +123,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           />
           <input
             type="text"
-            {...form.register("FullName")}
+            {...form.register("fullName")}
             placeholder={t("auth.full_name_placeholder")}
             className={`w-full ${isRtl ? "pr-10 pl-4" : "pl-10 pr-4"} py-2 rounded-xl bg-muted/50 border ${
-              form.formState.errors.FullName
+              form.formState.errors.fullName
                 ? "border-rose-500"
                 : "border-input"
             } text-foreground text-sm focus:outline-none focus:border-primary`}
@@ -146,21 +145,21 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           />
           <input
             type="text"
-            {...form.register("UserName")}
+            {...form.register("userName")}
             placeholder="e.g. user_99"
             className={`w-full ${isRtl ? "pr-10 pl-4" : "pl-10 pr-4"} py-2 rounded-xl bg-muted/50 border ${
-              form.formState.errors.UserName
+              form.formState.errors.userName
                 ? "border-rose-500"
                 : "border-input"
             } text-foreground text-sm focus:outline-none focus:border-primary`}
           />
         </div>
-        {form.formState.errors.UserName && (
+        {form.formState.errors.userName && (
           <p className="text-[11px] text-rose-500 font-medium">
-            {form.formState.errors.UserName.message}
+            {form.formState.errors.userName.message}
           </p>
         )}
-        {apiError?.errors?.UserName && (
+        {apiError?.errors?.userName && (
           <p className="text-[11px] text-rose-500 font-medium">
             {t("auth.username_exists")}
           </p>
@@ -181,10 +180,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           />
           <input
             type="text"
-            {...form.register("Address")}
+            {...form.register("address")}
             placeholder={t("auth.address_placeholder")}
             className={`w-full ${isRtl ? "pr-10 pl-4" : "pl-10 pr-4"} py-2 rounded-xl bg-muted/50 border ${
-              form.formState.errors.Address ? "border-rose-500" : "border-input"
+              form.formState.errors.address ? "border-rose-500" : "border-input"
             } text-foreground text-sm`}
           />
         </div>
@@ -201,19 +200,19 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           />
           <input
             type="email"
-            {...form.register("Email")}
+            {...form.register("email")}
             placeholder="name@example.com"
             className={`w-full ${isRtl ? "pr-10 pl-4" : "pl-10 pr-4"} py-2 rounded-xl bg-muted/50 border ${
-              form.formState.errors.Email ? "border-rose-500" : "border-input"
+              form.formState.errors.email ? "border-rose-500" : "border-input"
             } text-foreground text-sm`}
           />
         </div>
-        {form.formState.errors.Email && (
+        {form.formState.errors.email && (
           <p className="text-[11px] text-rose-500 font-medium">
-            {form.formState.errors.Email.message}
+            {form.formState.errors.email.message}
           </p>
         )}
-        {apiError?.errors?.Email && (
+        {apiError?.errors?.email && (
           <p className="text-[11px] text-rose-500 font-medium">
             {t("auth.email_exists")}
           </p>
@@ -231,10 +230,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           />
           <input
             type={showPassword ? "text" : "password"}
-            {...form.register("Password")}
+            {...form.register("password")}
             placeholder="••••••••"
             className={`w-full ${isRtl ? "pr-10 pl-10" : "pl-10 pr-10"} py-2 rounded-xl bg-muted/50 border ${
-              form.formState.errors.Password
+              form.formState.errors.password
                 ? "border-rose-500"
                 : "border-input"
             } text-foreground text-sm`}
@@ -251,9 +250,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             )}
           </button>
         </div>
-        {form.formState.errors.Password && (
+        {form.formState.errors.password && (
           <p className="text-[11px] text-rose-500 font-medium">
-            {form.formState.errors.Password.message}
+            {form.formState.errors.password.message}
           </p>
         )}
       </div>

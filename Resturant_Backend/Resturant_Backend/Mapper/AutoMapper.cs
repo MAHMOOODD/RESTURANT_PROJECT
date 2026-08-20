@@ -27,6 +27,8 @@ namespace Resturant_Backend.Mapper
 
             // products Mapping
             CreateMap<Product, GetProductDto>().ReverseMap();
+
+            CreateMap<Product, GetAllProductDto>().ReverseMap();
             CreateMap<Product, AddProductDto>().ReverseMap();
             CreateMap<Product, EditProductDto>().ReverseMap();
 
@@ -42,7 +44,9 @@ namespace Resturant_Backend.Mapper
 
             //Review Mapping
 
-            CreateMap<Review, GetReviewDto>().ReverseMap();
+            CreateMap<Review, GetReviewDto>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Appuser.UserName))
+                .ForMember(dest => dest.UserImage, opt => opt.MapFrom(src => src.Appuser.ImageUrl));
+            CreateMap<GetReviewDto, Review>();
             CreateMap<Review, AddReviewDto>().ReverseMap();
             CreateMap<Review, EditReviewDto>().ReverseMap();
 

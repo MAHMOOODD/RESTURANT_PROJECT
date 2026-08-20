@@ -8,11 +8,11 @@ export const useAuthSchemas = () => {
   const loginSchema = useMemo(
     () =>
       z.object({
-        Email: z
+        email: z
           .string()
           .min(1, t("auth.email_required"))
           .email(t("auth.email_invalid")),
-        Password: z.string().min(1, t("auth.password_required")),
+        password: z.string().min(1, t("auth.password_required")),
         remember: z.boolean().optional(),
       }),
     [i18n.language, t]
@@ -21,14 +21,14 @@ export const useAuthSchemas = () => {
   const registerSchema = useMemo(
     () =>
       z.object({
-        FullName: z.string().optional(),
-        Address: z.string().optional(),
-        UserName: z.string().min(1, t("auth.username_required")),
-        Email: z
+        fullName: z.string().optional(),
+        address: z.string().optional(),
+        userName: z.string().min(1, t("auth.username_required")),
+        email: z
           .string()
           .min(1, t("auth.email_required"))
           .email(t("auth.email_invalid")),
-        Password: z
+        password: z
           .string()
           .min(6, t("auth.password_min"))
           .regex(/[0-9]/, t("auth.password_digit"))
@@ -42,7 +42,7 @@ export const useAuthSchemas = () => {
   const forgotPasswordSchema = useMemo(
     () =>
       z.object({
-        Email: z
+        email: z
           .string()
           .min(1, t("auth.email_required"))
           .email(t("auth.email_invalid")),

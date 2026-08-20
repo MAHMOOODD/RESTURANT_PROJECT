@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Resturant_Backend.Common.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Products;
+using Resturant_Backend.Helpers.Filter;
+using Resturant_Backend.Helpers.Pagination;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
 using Resturant_Backend.Roles;
@@ -25,12 +27,16 @@ namespace Resturant_Backend.Controller
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] Filters filter)
         {
+            var vaildFilter = new PaginationFilter(filter.Pagination.PageNumber, filter.Pagination.PageSize);
 
-            var products = await _unitOfWork.ProductsRepo.GetAllAsync();
+            var ProductsCount = await _unitOfWork.ProductsRepo.GetProductCountAsync();
 
-            var res = _mapper.Map<List<GetProductDto>>(products);
+            var products = await _unitOfWork.ProductsRepo.GetAll(filter).ToListAsync();
+
+            var P = _mapper.Map<List<GetAllProductDto>>(products);
+            var res = new PagedResponse<GetAllProductDto>(P, vaildFilter.PageNumber, vaildFilter.PageSize, ProductsCount);
             return this.Success(res);
         }
         [HttpGet("GetById/{id:int}")]
@@ -43,6 +49,28 @@ namespace Resturant_Backend.Controller
             var res = _mapper.Map<GetProductDto>(product);
             return this.Success(res);
         }
+
+
+        [HttpGet("GetProductByName")]
+        public async Task<IActionResult> GetProductByName(string name, [FromQuery] Filters filters)
+        {
+            var products = await _unitOfWork.ProductsRepo.GetProductsByName(name, filters).ToListAsync();
+            Ensure.NotNull(products, "Products Not Found");
+            var ress = _mapper.Map<List<GetAllProductDto>>(products);
+            var res = new PagedResponse<GetAllProductDto>(ress, filters.Pagination.PageNumber, filters.Pagination.PageSize, products.Count);
+            return this.Success(res);
+        }
+
+        [HttpGet("GetProductByCategory")]
+        public async Task<IActionResult> GetProductByCategory(string categoryName, [FromQuery] Filters filters)
+        {
+            var products = await _unitOfWork.ProductsRepo.GetProductsByCategory(categoryName, filters).ToListAsync();
+            Ensure.NotNull(products, "Products Not Found");
+            var ress = _mapper.Map<List<GetAllProductDto>>(products);
+            var res = new PagedResponse<GetAllProductDto>(ress, filters.Pagination.PageNumber, filters.Pagination.PageSize, products.Count);
+            return this.Success(res);
+        }
+
 
 
         [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]

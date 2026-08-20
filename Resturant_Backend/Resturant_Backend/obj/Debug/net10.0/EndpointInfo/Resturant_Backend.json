@@ -809,6 +809,45 @@
         "tags": [
           "Product"
         ],
+        "parameters": [
+          {
+            "name": "Pagination.PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Pagination.PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortByPrice",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "SortBySelling",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Ascending",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -829,6 +868,122 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Product/GetProductByName": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Pagination.PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Pagination.PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortByPrice",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "SortBySelling",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Ascending",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Product/GetProductByCategory": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "parameters": [
+          {
+            "name": "categoryName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Pagination.PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Pagination.PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortByPrice",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "SortBySelling",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Ascending",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -1127,11 +1282,16 @@
       "AddCategoriesDto": {
         "required": [
           "imageUrl",
-          "name"
+          "name",
+          "nameAr"
         ],
         "type": "object",
         "properties": {
           "name": {
+            "minLength": 3,
+            "type": "string"
+          },
+          "nameAr": {
             "minLength": 3,
             "type": "string"
           },
@@ -1186,9 +1346,11 @@
         "required": [
           "categoryId",
           "description",
+          "descriptionAr",
           "imageUrl",
           "isAvailable",
           "name",
+          "nameAr",
           "price"
         ],
         "type": "object",
@@ -1197,13 +1359,25 @@
             "minLength": 1,
             "type": "string"
           },
+          "nameAr": {
+            "minLength": 1,
+            "type": "string"
+          },
           "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "descriptionAr": {
             "minLength": 1,
             "type": "string"
           },
           "price": {
             "type": "number",
             "format": "double"
+          },
+          "preparingTime": {
+            "type": "integer",
+            "format": "int32"
           },
           "imageUrl": {
             "minLength": 1,
@@ -1221,9 +1395,15 @@
         "additionalProperties": false
       },
       "AddReviewDto": {
+        "required": [
+          "productId",
+          "rating"
+        ],
         "type": "object",
         "properties": {
           "productId": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           },
@@ -1234,6 +1414,7 @@
             "format": "int32"
           },
           "comment": {
+            "maxLength": 1000,
             "type": "string",
             "nullable": true
           }
@@ -1271,15 +1452,25 @@
         "additionalProperties": false
       },
       "EditCategoriesDto": {
+        "required": [
+          "imageUrl",
+          "name",
+          "nameAr"
+        ],
         "type": "object",
         "properties": {
           "name": {
-            "type": "string",
-            "nullable": true
+            "minLength": 3,
+            "type": "string"
+          },
+          "nameAr": {
+            "minLength": 3,
+            "type": "string"
           },
           "imageUrl": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "pattern": ".+\\.(jpg|jpeg|png|gif|webp)$",
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -1313,9 +1504,11 @@
         "required": [
           "categoryId",
           "description",
+          "descriptionAr",
           "imageUrl",
           "isAvailable",
           "name",
+          "nameAr",
           "price"
         ],
         "type": "object",
@@ -1324,13 +1517,25 @@
             "minLength": 1,
             "type": "string"
           },
+          "nameAr": {
+            "minLength": 1,
+            "type": "string"
+          },
           "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "descriptionAr": {
             "minLength": 1,
             "type": "string"
           },
           "price": {
             "type": "number",
             "format": "double"
+          },
+          "preparingTime": {
+            "type": "integer",
+            "format": "int32"
           },
           "imageUrl": {
             "minLength": 1,
@@ -1348,9 +1553,15 @@
         "additionalProperties": false
       },
       "EditReviewDto": {
+        "required": [
+          "productId",
+          "rating"
+        ],
         "type": "object",
         "properties": {
           "productId": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           },
@@ -1361,6 +1572,7 @@
             "format": "int32"
           },
           "comment": {
+            "maxLength": 1000,
             "type": "string",
             "nullable": true
           }

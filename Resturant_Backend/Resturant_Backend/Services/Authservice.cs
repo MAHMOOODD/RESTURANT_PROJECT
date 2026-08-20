@@ -162,11 +162,10 @@ public class Authservice : IAuthService
     {
         var user = await _userManager.FindByIdAsync(model.UserId);
         Ensure.NotNull(user, "User not found");
-
         var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
         var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
 
-        Ensure.Check(!result.Succeeded, "Failed to confirm email");
+        Ensure.Check(result.Succeeded, "Failed to confirm email");
 
         return string.Empty;
     }
@@ -200,7 +199,7 @@ public class Authservice : IAuthService
         var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Token));
         var result = await _userManager.ResetPasswordAsync(user, decodedToken, model.NewPassword);
 
-        Ensure.Check(!result.Succeeded, string.Join(", ", result.Errors.Select(e => e.Description)));
+        Ensure.Check(result.Succeeded, string.Join(", ", result.Errors.Select(e => e.Description)));
 
         return string.Empty;
     }
@@ -214,7 +213,7 @@ public class Authservice : IAuthService
         user.Address = model.Address ?? user.Address;
 
         var result = await _userManager.UpdateAsync(user);
-        Ensure.Check(!result.Succeeded, "Failed to update profile");
+        Ensure.Check(result.Succeeded, "Failed to update profile");
 
         return string.Empty;
     }
@@ -225,13 +224,13 @@ public class Authservice : IAuthService
         Ensure.NotNull(user, "Invalid user ID");
 
         var roleExists = await _roleManager.RoleExistsAsync(model.RoleName);
-        Ensure.Check(!roleExists, "Role does not exist");
+        Ensure.Check(roleExists, "Role does not exist");
 
         var isInRole = await _userManager.IsInRoleAsync(user, model.RoleName);
         Ensure.Check(isInRole, "User already assigned to this role");
 
         var result = await _userManager.AddToRoleAsync(user, model.RoleName);
-        Ensure.Check(!result.Succeeded, "Something went wrong");
+        Ensure.Check(result.Succeeded, "Something went wrong");
 
         return string.Empty;
     }
@@ -242,7 +241,7 @@ public class Authservice : IAuthService
         Ensure.NotNull(user, "Invalid token");
 
         var refreshToken = user.RefreshTokens.Single(t => t.Token == token);
-        Ensure.Check(!refreshToken.IsActive, "Inactive token");
+        Ensure.Check(refreshToken.IsActive, "Inactive token");
 
         refreshToken.RevokeOn = DateTime.UtcNow;
 

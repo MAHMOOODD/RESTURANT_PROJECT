@@ -32,7 +32,7 @@ public class AccountController : ControllerBase
         var origin = _jwtOptions.Value.Audience?.TrimEnd('/');
         var result = await _authService.RegisterAsync(model, origin);
 
-        Ensure.Check(!result.IsAuth, result?.Message ?? "Registration failed.");
+        Ensure.Check(result.IsAuth, result?.Message ?? "Registration failed.");
 
         if(!string.IsNullOrEmpty(result.RefreshToken))
             SetRefreshTokenInCookie(result.RefreshToken, result.RefreshTokenExpiration);
@@ -40,7 +40,7 @@ public class AccountController : ControllerBase
         return this.Success(_mapper.Map<ResponseRegister>(result));
     }
 
-    [HttpPost("ConfirmEmail")]
+    [HttpGet("ConfirmEmail")]
     public async Task<IActionResult> ConfirmEmailAsync([FromQuery] ConfirmEmailDto model)
     {
         await _authService.ConfirmEmailAsync(model);
@@ -52,7 +52,7 @@ public class AccountController : ControllerBase
     {
         var result = await _authService.GetTokenAsync(model);
 
-        Ensure.Check(!result.IsAuth, result?.Message ?? "Invalid email or password.");
+        Ensure.Check(result.IsAuth, result?.Message ?? "Invalid email or password.");
 
         if(!string.IsNullOrEmpty(result.RefreshToken))
             SetRefreshTokenInCookie(result.RefreshToken, result.RefreshTokenExpiration);
@@ -102,7 +102,7 @@ public class AccountController : ControllerBase
         Ensure.NotNullOrEmpty(refreshToken, "Refresh token is required!");
 
         var result = await _authService.RefreshTokenAsync(refreshToken!);
-        Ensure.Check(!result.IsAuth, result?.Message ?? "Invalid refresh token.");
+        Ensure.Check(result.IsAuth, result?.Message ?? "Invalid refresh token.");
 
         SetRefreshTokenInCookie(result.RefreshToken!, result.RefreshTokenExpiration);
 
@@ -116,7 +116,15 @@ public class AccountController : ControllerBase
         Ensure.NotNullOrEmpty(token, "Token is required!");
 
         var isRevoked = await _authService.RevokeTokenAsync(token!);
-        Ensure.Check(!isRevoked, "Token is invalid!");
+        Ensure.Check(isRevoked, "Token is invalid!");
+
+        // حذف الـ Cookie من متصفح العميل بعد نجاح الـ Revoke
+        Response.Cookies.Delete("refreshToken", new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None
+        });
 
         return this.SuccessMessage("Token revoked successfully.");
     }

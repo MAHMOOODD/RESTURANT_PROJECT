@@ -6,6 +6,7 @@ import {
   useLoginMutation,
   useRegisterMutation,
 } from "@/store/features/User/Auth";
+import { useNavigate } from "react-router-dom";
 
 import { BrandBanner } from "@/components/my/Auth/BrandBanner";
 import { LoginForm } from "@/components/my/Auth/LoginForm";
@@ -17,11 +18,13 @@ import type {
   ForgotPasswordFormData,
 } from "@/components/my/Auth/useAuthSchemas";
 import type { ApiError } from "@/services/baseQuery";
-import type { ResponseLogin, ResponseRegister } from "@/store/types/types";
+import type { ResponseLogin, ResponseRegister } from "@/types/types";
+import { setCredentials } from "@/store/features/User/authSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 export const Auth: React.FC = () => {
   const { t } = useTranslation();
-
+  const dispatch = useAppDispatch();
   const [Login, { isLoading: isLoginLoading, error: isLoginError }] =
     useLoginMutation();
   const [Register, { isLoading: isRegisterLoading, error: isRegisterError }] =
@@ -31,6 +34,7 @@ export const Auth: React.FC = () => {
     { isLoading: isForgetPasswordLoading, error: isForgetPasswordError },
   ] = useForgetPasswordMutation();
 
+  const navigate = useNavigate();
   const RegisterApiError = isRegisterError as
     | ApiError<ResponseRegister>
     | undefined;
@@ -44,9 +48,19 @@ export const Auth: React.FC = () => {
     try {
       const response = await Login(data).unwrap();
       console.log("Login response:", response);
+
+      //  التأكد من وجود التوكن وحفظه في localStorage
+      if (response?.data?.token) {
+        dispatch(setCredentials({ token: response.data.token }));
+        navigate("/"); 
+      } else {
+        console.warn("No token received in response!");
+      }
+
+      navigate("/");
     } catch (error) {
       console.error("Login error:", error);
-      throw error; // Rethrow the error to be handled in the modal
+      throw error;
     }
   };
 

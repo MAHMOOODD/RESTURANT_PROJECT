@@ -8,7 +8,8 @@
     "about": "Our Story",
     "account": "Account",
     "cart": "Cart",
-    "order_now": "Order Now"
+    "order_now": "Order Now",
+    "log_out": "Log Out"
   },
   "auth": {
     "brand_tagline": "Fastest delivery in no time 🚀",
@@ -24,7 +25,7 @@
     "sign_in_subtitle": "Please enter your details to sign in.",
     "sign_up_subtitle": "Join AKLNY today and get 20% off your first order!",
     "full_name": "Full Name",
-    "full_name_placeholder": "John Doe",
+    "full_name_placeholder": "Type your name",
     "username": "Username",
     "address": "Address",
     "address_placeholder": "City, Street, Apt No.",
@@ -55,10 +56,7 @@
     "reset_sent_desc": "If this email is registered with us, you will receive instructions shortly.",
     "close": "Close",
 
-
-
-
-"resetPasswordTitle": "Reset New Password",
+    "resetPasswordTitle": "Reset New Password",
     "resetPasswordSubtitle": "Enter your new password for your AKLNY account",
     "newPassword": "New Password",
     "confirmPassword": "Confirm Password",
@@ -71,16 +69,13 @@
     "confirmPasswordRequired": "Confirm password is required",
     "passwordsDoNotMatch": "Passwords do not match",
 
-
-
+    "resetPasswordSuccess": "Password reset successfully! You will be redirected to the login page in 3 seconds.",
 
     "almost_there": "One last step!",
     "check_your_inbox": "Check your inbox 📩",
     "verification_sent_desc": "We sent a confirmation link to:",
     "open_email_app": "Open Email App",
     "wrong_email": "Edit details or resend",
-
-
 
     "confirmingEmail": "Confirming your account...",
     "emailConfirmedTitle": "Account Confirmed Successfully!",
@@ -89,21 +84,54 @@
     "confirmFailedTitle": "Account Confirmation Failed",
     "confirmFailedSubtitle": "The link has expired or is invalid. Please request a new confirmation link.",
 
-
     "username_exists": "Username already exists",
+
+    "server_error": "An error occurred on the server. Please try again later.",
 
     "email_exists": "Email already exists",
     "login_error": "Invalid email or password",
-        "forget_password_error": "Email is not registered with us"
-
+    "forget_password_error": "Email is not registered with us"
   },
-  "HeroSection" : {
+  "HeroSection": {
     "hero_title": "Craving Something",
     "hero_subtitle": "Unforgettable?",
     "hero_description": "Hot, fresh, and delivered fast. Satisfaction in every bite.",
     "order_now": "Explore Menu"
-  }
-  ,
+  },
+  "products": {
+    "all": "All",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "chefPick": "Chef's Pick",
+    "featured": "Featured",
+    "minutes": "min",
+    "currency": "EGP",
+    "addedToCart": "Added to cart",
+    "addToCart": "Add to cart",
+    "noProductsFound": "No products match your search at the moment.",
+    "searchPlaceholder": "Search for meal, sauce, or ingredients...",
+    "clearSearch": "Clear search",
+    "filterAndSort": "Filter & Sort",
+    "filterPriceAndSort": "Filter by price and sort",
+    "reset": "Reset",
+    "priceRange": "Price range (EGP)",
+    "minPrice": "Min",
+    "maxPrice": "Max",
+    "sortBy": "Sort by",
+    "sortPopular": "Most Popular",
+    "sortPriceAsc": "Price: Low to High",
+    "sortPriceDesc": "Price: High to Low",
+    "applyFilter": "Apply Filter",
+    "showing": "Showing",
+    "ofTotal": "of total",
+    "itemsCount": "items",
+    "details": "Product Details",
+    "loadingDetails": "Preparing meal details...",
+    "errorLoading": "Failed to load meal details",
+    "reviews": "Customer Reviews",
+    "verifiedPurchase": "Verified Buyer",
+    "noReviews": "No reviews for this meal yet. Be the first to leave one!"
+  },
   "footer": {
     "tagline": "Taste that elevates your mood. Fresh daily, crafted with passion.",
     "brand_desc": "We offer an unforgettable fast food experience! Delicious burgers and meals prepared with passion using the fresh ingredients daily.",

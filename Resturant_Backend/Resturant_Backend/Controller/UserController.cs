@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Resturant_Backend.Common.Exceptions;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.User;
 using Resturant_Backend.Interfaces;
@@ -26,13 +25,10 @@ namespace Resturant_Backend.Controller
 
 
         [HttpGet("IsAuth")]
+        [Authorize]
         public async Task<IActionResult> CheckAuth()
         {
-
-            var isAuthenticated = User.Identity is not null && User.Identity.IsAuthenticated;
-            Ensure.Check(!isAuthenticated, "User Is Not Authenticated");
-
-            return this.Success(isAuthenticated);
+            return this.SuccessMessage("Authenticated");
 
         }
         [Authorize]

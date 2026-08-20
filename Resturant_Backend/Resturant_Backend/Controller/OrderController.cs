@@ -34,13 +34,13 @@ namespace Resturant_Backend.Controller
             var (address, found) = await _unitOfWork.UserRepo.GetUserAddressAsync(userId);
 
 
-            Ensure.Check(!found && string.IsNullOrEmpty(dto.UserAddress), "You must provide an address.");
+            Ensure.Check(found && string.IsNullOrEmpty(dto.UserAddress), "You must provide an address.");
 
 
 
             var cartItems = _unitOfWork.CartRepo.GetAllCartItems(userId);
 
-            Ensure.Check(!cartItems.Any(), "Cart is Empty");
+            Ensure.Check(cartItems.Any(), "Cart is Empty");
 
 
             var totalPrice = cartItems.Sum(c => c.Quantity * c.Product.Price);
@@ -51,7 +51,7 @@ namespace Resturant_Backend.Controller
             {
                 var (message, coupon, discount) = await _unitOfWork.CouponRepo.ValidateCoupon(dto.Coupon, totalPrice);
 
-                Ensure.Check(coupon == false, message);
+                Ensure.Check(coupon, message);
 
                 if(coupon)
                 {
@@ -109,7 +109,7 @@ namespace Resturant_Backend.Controller
 
             var orders = _unitOfWork.OrderRepo.GetUserOrders(userId);
 
-            Ensure.Check(orders is null || orders.Count < 1, "Make an order First");
+            Ensure.Check(orders is not null && orders.Count > 0, "Make an order First");
 
             var ordersToShow = _mapper.Map<List<GetOrderDto>>(orders);
 

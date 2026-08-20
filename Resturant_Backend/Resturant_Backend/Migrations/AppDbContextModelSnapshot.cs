@@ -180,6 +180,9 @@ namespace Resturant_Backend.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -250,7 +253,7 @@ namespace Resturant_Backend.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("Resturant_Backend.Models.Category", b =>
@@ -269,9 +272,13 @@ namespace Resturant_Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Resturant_Backend.Models.Coupon", b =>
@@ -303,7 +310,7 @@ namespace Resturant_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Coupons", (string)null);
+                    b.ToTable("Coupons");
                 });
 
             modelBuilder.Entity("Resturant_Backend.Models.Order", b =>
@@ -346,7 +353,7 @@ namespace Resturant_Backend.Migrations
 
                     b.HasIndex("CouponId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Resturant_Backend.Models.OrderDetails", b =>
@@ -375,7 +382,7 @@ namespace Resturant_Backend.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails", (string)null);
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("Resturant_Backend.Models.Product", b =>
@@ -393,6 +400,10 @@ namespace Resturant_Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DescriptionAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -404,6 +415,13 @@ namespace Resturant_Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PreparingTime")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -414,7 +432,7 @@ namespace Resturant_Backend.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Resturant_Backend.Models.Review", b =>
@@ -447,7 +465,7 @@ namespace Resturant_Backend.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -529,7 +547,7 @@ namespace Resturant_Backend.Migrations
 
                             b1.HasKey("AppuserId", "Id");
 
-                            b1.ToTable("RefreshToken", (string)null);
+                            b1.ToTable("RefreshToken");
 
                             b1.WithOwner()
                                 .HasForeignKey("AppuserId");
@@ -541,7 +559,7 @@ namespace Resturant_Backend.Migrations
             modelBuilder.Entity("Resturant_Backend.Models.Cart_Item", b =>
                 {
                     b.HasOne("Resturant_Backend.Models.Appuser", "Appuser")
-                        .WithMany()
+                        .WithMany("CartItems")
                         .HasForeignKey("AppuserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -625,6 +643,8 @@ namespace Resturant_Backend.Migrations
 
             modelBuilder.Entity("Resturant_Backend.Models.Appuser", b =>
                 {
+                    b.Navigation("CartItems");
+
                     b.Navigation("Orders");
 
                     b.Navigation("Reviews");

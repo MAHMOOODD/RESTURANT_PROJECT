@@ -532,7 +532,33 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "Pagination.PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Pagination.PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortByPrice",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBySelling",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ascending",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -547,6 +573,88 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ProductController",
+    "Method": "GetProductByCategory",
+    "RelativePath": "api/Product/GetProductByCategory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Pagination.PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Pagination.PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortByPrice",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBySelling",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ascending",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Resturant_Backend.Controller.ProductController",
+    "Method": "GetProductByName",
+    "RelativePath": "api/Product/GetProductByName",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Pagination.PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Pagination.PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortByPrice",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBySelling",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ascending",
+        "Type": "System.Boolean",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
