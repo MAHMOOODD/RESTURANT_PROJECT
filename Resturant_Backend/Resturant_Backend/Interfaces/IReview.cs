@@ -6,6 +6,9 @@ namespace Resturant_Backend.Interfaces
     {
 
 
-        List<Review> GetAllReviews(int productId);
+        Task<List<Review>> GetAllReviews(int productId);
+
+        Task<List<Review>> GetTop10Review();
+
     }
 }

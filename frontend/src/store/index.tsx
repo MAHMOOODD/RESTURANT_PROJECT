@@ -1,26 +1,32 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authApi } from "./features/User/Auth";
-import { productApi } from "./features/items/Items";
 import authReducer from "./features/User/authSlice";
-// import userReducer from './features/user/userSlice';
+import { authApi } from "@/store/features/User/Auth";
+import { productApi } from "@/store/features/productApi";
+import { cartApi } from "@/store/features/cartApi";
+import { reviewApi } from "@/store/features/reviewApi";
+import { orderApi } from "@/store/features/orderApi";
+import { couponApi } from "@/store/features/couponApi";
 
 export const store = configureStore({
   reducer: {
-    // 1. ربط الـ API بالـ Store
-    
     auth: authReducer,
-
-
     [authApi.reducerPath]: authApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
+    [cartApi.reducerPath]: cartApi.reducer,
+    [reviewApi.reducerPath]: reviewApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
+    [couponApi.reducerPath]: couponApi.reducer,
   },
-  // 2. إضافة الـ Middleware عشان الـ Caching والـ Fetching يشتغلوا
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat(authApi.middleware)
-      .concat(productApi.middleware),
+    getDefaultMiddleware().concat(
+      authApi.middleware,
+      productApi.middleware,
+      cartApi.middleware,
+      reviewApi.middleware,
+      orderApi.middleware,
+      couponApi.middleware
+    ),
 });
 
-// استنتاج الـ types من الـ store نفسه
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

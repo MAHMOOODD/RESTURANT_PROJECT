@@ -994,6 +994,65 @@
         }
       }
     },
+    "/api/Product/GetProductByCategoryId": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Pagination.PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Pagination.PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortByPrice",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "SortBySelling",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Ascending",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Product/Add": {
       "post": {
         "tags": [
@@ -1105,6 +1164,18 @@
               "format": "int32"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Review/GetTop10": {
+      "get": {
+        "tags": [
+          "Review"
         ],
         "responses": {
           "200": {
@@ -1265,6 +1336,18 @@
       }
     },
     "/api/User/UserInfo": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/GetRoles": {
       "get": {
         "tags": [
           "User"
@@ -1713,10 +1796,16 @@
         "type": "object",
         "properties": {
           "fullName": {
+            "pattern": "^[\\p{L}\\s]+$",
             "type": "string",
             "nullable": true
           },
           "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "pattern": "^01[0125]\\d{8}$",
             "type": "string",
             "nullable": true
           }

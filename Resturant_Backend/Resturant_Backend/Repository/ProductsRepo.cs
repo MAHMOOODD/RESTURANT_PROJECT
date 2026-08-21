@@ -41,6 +41,12 @@ namespace Resturant_Backend.Repository
                 .Skip(( filters.Pagination.PageNumber - 1 ) * filters.Pagination.PageSize).Take(filters.Pagination.PageSize).Where(p => p.Category.Name == categoryName);
             return SortProductBy(products, filters.SortByPrice, filters.SortBySelling, filters.Ascending);
         }
+        public IQueryable<Product> GetProductsByCategory(int categoryId, Filters filters)
+        {
+            var products = _context.Products
+                .Skip(( filters.Pagination.PageNumber - 1 ) * filters.Pagination.PageSize).Take(filters.Pagination.PageSize).Where(p => p.Category.Id == categoryId);
+            return SortProductBy(products, filters.SortByPrice, filters.SortBySelling, filters.Ascending);
+        }
 
         public IQueryable<Product> GetProductsByName(string name, Filters filters)
         {

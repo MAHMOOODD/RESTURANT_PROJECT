@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Resturant_Backend.Common.Exceptions;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Coupon;
 using Resturant_Backend.Interfaces;
@@ -24,7 +23,6 @@ namespace Resturant_Backend.Controller
             this._mapper = mapper;
 
         }
-        [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
 
         [HttpGet]
         public async Task<IActionResult> GetAllCoupons()

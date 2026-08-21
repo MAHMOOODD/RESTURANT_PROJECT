@@ -52,7 +52,7 @@ export const Auth: React.FC = () => {
       //  التأكد من وجود التوكن وحفظه في localStorage
       if (response?.data?.token) {
         dispatch(setCredentials({ token: response.data.token }));
-        navigate("/"); 
+        navigate("/");
       } else {
         console.warn("No token received in response!");
       }
@@ -85,7 +85,7 @@ export const Auth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-background text-foreground p-4 lg:p-8 selection:bg-rose-500 selection:text-white transition-colors duration-300 relative">
+    <div className="min-h-screen w-full flex items-center justify-center bg-background text-foreground p-4 lg:p-8 selection:bg-primary selection:text-primary-foreground transition-colors duration-300 relative">
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 bg-card rounded-3xl border border-border shadow-2xl overflow-hidden min-h-[680px] relative transition-colors duration-300">
         {/* Left Side Banner */}
         <BrandBanner />
@@ -94,10 +94,10 @@ export const Auth: React.FC = () => {
         <div className="lg:col-span-6 p-8 sm:p-10 flex flex-col justify-center bg-card text-foreground relative transition-colors duration-300">
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center justify-center gap-3 mb-6">
-            <div className="p-2.5 bg-gradient-to-tr from-rose-600 to-orange-500 rounded-xl shadow-md">
-              <Flame className="w-6 h-6 text-white" />
+            <div className="p-2.5 bg-primary text-primary-foreground rounded-xl shadow-md">
+              <Flame className="w-6 h-6" />
             </div>
-            <span className="text-2xl font-black tracking-widest bg-gradient-to-r from-orange-400 via-rose-500 to-amber-300 bg-clip-text text-transparent">
+            <span className="text-2xl font-black tracking-widest text-primary">
               {t("brand")}
             </span>
           </div>

@@ -11,6 +11,8 @@ namespace Resturant_Backend.Models
 
 
         public string? Address { get; set; }
+
+
         public List<Order> Orders { get; set; }
         public List<Review> Reviews { get; set; }
         public List<Cart_Item> CartItems { get; set; }

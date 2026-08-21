@@ -4,12 +4,52 @@
   "nav": {
     "menu": "Menu",
     "categories": "Categories",
+    "products": "Products",
     "deals": "Deals 🔥",
     "about": "Our Story",
     "account": "Account",
     "cart": "Cart",
     "order_now": "Order Now",
-    "log_out": "Log Out"
+    "log_out": "Log Out",
+    "welcome": "Welcome"
+  },
+ "account": {
+    "badge": "Account Settings",
+    "rolesLabel": "Permissions",
+    "loading": "Loading profile information...",
+    "usernameLabel": "Username",
+    "emailLabel": "Email Address",
+    "readOnly": "Read-only",
+    "fullNameLabel": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "Enter your phone number (e.g. 01012345678)",
+    "addressLabel": "Delivery Address",
+    "addressPlaceholder": "Enter your detailed delivery address",
+    "change": "Change",
+    "cancel": "Cancel",
+    "saveBtn": "Save Changes",
+    "saving": "Saving...",
+    "updateSuccess": "Profile updated successfully!",
+    "updateError": "Failed to update profile data",
+    "errors": {
+      "fullNamePattern": "Full name can only contain letters and spaces",
+      "phonePattern": "Invalid phone number (e.g. 01012345678)"
+    }
+  },
+  "coupons": {
+    "exclusiveDiscount": "Exclusive Discount",
+    "discountTitle": "{{discount}} EGP Off on orders over {{min}} EGP",
+    "usedCount": "Used {{count}} times",
+    "validUntil": "Valid until {{date}}",
+    "copied": "Copied"
+  },
+  "categories": {
+    "available": "Available Categories"
+  },"bentoHeader": {
+    "badge": "Top Sellers",
+    "title": "Most Popular This Week 🚀",
+    "subtitle": "Tried and loved by thousands of customers daily."
   },
   "auth": {
     "brand_tagline": "Fastest delivery in no time 🚀",
@@ -96,6 +136,7 @@
     "hero_title": "Craving Something",
     "hero_subtitle": "Unforgettable?",
     "hero_description": "Hot, fresh, and delivered fast. Satisfaction in every bite.",
+    "badge": "Fastest Delivery in Egypt 🚀",
     "order_now": "Explore Menu"
   },
   "products": {
@@ -131,6 +172,14 @@
     "reviews": "Customer Reviews",
     "verifiedPurchase": "Verified Buyer",
     "noReviews": "No reviews for this meal yet. Be the first to leave one!"
+  },
+  "reviews": {
+    "badge": "Real Experiences & Reviews",
+    "title": "What Our Customers Say ⭐",
+    "subtitle": "Top ratings collected right after order delivery",
+    "verified": "Verified Order",
+    "anonymous": "AKLNY Customer",
+    "recent": "Recently"
   },
   "footer": {
     "tagline": "Taste that elevates your mood. Fresh daily, crafted with passion.",

@@ -214,6 +214,11 @@ public class Authservice : IAuthService
 
         var result = await _userManager.UpdateAsync(user);
         Ensure.Check(result.Succeeded, "Failed to update profile");
+        if(model.PhoneNumber is not null)
+        {
+            var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
+            Ensure.Check(setPhoneResult.Succeeded, "Failed to update phone number");
+        }
 
         return string.Empty;
     }

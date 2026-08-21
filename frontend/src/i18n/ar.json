@@ -4,12 +4,53 @@
   "nav": {
     "menu": "المنيو",
     "categories": "الأقسام",
+    "products": "الوجبات",
     "deals": "العروض 🔥",
     "about": "قصتنا",
     "account": "حسابي",
     "cart": "السلة",
     "order_now": "اطلب الآن",
-    "log_out": "تسجيل الخروج"
+    "log_out": "تسجيل الخروج",
+    "welcome": "مرحباً"
+  },
+  "account": {
+    "badge": "إعدادات الحساب",
+    "rolesLabel": "الصلاحيات",
+    "loading": "جاري تحميل بيانات الحساب...",
+    "usernameLabel": "اسم المستخدم",
+    "emailLabel": "البريد الإلكتروني",
+    "readOnly": "غير قابل للتغيير",
+    "fullNameLabel": "الاسم بالكامل",
+    "fullNamePlaceholder": "أدخل اسمك بالكامل",
+    "phoneLabel": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم هاتفك (مثال: 01012345678)",
+    "addressLabel": "العنوان",
+    "addressPlaceholder": "أدخل عنوان التوصيل المفصل",
+    "change": "تعديل",
+    "cancel": "إلغاء",
+    "saveBtn": "حفظ التغييرات",
+    "saving": "جاري الحفظ...",
+    "updateSuccess": "تم تحديث البيانات بنجاح!",
+    "updateError": "حدث خطأ أثناء تحديث البيانات",
+    "errors": {
+      "fullNamePattern": "الاسم يجب أن يحتوي على حروف إنجليزية ومسافات فقط",
+      "phonePattern": "رقم الهاتف غير صحيح (مثال: 01012345678)"
+    }
+  },
+  "coupons": {
+    "exclusiveDiscount": "خصم حصري",
+    "discountTitle": "خصم {{discount}} ج.م عند الطلب بـ {{min}} ج.م",
+    "usedCount": "تم استخدامه {{count}} مرة",
+    "validUntil": "صالح حتى {{date}}",
+    "copied": "تم النسخ"
+  },
+  "categories": {
+    "available": "الأقسام المتاحة"
+  },
+  "bentoHeader": {
+    "badge": "الأعلى مبيعاً",
+    "title": "الأكثر طلباً هذا الأسبوع 🚀",
+    "subtitle": "اختيارات مجربة ومفضلة لدى آلاف العملاء بشكل يومي."
   },
   "auth": {
     "brand_tagline": "أسرع خدمة توصيل في أسرع وقت 🚀",
@@ -96,7 +137,8 @@
     "hero_title": "بتدور علي اكلة",
     "hero_subtitle": "متتنسيش ؟",
     "hero_description": "سخن، طازج، وبيوصل بسرعة. رضاك مضمون في كل لقمة.",
-    "order_now": "استكشف المنيو"
+    "order_now": "استكشف المنيو",
+    "badge": "اسرع توصيل في مصر 🚀"
   },
   "products": {
     "all": "الكل",
@@ -131,6 +173,14 @@
     "reviews": "تقييمات العملاء",
     "verifiedPurchase": "مشتري مأكولات",
     "noReviews": "لا توجد تقييمات لهذه الوجبة بعد. كن أول من يشارك رأيه!"
+  },
+  "reviews": {
+    "badge": "آراء وتجارب حقيقية",
+    "title": "ماذا يقول عملاؤنا؟ ⭐",
+    "subtitle": "أعلى التقييمات التي تم جمعها فور استلام الطلبات",
+    "verified": "طلب موثق",
+    "anonymous": "عميل أكلني",
+    "recent": "مؤخراً"
   },
   "footer": {
     "tagline": "طعم يرفع مزاجك. طازج يومياً، محضّر بأعلى معايير الجودة.",

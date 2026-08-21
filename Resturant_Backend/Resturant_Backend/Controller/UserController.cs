@@ -45,8 +45,21 @@ namespace Resturant_Backend.Controller
         }
 
 
+        [Authorize]
+        [HttpGet("GetRoles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roles = User
+                .FindAll(ClaimTypes.Role)
+                .Select(c => c.Value)
+                .ToList();
+            if(!roles.Any())
+            {
+                this.NotFoundEx("Role not found");
+            }
 
-
+            return this.Success(roles);
+        }
 
 
 

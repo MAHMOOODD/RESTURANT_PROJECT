@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Resturant_Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc5f9c9d9e196b2a4852792d806b5ec6c7ec8ee6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b10e2ae4d3565394b47b98d02f894934f9c176fc")]
 [assembly: System.Reflection.AssemblyProductAttribute("Resturant_Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Resturant_Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

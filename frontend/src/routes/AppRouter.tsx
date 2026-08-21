@@ -5,6 +5,7 @@ import Products from '../pages/Products';
 import { Auth}  from '@/pages/Auth';
 import ResetPassword from '@/components/my/Auth/ResetPassword';
 import ConfirmEmail from '@/components/my/Auth/ConfirmEmail';
+import Account from '@/pages/Account';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
         { index: true, element: <Auth /> },
         { path: 'confirm-email', element: <ConfirmEmail /> },
         { path: 'reset-password', element: <ResetPassword /> },
+        {path: 'profile', element: <Account/>}
       ]},
     ],
   },

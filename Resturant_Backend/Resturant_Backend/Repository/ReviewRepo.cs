@@ -13,9 +13,15 @@ namespace Resturant_Backend.Repository
             _context = context;
         }
 
-        public List<Review> GetAllReviews(int productId)
+        public async Task<List<Review>> GetAllReviews(int productId)
         {
-            var reviews = _context.Reviews.Include(c => c.Appuser).Where(r => r.ProductId == productId).ToList();
+            var reviews = await _context.Reviews.Include(c => c.Appuser).Where(r => r.ProductId == productId).ToListAsync();
+            return reviews;
+        }
+
+        public async Task<List<Review>> GetTop10Review()
+        {
+            var reviews = await _context.Reviews.Include(c => c.Appuser).OrderByDescending(r => r.Rating).Take(10).ToListAsync();
             return reviews;
         }
     }

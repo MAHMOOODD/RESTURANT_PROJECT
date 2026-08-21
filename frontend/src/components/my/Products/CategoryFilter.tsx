@@ -1,32 +1,46 @@
+import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { LayoutGrid } from "lucide-react";
-import { useGetAllCategoriesQuery } from "@/store/features/items/Items";
-import defaultCategoryImg from "@/assets/bb.jpg"; // صورة افتراضية
+import { useGetAllCategoriesQuery } from "@/store/features/productApi";
+import defaultCategoryImg from "@/assets/bb.jpg";
+import type { GetCategoriesDto } from "@/types/types";
 
 interface CategoryFilterProps {
-  selectedCategory: string;
-  onSelectCategory: (categoryName: string) => void;
+  selectedCategoryId: number;
+  onSelectCategory: (categoryId: number) => void;
 }
 
-export default function CategoryFilter({
-  selectedCategory,
+const CategoryFilter = memo(function CategoryFilter({
+  selectedCategoryId,
   onSelectCategory,
 }: CategoryFilterProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data: categories = [], isLoading } = useGetAllCategoriesQuery();
 
-  const categoriesWithAll = [
-    { id: 0, name: t("products.all"), imageUrl: "" },
-    ...categories,
-  ];
+  const isAr = i18n.language === "ar";
+
+  const categoriesWithAll = useMemo<GetCategoriesDto[]>(() => {
+    return [
+      {
+        id: 0,
+        name: "All",
+        nameAr: "الكل",
+        imageUrl: "",
+      },
+      ...categories,
+    ];
+  }, [categories]);
 
   if (isLoading) {
     return (
-      <div className="flex items-center gap-6  overflow-x-auto py-4 scrollbar-none w-full animate-pulse justify-start sm:justify-center">
+      <div className="flex items-center gap-4 overflow-x-auto py-2 scrollbar-none w-full animate-pulse justify-start sm:justify-center">
         {[1, 2, 3, 4, 5, 6].map((item) => (
-          <div key={item} className="flex flex-col items-center gap-2 shrink-0">
-            <div className="w-16 h-16 rounded-full bg-card/60 border border-border/40" />
-            <div className="h-3 w-12 bg-card/60 rounded-md" />
+          <div
+            key={item}
+            className="flex flex-col items-center gap-1.5 shrink-0"
+          >
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-card/60 border border-border/40" />
+            <div className="h-2.5 w-10 bg-card/60 rounded-md" />
           </div>
         ))}
       </div>
@@ -34,42 +48,45 @@ export default function CategoryFilter({
   }
 
   return (
-    <div className="w-full py-4">
-      <div className="flex items-center gap-5  sm:gap-7 overflow-x-auto scrollbar-none py-2 px-2 justify-start sm:justify-center">
+    <div className="w-full">
+      <div className="flex items-center gap-3.5 sm:gap-5 overflow-x-auto scrollbar-none py-1 px-1 justify-start sm:justify-center">
         {categoriesWithAll.map((cat) => {
-          const isActive = selectedCategory === cat.name;
           const isAll = cat.id === 0;
+          const isActive = selectedCategoryId === cat.id;
+
+          const displayName = isAll
+            ? t("products.all", "الكل")
+            : isAr && cat.nameAr
+              ? cat.nameAr
+              : cat.name;
 
           return (
             <button
               key={cat.id}
-              onClick={() => onSelectCategory(cat.name)}
-              className="group flex flex-col items-center gap-2.5 shrink-0 focus:outline-none cursor-pointer"
+              type="button"
+              onClick={() => onSelectCategory(cat.id)}
+              className="group flex flex-col items-center gap-1.5 shrink-0 focus:outline-none cursor-pointer"
             >
-              {/* الدائرة الخارجية مع الإطار والأبعاد */}
               <div
-                className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-full p-1 transition-all duration-300 flex items-center justify-center ${
+                className={`relative w-12 h-12 sm:w-14 sm:h-14 rounded-full p-0.5 transition-all duration-300 flex items-center justify-center ${
                   isActive
-                    ? "ring-4 ring-[#123126] dark:ring-emerald-500 scale-105 shadow-lg shadow-[#123126]/20"
-                    : "ring-2 ring-gray-200 dark:ring-border hover:ring-gray-400 group-hover:scale-105"
+                    ? "ring-2 ring-primary scale-105 shadow-md shadow-primary/20"
+                    : "ring-1 ring-border hover:ring-primary/50 group-hover:scale-105"
                 }`}
               >
-                {/* الحاوية الداخلية للصورة */}
                 <div className="w-full h-full rounded-full overflow-hidden bg-muted flex items-center justify-center shadow-inner">
                   {isAll ? (
-                    <div className="w-full h-full bg-[#123126]/10 dark:bg-emerald-950/40 flex items-center justify-center">
+                    <div className="w-full h-full bg-primary/10 flex items-center justify-center">
                       <LayoutGrid
-                        className={`w-7 h-7 ${
-                          isActive
-                            ? "text-[#123126] dark:text-emerald-400"
-                            : "text-muted-foreground"
+                        className={`w-5 h-5 sm:w-6 sm:h-6 ${
+                          isActive ? "text-primary" : "text-muted-foreground"
                         }`}
                       />
                     </div>
                   ) : cat.imageUrl && cat.imageUrl.trim() !== "" ? (
                     <img
                       src={cat.imageUrl}
-                      alt={cat.name}
+                      alt={displayName}
                       onError={(e) => {
                         e.currentTarget.src = defaultCategoryImg;
                       }}
@@ -78,22 +95,21 @@ export default function CategoryFilter({
                   ) : (
                     <img
                       src={defaultCategoryImg}
-                      alt={cat.name}
+                      alt={displayName}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                   )}
                 </div>
               </div>
 
-              {/* اسم الفئة أسفل الدائرة */}
               <span
-                className={`text-xs sm:text-sm font-bold tracking-tight transition-colors ${
+                className={`text-[11px] sm:text-xs font-semibold tracking-tight transition-colors ${
                   isActive
-                    ? "text-[#123126] dark:text-emerald-400 font-extrabold"
-                    : "text-gray-600 dark:text-muted-foreground group-hover:text-foreground"
+                    ? "text-primary font-bold"
+                    : "text-muted-foreground group-hover:text-foreground"
                 }`}
               >
-                {cat.name}
+                {displayName}
               </span>
             </button>
           );
@@ -101,4 +117,6 @@ export default function CategoryFilter({
       </div>
     </div>
   );
-}
+});
+
+export default CategoryFilter;

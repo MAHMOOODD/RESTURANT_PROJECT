@@ -36,7 +36,7 @@ export default function ProductSearch({
 
   return (
     <div className="relative w-full z-20">
-      <div className="relative flex items-center bg-card/80 backdrop-blur-xl border border-border/80 rounded-2xl p-1.5 shadow-lg shadow-black/5 transition-all focus-within:border-primary/50 focus-within:ring-4 focus-within:ring-primary/10">
+      <div className="relative flex items-center bg-card/80 backdrop-blur-xl border border-border rounded-2xl p-1.5 shadow-lg transition-all focus-within:border-primary/50 focus-within:ring-4 focus-within:ring-primary/10">
         
         <div className="px-3 text-muted-foreground flex items-center justify-center">
           <Search className="w-5 h-5 text-primary/80" />
@@ -67,13 +67,13 @@ export default function ProductSearch({
           className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
             hasActiveFilters || isFilterOpen
               ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
-              : "bg-secondary/80 text-secondary-foreground hover:bg-secondary border border-border/50"
+              : "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border/50"
           }`}
         >
           <SlidersHorizontal className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">{t("products.filterAndSort")}</span>
           {hasActiveFilters && (
-            <span className="w-2 h-2 rounded-full bg-amber-300 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-primary-foreground animate-pulse" />
           )}
         </button>
       </div>
@@ -85,7 +85,7 @@ export default function ProductSearch({
             onClick={() => setIsFilterOpen(false)} 
           />
 
-          <div className="absolute ltr:right-0 rtl:left-0 top-full mt-2 w-full sm:w-80 bg-card/95 backdrop-blur-2xl border border-border/80 rounded-2xl p-4 shadow-2xl z-20 space-y-4 animate-in fade-in zoom-in-95 duration-200">
+          <div className="absolute ltr:right-0 rtl:left-0 top-full mt-2 w-full sm:w-80 bg-card/95 backdrop-blur-2xl border border-border rounded-2xl p-4 shadow-2xl z-20 space-y-4 animate-in fade-in zoom-in-95 duration-200">
             
             <div className="flex items-center justify-between pb-2 border-b border-border/60">
               <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
@@ -111,14 +111,14 @@ export default function ProductSearch({
                   placeholder={t("products.minPrice")}
                   value={minPrice}
                   onChange={(e) => setMinPrice(e.target.value ? Number(e.target.value) : "")}
-                  className="w-full bg-muted/50 border border-border/80 rounded-xl px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full bg-muted/50 border border-border rounded-xl px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 />
                 <input
                   type="number"
                   placeholder={t("products.maxPrice")}
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : "")}
-                  className="w-full bg-muted/50 border border-border/80 rounded-xl px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full bg-muted/50 border border-border rounded-xl px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 />
               </div>
             </div>

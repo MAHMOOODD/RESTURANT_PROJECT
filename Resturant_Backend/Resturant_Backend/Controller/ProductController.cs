@@ -70,6 +70,15 @@ namespace Resturant_Backend.Controller
             var res = new PagedResponse<GetAllProductDto>(ress, filters.Pagination.PageNumber, filters.Pagination.PageSize, products.Count);
             return this.Success(res);
         }
+        [HttpGet("GetProductByCategoryId")]
+        public async Task<IActionResult> GetProductByCategory(int categoryId, [FromQuery] Filters filters)
+        {
+            var products = await _unitOfWork.ProductsRepo.GetProductsByCategory(categoryId, filters).ToListAsync();
+            Ensure.NotNull(products, "Products Not Found");
+            var ress = _mapper.Map<List<GetAllProductDto>>(products);
+            var res = new PagedResponse<GetAllProductDto>(ress, filters.Pagination.PageNumber, filters.Pagination.PageSize, products.Count);
+            return this.Success(res);
+        }
 
 
 

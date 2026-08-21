@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, KeyRound, CheckCircle2, X } from "lucide-react";
+import { Mail, KeyRound, CheckCircle2,  XCircleIcon } from "lucide-react";
 import { useAuthSchemas, type ForgotPasswordFormData } from "./useAuthSchemas";
 import type { ApiError } from "@/services/baseQuery";
 
@@ -54,12 +54,12 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
           onClick={handleClose}
           className="absolute top-4 left-4 p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
         >
-          <X className="w-5 h-5" />
+          <XCircleIcon className="w-6 h-6" />
         </button>
 
         {!isSubmitted ? (
           <>
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center mt-5 gap-3 mb-4">
               <div className="p-3 bg-rose-500/10 text-rose-500 rounded-xl">
                 <KeyRound className="w-6 h-6" />
               </div>

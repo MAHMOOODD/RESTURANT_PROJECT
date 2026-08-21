@@ -35,6 +35,8 @@ namespace Resturant_Backend.Repository
         public async Task<Appuser?> GetUserInformationAsync(string userId)
         {
             var user = await _context.Users.FindAsync(userId);
+
+
             return user is null ? null : user;
         }
     }

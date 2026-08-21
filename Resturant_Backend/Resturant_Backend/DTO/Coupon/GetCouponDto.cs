@@ -4,6 +4,7 @@ namespace Resturant_Backend.DTO.Coupon
 {
     public class GetCouponDto
     {
+        public int Id { get; set; }
         public string Code { get; set; }
         public decimal Discount { get; set; }
 

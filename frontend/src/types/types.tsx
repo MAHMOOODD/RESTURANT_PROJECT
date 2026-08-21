@@ -88,6 +88,7 @@ export interface EditCouponDto {
 }
 
 export interface GetCouponDto {
+  id: number;
   code: string;
   discount: number;
   minimumAmount: number;
@@ -278,6 +279,7 @@ export interface TokenRequestModel {
 export interface UpdateProfileDto {
   fullName?: string;
   address?: string;
+  phoneNumber?: string;
 }
 
 export interface UserCreatedModel {

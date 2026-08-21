@@ -1,13 +1,12 @@
 import { useTranslation } from "react-i18next";
 import ProductCard from "./ProductCard";
 import type { GetProductDto } from "@/types/types";
-
 interface ProductGridProps {
   products: GetProductDto[];
-  onAddToCart?: (product: GetProductDto) => void;
+  onAddToCart?: () => void;
 }
 
-export default function ProductGrid({ products, onAddToCart }: ProductGridProps) {
+export default function ProductGrid({ products }: ProductGridProps) {
   const { t } = useTranslation();
 
   if (!products || products.length === 0) {
@@ -23,11 +22,7 @@ export default function ProductGrid({ products, onAddToCart }: ProductGridProps)
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          onAddToCart={onAddToCart}
-        />
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );

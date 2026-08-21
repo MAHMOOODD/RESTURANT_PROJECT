@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Flame, ShoppingBag, User, Menu, X, ArrowLeft } from "lucide-react";
+import {  ShoppingBag, User, Menu, X, ArrowLeft } from "lucide-react";
 import LanguageSwitcher from "@/components/my/LanguageSwitcher";
 import { ThemeToggle } from "@/components/my/ThemeToggle";
 import { Link, useNavigate } from "react-router-dom";
+import dish from "@/assets/vegetarian.png";
 import {
   useCheckAuthQuery,
+  useGetUserInfoQuery,
   useRevokeTokenMutation,
   authApi,
 } from "@/store/features/User/Auth";
@@ -36,8 +38,17 @@ export default function Navbar() {
     skip: !isAuthenticated,
   });
 
-  // تحديد هل المستخدم مسجل دخول أم لا (سواء عبر Redux أو الـ API)
+  // تحديد هل المستخدم مسجل دخول أم لا
   const isLoggedIn = isAuthenticated && (checkAuthData?.data ?? true);
+
+  // 🎯 جلب بيانات المستخدم فقط إذا كان مسجل الدخول
+  const { data: userInfo } = useGetUserInfoQuery(undefined, {
+    skip: !isLoggedIn,
+  });
+
+  // استخراج الاسم والحرف الأول للـ Avatar
+  const userName = userInfo?.fullName || userInfo?.userName;
+  const userInitial = userName ? userName.charAt(0).toUpperCase() : "U";
 
   const handleLogout = async () => {
     try {
@@ -74,7 +85,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-rose-500/30 group-hover:scale-105 transition-transform">
-            <Flame className="w-6 h-6 fill-current" />
+           <img src={dish} alt="Logo" className="w-6 h-6" />
           </div>
           <div className="flex flex-col">
             <span className="font-extrabold text-lg sm:text-xl tracking-wider leading-none text-foreground">
@@ -100,6 +111,12 @@ export default function Navbar() {
           >
             {t("nav.categories")}
           </a>
+          <Link
+            to="/products"
+            className="px-3.5 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
+          >
+            {t("nav.products")}
+          </Link>
           <a
             href="#deals"
             className="px-3.5 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
@@ -119,14 +136,79 @@ export default function Navbar() {
           <LanguageSwitcher />
           <ThemeToggle />
 
-          <button className="hidden sm:flex items-center gap-2 p-2.5 rounded-xl border border-border bg-card text-foreground hover:border-primary/50 hover:text-primary transition-all">
-            <User className="w-4 h-4" />
-            <span className="text-xs font-semibold hidden xl:inline">
-              {t("nav.account")}
-            </span>
-          </button>
+          {/* 🎯 زر الحساب - رأسياً (الصورة فوق والاسم تحتها) + علامة أونلاين */}
+          <Link
+            to={isLoggedIn ? "/auth/profile" : "/auth"}
+            className="flex flex-col items-center justify-center gap-1 group cursor-pointer transition-all hover:opacity-95"
+          >
+            {isLoggedIn ? (
+              <div
+                className="flex items-center gap-2.5 px-2 py-1.5 rounded-full 
+                bg-muted/50 hover:bg-muted 
+                border border-border/50 hover:border-border
+                transition-all duration-200 group"
+              >
+                {/* Avatar */}
+                <div className="relative shrink-0">
+                  <div
+                    className="w-9 h-9 rounded-full overflow-hidden
+                    bg-gradient-to-br from-primary to-orange-500
+                    text-white font-bold text-sm
+                    flex items-center justify-center
+                    ring-2 ring-background
+                    shadow-sm
+                    transition-transform duration-200
+                    group-hover:scale-105"
+                  >
+                    {userInitial}
+                  </div>
 
-          <button className="relative p-2.5 rounded-xl border border-border bg-card text-foreground hover:border-primary/50 hover:text-primary transition-all">
+                  {/* Online indicator */}
+                  <span
+                    className="absolute bottom-0 right-0
+                 w-2.5 h-2.5
+                 rounded-full
+                 bg-emerald-500
+                 ring-2 ring-background"
+                  />
+                </div>
+
+                {/* User info */}
+                <div className="hidden sm:flex flex-col min-w-0 leading-tight">
+                  <span className="text-[10px] font-medium text-muted-foreground">
+                    {t("nav.welcome", "مرحباً")}
+                  </span>
+
+                  <span className="max-w-[110px] truncate text-xs font-semibold text-foreground">
+                    {userName || t("nav.account")}
+                  </span>
+                </div>
+
+                {/* Chevron */}
+              </div>
+            ) : (
+              <>
+                <div
+                  className="
+    w-10 h-10
+    rounded-full
+    flex items-center justify-center
+    bg-muted/60
+    border border-border/60
+    text-muted-foreground
+    group-hover:bg-primary/10
+    group-hover:border-primary/40
+    group-hover:text-primary
+    transition-all duration-200
+  "   >
+                  <User className="w-[18px] h-[18px]" strokeWidth={1.8} />
+                </div>
+              </>
+            )}
+          </Link>
+
+          {/* Shopping Bag */}
+          <button className="relative p-2.5 rounded-xl border border-border bg-card text-foreground hover:border-primary/50 hover:text-primary transition-all cursor-pointer">
             <ShoppingBag className="w-4 h-4" />
             <span className="absolute -top-1.5 -right-1.5 bg-primary text-primary-foreground text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-card shadow-md">
               3
@@ -163,15 +245,12 @@ export default function Navbar() {
               ) : (
                 <IoMdLogOut className="w-4 h-4" />
               )}
-
-
-              
             </button>
           )}
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2.5 rounded-xl border border-border bg-card text-foreground"
+            className="lg:hidden p-2.5 rounded-xl border border-border bg-card text-foreground cursor-pointer"
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -203,7 +282,7 @@ export default function Navbar() {
           >
             {t("nav.deals")}
           </a>
-          <button className="w-full py-3 mt-2 rounded-xl bg-primary text-primary-foreground font-bold text-sm shadow-lg shadow-primary/30">
+          <button className="w-full py-3 mt-2 rounded-xl bg-primary text-primary-foreground font-bold text-sm shadow-lg shadow-primary/30 cursor-pointer">
             {t("nav.order_now")}
           </button>
         </div>

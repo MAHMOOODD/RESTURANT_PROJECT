@@ -4,7 +4,7 @@ export default function ProductSkeleton({ count = 6 }: { count?: number }) {
       {Array.from({ length: count }).map((_, index) => (
         <div
           key={index}
-          className="bg-card/60 rounded-3xl border border-border/60 p-4 space-y-4 animate-pulse flex flex-col justify-between"
+          className="bg-card/60 rounded-3xl border border-border p-4 space-y-4 animate-pulse flex flex-col justify-between"
         >
           <div className="h-48 bg-muted rounded-2xl w-full relative overflow-hidden">
             <div className="absolute bottom-3 right-3 h-6 w-16 bg-muted-foreground/20 rounded-full" />

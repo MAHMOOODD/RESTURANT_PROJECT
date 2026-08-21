@@ -1,6 +1,7 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { useSearchParams } from "react-router-dom"; // 👈 استيراد searchParams
 import { useTranslation } from "react-i18next";
-import {  UtensilsCrossed } from "lucide-react";
+import { UtensilsCrossed } from "lucide-react";
 
 import ProductSearch from "@/components/my/Products/ProductSearch";
 import CategoryFilter from "@/components/my/Products/CategoryFilter";
@@ -11,21 +12,49 @@ import Pagination from "@/components/my/Products/Pagination";
 import {
   useGetAllProductsQuery,
   useGetProductByNameQuery,
-  useGetProductByCategoryQuery,
-} from "@/store/features/items/Items";
+  useGetProductByCategoryIdQuery,
+  useGetAllCategoriesQuery,
+} from "@/store/features/productApi";
 import type { Filter, GetProductDto } from "@/types/types";
 
 const ITEMS_PER_PAGE = 8;
 
 export default function Products() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams(); // 👈 جلب وتحديث الـ Query Parameters
 
+ 
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(t("products.all"));
+  // قراءة رقم الكاتيجوري من الـ URL إن وجد
+  const categoryParam = searchParams.get("category");
+  const initialCatId = categoryParam ? Number(categoryParam) : 0;
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(initialCatId);
   const [sortBy, setSortBy] = useState<string>("popular");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // إعداد كائن الفلترة
+  // مزامنة الـ state لو تغير الـ URL
+  useEffect(() => {
+    if (categoryParam) {
+      setTimeout(() => {
+        setSelectedCategoryId(Number(categoryParam));
+      }, 0);
+    }
+  }, [categoryParam]);
+
+  const { data: categories = [] } = useGetAllCategoriesQuery();
+  const isAr = i18n.language === "ar";
+
+  const activeCategoryName = useMemo(() => {
+    if (selectedCategoryId === 0) return t("products.all", "الكل");
+    const activeCat = categories.find((c) => c.id === selectedCategoryId);
+    return activeCat
+      ? isAr && activeCat.nameAr
+        ? activeCat.nameAr
+        : activeCat.name
+      : "";
+  }, [selectedCategoryId, categories, isAr, t]);
+
   const filterParams: Filter = useMemo(() => {
     return {
       pagination: {
@@ -38,56 +67,57 @@ export default function Products() {
     };
   }, [currentPage, sortBy]);
 
-  // تحديد نوع الطلب
+
+
   const isSearchingByName = searchQuery.trim().length > 0;
-  const isFilteringByCategory =
-    selectedCategory !== t("products.all") &&
-    selectedCategory !== "الكل" &&
-    selectedCategory !== "All" &&
-    !isSearchingByName;
+  const isFilteringByCategory = selectedCategoryId !== 0 && !isSearchingByName;
   const isGetAll = !isSearchingByName && !isFilteringByCategory;
 
-  // Requests
   const { data: allRes, isLoading: isAllLoading } = useGetAllProductsQuery(
     filterParams,
-    { skip: !isGetAll }
+    { skip: !isGetAll },
   );
   const { data: searchRes, isLoading: isSearchLoading } =
     useGetProductByNameQuery(
       { name: searchQuery, filter: filterParams },
-      { skip: !isSearchingByName }
+      { skip: !isSearchingByName },
     );
   const { data: categoryRes, isLoading: isCategoryLoading } =
-    useGetProductByCategoryQuery(
-      { categoryName: selectedCategory, filter: filterParams },
-      { skip: !isFilteringByCategory }
+    useGetProductByCategoryIdQuery(
+      { categoryId: selectedCategoryId, filter: filterParams },
+      { skip: !isFilteringByCategory },
     );
 
   const isLoading = isAllLoading || isSearchLoading || isCategoryLoading;
 
-  // استخراج النتيجة
   const activeData = isSearchingByName
     ? searchRes
     : isFilteringByCategory
-    ? categoryRes
-    : allRes;
+      ? categoryRes
+      : allRes;
 
   const products: GetProductDto[] = activeData?.data || [];
   const totalCount = activeData?.totalRecords || 0;
   const totalPages = activeData?.totalPages || 1;
 
+  // عند تغيير الكاتيجوري نحدث الـ State والـ URL بنفس الوقت
+  const handleSelectCategory = useCallback((id: number) => {
+    setSelectedCategoryId(id);
+    setCurrentPage(1);
+    if (id === 0) {
+      searchParams.delete("category");
+    } else {
+      searchParams.set("category", id.toString());
+    }
+    setSearchParams(searchParams);
+  }, [searchParams, setSearchParams]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background/95 to-muted/20 text-foreground p-4 sm:p-6 lg:p-10 transition-colors duration-300 relative overflow-hidden">
-      {/* خلفية ضوئية عصرية */}
+    <div className="min-h-screen bg-background text-foreground p-4 sm:p-6 lg:p-10 transition-colors duration-300 relative">
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute top-1/3 left-10 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none -z-10" />
-
-      <div className="max-w-7xl mx-auto space-y-8">
-        
-     
-
-        {/* شريط البحث المتميز */}
-        <div className="sticky top-4 z-30 bg-transparent backdrop-blur-2xl p-2 rounded-3xl  shadow-2xl shadow-black/5">
+      <div className="absolute top-1/3 left-10 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="sticky top-4 z-30 bg-background/80 backdrop-blur-2xl p-2 rounded-3xl border border-border/50 shadow-2xl">
           <ProductSearch
             searchQuery={searchQuery}
             setSearchQuery={(q) => {
@@ -106,21 +136,16 @@ export default function Products() {
           />
         </div>
 
-        {/* قسم الفئات الفاخر */}
-        <div className="relative backdrop-blur-xl p-4 sm:p-6 rounded-4xl  shadow-sm">
+        <div className="backdrop-blur-xl px-3 py-2.5 sm:px-5 sm:py-3 rounded-2xl shadow-sm">
           <CategoryFilter
-            selectedCategory={selectedCategory}
-            onSelectCategory={(c) => {
-              setSelectedCategory(c);
-              setCurrentPage(1);
-            }}
+            selectedCategoryId={selectedCategoryId}
+            onSelectCategory={handleSelectCategory}
           />
         </div>
 
-        {/* شريط عدد النتائج والعرض */}
         <div className="flex items-center justify-between px-2 text-xs sm:text-sm font-bold text-muted-foreground">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span>
               {t("products.showing") || "عرض"}{" "}
               <strong className="text-foreground text-sm font-black">
@@ -134,22 +159,19 @@ export default function Products() {
             </span>
           </div>
 
-          {selectedCategory !== t("products.all") && (
-            <span className="text-[11px] bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20 font-semibold flex items-center gap-1.5">
-              <UtensilsCrossed className="w-3 h-3" />
-              {selectedCategory}
-            </span>
-          )}
+          <span className="text-[11px] bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20 font-semibold flex items-center gap-1.5">
+            <UtensilsCrossed className="w-3 h-3" />
+            {activeCategoryName}
+          </span>
         </div>
 
-        {/* شبكة المنتجات أو Skeleton */}
         {isLoading ? (
           <ProductSkeleton count={ITEMS_PER_PAGE} />
         ) : (
-          <ProductGrid products={products} />
+          <ProductGrid
+           products={products} />
         )}
 
-        {/* التنقل بين الصفحات */}
         {!isLoading && totalPages > 1 && (
           <div className="pt-4">
             <Pagination

@@ -23,7 +23,7 @@ export default function Pagination({
       <button
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        className="p-2 rounded-xl bg-card border border-border/80 text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+        className="p-2 rounded-xl bg-card border border-border text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted/80 hover:text-foreground transition-colors cursor-pointer"
         aria-label={t("products.previousPage")}
       >
         {isRtl ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -34,10 +34,10 @@ export default function Pagination({
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`w-9 h-9 rounded-xl text-xs font-bold transition-all ${
+          className={`w-9 h-9 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             currentPage === page
-              ? "bg-primary text-primary-foreground shadow-sm scale-105"
-              : "bg-card border border-border/80 text-muted-foreground hover:bg-muted"
+              ? "bg-primary text-primary-foreground shadow-md shadow-primary/20 scale-105"
+              : "bg-card border border-border text-muted-foreground hover:bg-muted hover:text-foreground"
           }`}
         >
           {page}
@@ -48,7 +48,7 @@ export default function Pagination({
       <button
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className="p-2 rounded-xl bg-card border border-border/80 text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+        className="p-2 rounded-xl bg-card border border-border text-foreground disabled:opacity-40 disabled:cursor-not-allowed hover:bg-muted/80 hover:text-foreground transition-colors cursor-pointer"
         aria-label={t("products.nextPage")}
       >
         {isRtl ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}

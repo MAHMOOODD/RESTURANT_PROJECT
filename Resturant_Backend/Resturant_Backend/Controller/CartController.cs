@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Resturant_Backend.Common.Exceptions;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Cart;
 using Resturant_Backend.Interfaces;
@@ -11,8 +10,9 @@ using System.Security.Claims;
 
 namespace Resturant_Backend.Controller
 {
-    [Authorize]
     [Route("api/[controller]")]
+    [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
+
     [ApiController]
     public class CartController : ControllerBase
     {
@@ -30,7 +30,7 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> GetCart()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
+            Ensure.Unauthorized(userId, message: "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
             var cartItems = _unitOfWork.CartRepo.GetAllCartItems(userId!);
 
@@ -46,11 +46,11 @@ namespace Resturant_Backend.Controller
         public async Task<IActionResult> AddToCart(int productId, EditCartItemDto dto)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
+            Ensure.Unauthorized(userId, message: "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
             // التحقق أولاً من وجود المنتج في قاعدة البيانات
             var product = await _unitOfWork.ProductsRepo.GetAsync(productId);
-            Ensure.NotNull(product, "Product Not Found");
+            Ensure.NotNull(product, message: "Product Not Found");
 
             // التحقق من عدم وجود المنتج مسبقاً في السلة
             var exist = await _unitOfWork.CartRepo.IsItemExist(productId, userId!);

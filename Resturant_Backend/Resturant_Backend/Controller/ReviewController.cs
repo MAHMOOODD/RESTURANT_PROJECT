@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Resturant_Backend.Common.Exceptions;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Review;
 using Resturant_Backend.Interfaces;
@@ -29,15 +28,28 @@ namespace Resturant_Backend.Controller
 
             var product = await _unitOfWork.ProductsRepo.GetAsync(ProductId);
 
-            Ensure.NotNull(product, "Product Not Found");
+            Ensure.NotNull(product, message: "Product Not Found");
 
-            var reviews = _unitOfWork.ReviewRepo.GetAllReviews(ProductId);
-            Ensure.NotNull(reviews, "No Reviews Found");
+            var reviews = await _unitOfWork.ReviewRepo.GetAllReviews(ProductId);
+            Ensure.NotNull(reviews, message: "No Reviews Found");
 
 
 
             var reviewToShow = _mapper.Map<List<GetReviewDto>>(reviews);
             return this.Success(reviewToShow);
+        }
+
+        [HttpGet("GetTop10")]
+        public async Task<IActionResult> GetTop10Reviews()
+        {
+            var reviews = await _unitOfWork.ReviewRepo.GetTop10Review();
+
+            if(reviews is null)
+                this.NotFoundEx("No reviews found");
+
+            var reviewToShow = _mapper.Map<List<GetReviewDto>>(reviews);
+            return this.Success(reviewToShow);
+
         }
 
 
