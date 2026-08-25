@@ -53,8 +53,8 @@ export const cartApi = createApi({
 
     // DELETE: /api/Cart/DeleteCartItem/{cartItemId}
     deleteCartItem: builder.mutation<string, number>({
-      query: (cartItemId) => ({
-        url: `/Cart/DeleteCartItem/${cartItemId}`,
+      query: (id) => ({
+        url: `/Cart/DeleteCartItem/${id}`,
         method: "DELETE",
       }),
       transformResponse: (response: ApiResponse<null>) => response.message,

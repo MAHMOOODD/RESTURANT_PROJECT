@@ -8,6 +8,7 @@ using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.Common.Responses;
 using Resturant_Backend.Data;
 using Resturant_Backend.Helpers;
+using Resturant_Backend.Helpers.PhotosHandle;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Middlewares;
 using Resturant_Backend.Models;
@@ -160,6 +161,8 @@ namespace Resturant_Backend
 
             builder.Services.AddScoped<IAuthService, Authservice>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWorkRepo>();
+
+            builder.Services.AddScoped<IPhotoService, PhotoService>();
 
             var app = builder.Build();
 

@@ -5,18 +5,26 @@ export default function BentoHeader() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black">
-          <Flame className="w-3.5 h-3.5 fill-current" />
+        {/* 🌟 Badge مع ألوان متناسقة للـ Light & Dark Modes */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 dark:bg-primary/15 border border-primary/25 text-primary text-sm sm:text-base font-black shadow-sm backdrop-blur-sm">
+          <Flame className="w-5 h-5 fill-current animate-bounce" />
           <span>{t("bentoHeader.badge", "Top Sellers")}</span>
         </div>
-        <h2 className="text-2xl md:text-4xl font-black text-foreground mt-2">
+
+        {/* 🚀 Main Title */}
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground mt-3 tracking-tight">
           {t("bentoHeader.title", "الأكثر طلباً هذا الأسبوع 🚀")}
         </h2>
       </div>
-      <p className="text-sm font-bold rounded-2xl text-muted-foreground max-w-sm">
-        {t("bentoHeader.subtitle", "اختيارات مجربة ومفضلة لدى آلاف العملاء بشكل يومي.")}
+
+      {/* 📄 Subtitle واضح ومريح للعين */}
+      <p className="text-base sm:text-lg font-bold text-muted-foreground max-w-md leading-relaxed">
+        {t(
+          "bentoHeader.subtitle",
+          "اختيارات مجربة ومفضلة لدى آلاف العملاء بشكل يومي.",
+        )}
       </p>
     </div>
   );

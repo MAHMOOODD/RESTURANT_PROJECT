@@ -10,7 +10,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 export const reviewApi = createApi({
   reducerPath: "reviewApi",
   baseQuery: baseQuery(),
-  tagTypes: ["Reviews"],
+  tagTypes: ["Reviews", "Products"],
   endpoints: (builder) => ({
     // GET: /api/Review/Get/{ProductId}
     getReviewsByProductId: builder.query<GetReviewDto[], number>({
@@ -22,15 +22,18 @@ export const reviewApi = createApi({
         response.data,
       providesTags: (_result, _error, productId) => [
         { type: "Reviews", id: productId },
+        { type: "Reviews", id: "LIST" },
       ],
     }),
-    getTop10Reviews: builder.query< GetReviewDto[], void>({
+
+    getTop10Reviews: builder.query<GetReviewDto[], void>({
       query: () => ({
         url: `/Review/GetTop10`,
         method: "GET",
       }),
       transformResponse: (response: ApiResponse<GetReviewDto[]>) =>
         response.data,
+      providesTags: [{ type: "Reviews", id: "TOP_10" }],
     }),
 
     // GET: /api/Review/getById/{id}
@@ -55,6 +58,8 @@ export const reviewApi = createApi({
         response.data,
       invalidatesTags: (_result, _error, arg) => [
         { type: "Reviews", id: arg.productId },
+        { type: "Reviews", id: "TOP_10" },
+        { type: "Products", id: arg.productId }, // إجبار صفحة تفاصيل المنتج على إعادة الجلب فوراً
       ],
     }),
 
@@ -72,6 +77,8 @@ export const reviewApi = createApi({
         response.data,
       invalidatesTags: (_result, _error, arg) => [
         { type: "Reviews", id: arg.dto.productId },
+        { type: "Reviews", id: "TOP_10" },
+        { type: "Products", id: arg.dto.productId }, // تحديث المنتج وتقييماته فوراً عند التعديل
       ],
     }),
 
@@ -82,8 +89,15 @@ export const reviewApi = createApi({
         method: "DELETE",
       }),
       transformResponse: (response: ApiResponse<null>) => response.message,
-      invalidatesTags: (_result, _error, arg) =>
-        arg.productId ? [{ type: "Reviews", id: arg.productId }] : ["Reviews"],
+      invalidatesTags: (_result, _error, arg) => [
+        { type: "Reviews", id: "TOP_10" },
+        ...(arg.productId
+          ? [
+              { type: "Reviews" as const, id: arg.productId },
+              { type: "Products" as const, id: arg.productId }, // تحديث المنتج فوراً عند الحذف
+            ]
+          : [{ type: "Reviews" as const, id: "LIST" }]),
+      ],
     }),
   }),
 });

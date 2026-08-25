@@ -63,13 +63,13 @@ export interface GetCartDto {
 export interface AddCategoriesDto {
   name: string; // Required, MinLength: 3
   nameAr: string; // Required, MinLength: 3
-  imageUrl: string; // Required, Regex: .+\.(jpg|jpeg|png|gif|webp)$
+  imageUrl ?: File; // Required, Regex: .+\.(jpg|jpeg|png|gif|webp)$
 }
 
 export interface EditCategoriesDto {
   name: string;
   nameAr: string;
-  imageUrl: string;
+  imageUrl?: File | null;
 }
 
 // ============ Coupon DTOs ============
@@ -77,14 +77,12 @@ export interface AddCouponDto {
   code: string;
   discount: number; // Range: 0-99
   minimumAmount: number; // Range: 1+
-  isActive: boolean;
 }
 
 export interface EditCouponDto {
   code: string;
   discount: number; // Range: 0-99
   minimumAmount: number; // Range: 1+
-  isActive: boolean;
 }
 
 export interface GetCouponDto {
@@ -94,7 +92,6 @@ export interface GetCouponDto {
   minimumAmount: number;
   createdAt: Date;
   expiryDate: Date;
-  isActive: boolean;
   orders: GetOrderDto[];
 }
 
@@ -149,7 +146,7 @@ export interface AddProductDto {
   name: string; // Required
   description: string; // Required
   price: number; // Required
-  imageUrl: string; // Required, Regex: .+\.(jpg|jpeg|png|gif|webp)$
+  imageUrl?: File; // Required, Regex: .+\.(jpg|jpeg|png|gif|webp)$
   isAvailable: boolean; // Required
   preparingTime: number; // Required
   categoryId: number; // Required
@@ -161,7 +158,7 @@ export interface EditProductDto {
   name: string; // Required
   description: string; // Required
   price: number; // Required
-  imageUrl: string; // Required, Regex: .+\.(jpg|jpeg|png|gif|webp)$
+  imageUrl?: File | null; // Required, Regex: .+\.(jpg|jpeg|png|gif|webp)$
   preparingTime: number; // Required
   isAvailable: boolean; // Required
   categoryId: number; // Required
@@ -280,6 +277,7 @@ export interface UpdateProfileDto {
   fullName?: string;
   address?: string;
   phoneNumber?: string;
+  imageUrl?: File | string; // Optional, Regex: .+\.(jpg|jpeg|png|gif|webp)$
 }
 
 export interface UserCreatedModel {

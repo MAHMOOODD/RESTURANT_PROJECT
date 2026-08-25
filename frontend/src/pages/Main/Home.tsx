@@ -6,7 +6,7 @@ import ReviewsSection from "@/components/my/Home/ReviewsSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen space-y-10 px-4 sm:px-8 max-w-7xl mx-auto pb-20">
+    <div className="min-h-screen space-y-10 px-4 sm:px-8 max-w-full mx-auto pb-20">
       <HeroSection />
       <CouponsSection />
       <CategoriesSection />

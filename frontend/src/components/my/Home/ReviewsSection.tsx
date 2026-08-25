@@ -25,7 +25,8 @@ export default function ReviewsSection() {
 
         return {
           id: rev.id,
-          userName: rev.userName?.trim() || t("reviews.anonymous", "عميل أكلني"),
+          userName:
+            rev.userName?.trim() || t("reviews.anonymous", "عميل أكلني"),
           userImage: rev.userImage || avatarFallback,
           rating: rev.rating,
           comment: rev.comment || "",
@@ -43,8 +44,8 @@ export default function ReviewsSection() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center py-12">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="flex justify-center items-center py-20">
+        <Loader2 className="w-10 h-10 animate-spin text-primary" />
       </div>
     );
   }
@@ -52,17 +53,17 @@ export default function ReviewsSection() {
   if (topReviews.length === 0) return null;
 
   return (
-    <section className="py-12 space-y-8">
+    <section className="py-16 space-y-12">
       <ReviewsHeader
         badgeText={t("reviews.badge", "آراء وتجارب حقيقية")}
         title={t("reviews.title", "ماذا يقول عملاؤنا؟ ⭐")}
         subtitle={t(
           "reviews.subtitle",
-          "أعلى التقييمات التي تم جمعها فور استلام الطلبات"
+          "أعلى التقييمات التي تم جمعها فور استلام الطلبات",
         )}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {topReviews.map((rev) => (
           <ReviewCard
             key={rev.id}

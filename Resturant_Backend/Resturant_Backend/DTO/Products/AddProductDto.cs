@@ -23,10 +23,9 @@ namespace Resturant_Backend.DTO.Products
         public int PreparingTime { get; set; } // in minutes
 
 
-        [Required(ErrorMessage = "Image URL Is Required")]
-        [RegularExpression(pattern: @".+\.(jpg|jpeg|png|gif|webp)$", ErrorMessage = "Invalid Image Format")]
 
-        public string ImageUrl { get; set; }
+        [Required(ErrorMessage = "Image URL Is Required")]
+        public IFormFile ImageUrl { get; set; } = null!;
 
         [Required(ErrorMessage = "Availability Status Is Required")]
         public bool IsAvailable { get; set; }

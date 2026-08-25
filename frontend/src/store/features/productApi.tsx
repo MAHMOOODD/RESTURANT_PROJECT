@@ -32,6 +32,42 @@ const buildFilterParams = (filter?: Filter) => {
   };
 };
 
+// 1. تعريف الـ Types بوضوح (يا اما منتج يا اما كاتيجوري من ملفات التايبس)
+type ProductDtoType = AddProductDto | EditProductDto;
+type CategoryDtoType = AddCategoriesDto | EditCategoriesDto;
+type AppDto = ProductDtoType | CategoryDtoType;
+
+// 2. دالة بناء الـ FormData باستخدام الـ Type Narrowing الآمن تماماً
+const createFormDataFromDto = (dto: AppDto): FormData => {
+  const formData = new FormData();
+
+  // التحقق الذكي: لو الكائن يحتوي على price فهو بالتأكيد "منتج"
+  if ("price" in dto) {
+    formData.append("Name", dto.name);
+    formData.append("NameAr", dto.nameAr);
+    formData.append("Description", dto.description);
+    formData.append("DescriptionAr", dto.descriptionAr);
+    formData.append("Price", String(dto.price));
+    formData.append("PreparingTime", String(dto.preparingTime));
+    formData.append("CategoryId", String(dto.categoryId));
+    formData.append("IsAvailable", String(dto.isAvailable));
+  } else {
+    // غير ذلك فهو بالتأكيد "كاتيجوري"
+    formData.append("Name", dto.name);
+    formData.append("NameAr", dto.nameAr);
+  }
+
+  // معالجة الصورة المشتركة بين الاثنين
+  if (dto.imageUrl instanceof File) {
+    formData.append("ImageUrl", dto.imageUrl, dto.imageUrl.name);
+  } else if (dto.imageUrl === null) {
+    const emptyFile = new File([""], "delete_image.png", { type: "" });
+    formData.append("ImageUrl", emptyFile);
+  }
+
+  return formData;
+};
+
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: baseQuery(),
@@ -49,7 +85,7 @@ export const productApi = createApi({
         params: buildFilterParams(filter || undefined),
       }),
       transformResponse: (
-        response: ApiResponse<PagedResponse<GetAllProductDto>>
+        response: ApiResponse<PagedResponse<GetAllProductDto>>,
       ) => response.data,
       providesTags: ["Products"],
     }),
@@ -79,7 +115,7 @@ export const productApi = createApi({
         },
       }),
       transformResponse: (
-        response: ApiResponse<PagedResponse<GetAllProductDto>>
+        response: ApiResponse<PagedResponse<GetAllProductDto>>,
       ) => response.data,
       providesTags: ["Products"],
     }),
@@ -98,7 +134,7 @@ export const productApi = createApi({
         },
       }),
       transformResponse: (
-        response: ApiResponse<PagedResponse<GetAllProductDto>>
+        response: ApiResponse<PagedResponse<GetAllProductDto>>,
       ) => response.data,
       providesTags: ["Products"],
     }),
@@ -117,7 +153,7 @@ export const productApi = createApi({
         },
       }),
       transformResponse: (
-        response: ApiResponse<PagedResponse<GetAllProductDto>>
+        response: ApiResponse<PagedResponse<GetAllProductDto>>,
       ) => response.data,
       providesTags: ["Products"],
     }),
@@ -127,7 +163,7 @@ export const productApi = createApi({
       query: (dto) => ({
         url: "/Product/Add",
         method: "POST",
-        body: dto,
+        body: createFormDataFromDto(dto),
       }),
       transformResponse: (response: ApiResponse<GetProductDto>) =>
         response.data,
@@ -142,7 +178,7 @@ export const productApi = createApi({
       query: ({ id, dto }) => ({
         url: `/Product/Edit/${id}`,
         method: "PUT",
-        body: dto,
+        body: createFormDataFromDto(dto),
       }),
       transformResponse: (response: ApiResponse<GetProductDto>) =>
         response.data,
@@ -164,7 +200,6 @@ export const productApi = createApi({
 
     // ============ CATEGORIES ENDPOINTS ============
 
-    // 9. Get All Categories
     getAllCategories: builder.query<GetCategoriesDto[], void>({
       query: () => ({
         url: "/Categories/GetAll",
@@ -175,7 +210,6 @@ export const productApi = createApi({
       providesTags: ["Categories"],
     }),
 
-    // 10. Get Category By Id
     getCategoryById: builder.query<GetCategoriesDto, number>({
       query: (id) => ({
         url: `/Categories/GetById/${id}`,
@@ -186,19 +220,19 @@ export const productApi = createApi({
       providesTags: (_result, _error, id) => [{ type: "Categories", id }],
     }),
 
-    // 11. Add Category
+    // 9. Add Category
     addCategory: builder.mutation<GetCategoriesDto, AddCategoriesDto>({
       query: (dto) => ({
         url: "/Categories/Add",
         method: "POST",
-        body: dto,
+        body: createFormDataFromDto(dto),
       }),
       transformResponse: (response: ApiResponse<GetCategoriesDto>) =>
         response.data,
       invalidatesTags: ["Categories"],
     }),
 
-    // 12. Edit Category
+    // 10. Edit Category
     editCategory: builder.mutation<
       GetCategoriesDto,
       { id: number; dto: EditCategoriesDto }
@@ -206,7 +240,7 @@ export const productApi = createApi({
       query: ({ id, dto }) => ({
         url: `/Categories/Edit/${id}`,
         method: "PUT",
-        body: dto,
+        body: createFormDataFromDto(dto),
       }),
       transformResponse: (response: ApiResponse<GetCategoriesDto>) =>
         response.data,
@@ -216,7 +250,7 @@ export const productApi = createApi({
       ],
     }),
 
-    // 13. Delete Category
+    // 11. Delete Category
     deleteCategory: builder.mutation<string, number>({
       query: (id) => ({
         url: `/Categories/Delete/${id}`,

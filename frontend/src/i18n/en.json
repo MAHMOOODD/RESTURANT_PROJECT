@@ -2,18 +2,196 @@
   "brand": "AKLNY",
   "brandSub": "Fast, Fresh, Delicious",
   "nav": {
+    "Home": "Home",
     "menu": "Menu",
     "categories": "Categories",
     "products": "Products",
     "deals": "Deals 🔥",
+    "orders": "Orders",
     "about": "Our Story",
+    "contact": "Contact Us",
     "account": "Account",
     "cart": "Cart",
     "order_now": "Order Now",
     "log_out": "Log Out",
     "welcome": "Welcome"
   },
- "account": {
+  "cart": {
+    "clear_modal": {
+      "title": "Are you sure you want to clear the cart?",
+      "spec": "Warning: All items in your shopping cart will be permanently removed and you cannot undo this action.",
+      "cancel": "Cancel",
+      "confirm": "Yes, Clear All"
+    },
+    "loading": "Preparing your delicious cart...",
+    "empty_title": "Your cart is empty!",
+    "empty_desc": "Explore our menu and order the finest meals delivered right to your door.",
+    "browse_menu": "Browse Menu Now",
+    "default_user": "AKLNY Premium Customer",
+    "active_account": "Active Account",
+    "default_address": "Cairo, Egypt (Main Delivery Address)",
+    "clear_all": "Clear Cart",
+    "items_header": "Selected Meals",
+    "different_items": "different items",
+    "summary_title": "Order Summary",
+    "meal_types": "Meal Items",
+    "types": "items",
+    "total_items": "Total Quantity",
+    "pieces": "pcs",
+    "delivery_fee": "Delivery Fee",
+    "free": "Free",
+    "fresh_notice": "Food is prepared fresh immediately upon checkout.",
+    "checkout_btn": "Proceed to Checkout",
+    "currency": "EGP",
+    "min": "min",
+    "popular": "Popular",
+    "unit": "per meal",
+    "total": "Total",
+    "delete_item": "Remove item",
+    "default_meal": "Delicious Meal",
+    "meal_hash": "Meal",
+    "default_desc": "Freshly prepared meal made with top-quality ingredients",
+    "update_error": "Failed to update quantity",
+    "item_deleted": "Item removed from cart",
+    "delete_error": "Failed to delete item",
+    "cleared": "Cart cleared successfully",
+    "clear_error": "Failed to clear cart"
+  },
+  "adminSidebar": {
+    "theme": "Theme",
+    "language": "Language",
+    "myAccount": "My Account",
+    "adminRole": "System Admin",
+    "backToHome": "Back to Home",
+    "logout": "Logout",
+    "links": {
+      "dashboard": "Dashboard",
+      "products": "Products & Items",
+      "categories": "Categories",
+      "orders": "Orders",
+      "coupons": "Coupons",
+      "users": "Users"
+    }
+  },
+  "adminLayout": {
+    "brand": "AKLNY Admin",
+    "menu": "Menu"
+  },
+  "adminHeader": {
+    "dashboard": "Admin Panel",
+    "openMenu": "Open Menu",
+    "closeMenu": "Close Menu"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "subtitle": "Review your details and apply a coupon code to see the final price.",
+    "edit_cart": "Edit Cart",
+    "currency": "EGP",
+    "shipping": {
+      "title": "Shipping & Delivery Info",
+      "edit": "Edit Info",
+      "name": "Customer Name",
+      "phone": "Phone Number",
+      "not_specified": "Not specified",
+      "address": "Registered Delivery Address",
+      "no_address": "No address registered! Click \"Edit Info\" above."
+    },
+    "coupon": {
+      "title": "Discount Coupon",
+      "desc": "Enter code and click apply to discount your bill",
+      "placeholder": "Enter coupon code...",
+      "apply": "Apply",
+      "applied_success": "Coupon applied: {{code}}",
+      "discount_percentage": "{{discount}}% off your bill",
+      "remove": "Remove Coupon"
+    },
+    "payment": {
+      "title": "Payment Method",
+      "cod": "Cash on Delivery"
+    },
+    "summary": {
+      "title": "Order Summary",
+      "meal_prefix": "Meal",
+      "subtotal": "Subtotal",
+      "delivery": "Delivery",
+      "free": "Free",
+      "discount_label": "Applied Discount ({{percent}}%)",
+      "final_total": "Final Total",
+      "you_saved": "You saved {{amount}} EGP",
+      "confirm_btn": "Confirm & Place Order ({{total}} EGP)"
+    },
+    "toast": {
+      "enter_coupon": "Please enter a coupon code first",
+      "invalid_coupon": "Invalid or non-existent coupon code!",
+      "expired_coupon": "Sorry, this coupon has expired!",
+      "min_amount": "Minimum amount to use this coupon is {{amount}} EGP",
+      "coupon_success": "Coupon applied successfully! {{discount}}% off 🎉",
+      "coupon_removed": "Coupon removed",
+      "address_required": "Please add a delivery address to your profile before placing the order!",
+      "order_success": "Order placed successfully! Preparing now 🍕",
+      "order_error": "An error occurred while creating the order"
+    },
+    "loading": "Verifying account, cart, and coupons...",
+    "errors": {
+      "auth_title": "Sorry, you must log in first!",
+      "auth_desc": "Please log in to your account to complete delivery and confirm your order.",
+      "login_btn": "Log In Now",
+      "empty_cart_title": "Your Cart is Empty!",
+      "empty_cart_desc": "Add some delicious meals from the menu to confirm your order.",
+      "back_menu": "Back to Menu"
+    }
+  },
+  "myOrders": {
+    "badge": "Orders History",
+    "title": "My Previous Orders",
+    "subtitle": "Track your current and past orders with ease",
+    "backToProfile": "My Profile",
+    "searchPlaceholder": "Search by order ID or address...",
+    "filters": {
+      "all": "All"
+    },
+    "totalPrice": "Total",
+    "emptyTitle": "No Matching Orders",
+    "emptyDesc": "You haven't placed any orders matching your current search"
+  },
+  "orderDetails": {
+    "title": "Order Details",
+    "backToOrders": "My Orders",
+    "loading": "Loading order details...",
+    "notFoundTitle": "Order Not Found!",
+    "notFoundDesc": "Make sure the order ID is correct or return to your orders list.",
+    "backToProfile": "Back to Profile",
+    "currentStatus": "Current Order Status:",
+    "deliveryAddress": "Delivery Address",
+    "paymentStatus": "Payment Status",
+    "orderedMeals": "Ordered Meals",
+    "defaultMealName": "Meal #{{id}}",
+    "discount": "Discount",
+    "totalPaid": "Total Paid",
+    "currency": "EGP",
+    "statuses": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled",
+      "unknown": "Unknown"
+    },
+    "timeline": {
+      "received": "Received",
+      "processing": "Processing",
+      "onTheWay": "On the way",
+      "delivered": "Delivered"
+    },
+    "payment": {
+      "pending": "Cash on Delivery (Pending)",
+      "completed": "Completed",
+      "failed": "Payment Failed",
+      "refunded": "Refunded",
+      "unknown": "Not Specified"
+    }
+  },
+  "account": {
     "badge": "Account Settings",
     "rolesLabel": "Permissions",
     "loading": "Loading profile information...",
@@ -29,6 +207,11 @@
     "change": "Change",
     "cancel": "Cancel",
     "saveBtn": "Save Changes",
+    "latestOrderTitle": "Your Latest Order",
+    "latestOrderSub": "Track your latest order status in real-time",
+    "viewAllOrders": "View All Orders",
+    "mealsCount": "meals",
+    "noOrdersYet": "No previous orders yet",
     "saving": "Saving...",
     "updateSuccess": "Profile updated successfully!",
     "updateError": "Failed to update profile data",
@@ -46,7 +229,8 @@
   },
   "categories": {
     "available": "Available Categories"
-  },"bentoHeader": {
+  },
+  "bentoHeader": {
     "badge": "Top Sellers",
     "title": "Most Popular This Week 🚀",
     "subtitle": "Tried and loved by thousands of customers daily."
@@ -140,6 +324,28 @@
     "order_now": "Explore Menu"
   },
   "products": {
+    "reviewsCount": "Review",
+    "submitReview": "Submit Review",
+    "updateReview": "Update Review",
+    "editReview": "Edit Review",
+    "writeCommentPlaceholder": "Write your review here...",
+    "yourRating": "Your Rating",
+    "addReviewTitle": "Add Your Review",
+    "editReviewTitle": "Edit Your Review",
+
+    "defaultClientName": "Aklny Customer",
+    "reviewNotFound": "Review not found.",
+    "reviewUpdateSuccess": "Your review has been updated successfully!",
+    "reviewAddedSuccess": "Your review has been added successfully!",
+    "reviewError": "An error occurred, please make sure you are logged in",
+    "reviewDeleted": "Review deleted successfully",
+    "deleteReviewError": "An error occurred while deleting the review",
+
+    "available": "Available Now",
+    "unavailable": "Currently Unavailable",
+    "mealDetails": "Meal Details",
+    "prepTime": "Time",
+    "descriptionLabel": "Meal Description",
     "all": "All",
     "previousPage": "Previous page",
     "nextPage": "Next page",
@@ -148,7 +354,10 @@
     "minutes": "min",
     "currency": "EGP",
     "addedToCart": "Added to cart",
+    "addToCartError": "You must be logged in to add products to the cart",
     "addToCart": "Add to cart",
+    "removedFromCart": "Removed from cart",
+    "removeFromCartError": "An error occurred while removing the product from the cart",
     "noProductsFound": "No products match your search at the moment.",
     "searchPlaceholder": "Search for meal, sauce, or ingredients...",
     "clearSearch": "Clear search",
@@ -164,12 +373,14 @@
     "sortPriceDesc": "Price: High to Low",
     "applyFilter": "Apply Filter",
     "showing": "Showing",
+    "noRating": "New Arrival 🚀",
     "ofTotal": "of total",
     "itemsCount": "items",
     "details": "Product Details",
     "loadingDetails": "Preparing meal details...",
     "errorLoading": "Failed to load meal details",
     "reviews": "Customer Reviews",
+    "price": "Price",
     "verifiedPurchase": "Verified Buyer",
     "noReviews": "No reviews for this meal yet. Be the first to leave one!"
   },
@@ -180,6 +391,59 @@
     "verified": "Verified Order",
     "anonymous": "AKLNY Customer",
     "recent": "Recently"
+  },
+  "about": {
+    "kitchenTitle": "AKLNY KITCHENS",
+    "titleHighlight": "Passion",
+    "badge": "Discover AKLNY Story",
+    "title": "Where Passion Meets",
+    "titleEnd": "Delicious Food",
+    "subtitle": "We didn't just start as a delivery restaurant, but an idea born to offer a new concept of food pleasure: speed, hygiene, unforgettable taste.",
+    "statsMeals": "Diverse Meals",
+    "statsClients": "Happy Clients",
+    "statsChefs": "Pro Chefs",
+    "statsQuality": "Original Quality",
+    "storyTitle": "Our Philosophy at AKLNY: Quality First",
+    "storyP1": "We truly believe good food makes a happy day. From the moment you choose your meal from the menu until it arrives at your doorstep, we ensure strict monitoring of every detail.",
+    "storyP2": "We carefully select our suppliers and manage our kitchens with passionate chefs who love the art of cooking, bringing you a meal that speaks for itself.",
+    "kitchenSub": "Where fresh ingredients blend with love to craft the most delicious meals",
+    "whyUs": "Why Do Thousands Choose Us Daily?",
+    "whyUsSub": "Advantages that make us your first choice whenever you feel hungry",
+    "badgeFresh": "Fresh Daily",
+    "badgeSafe": "Healthy & Safe",
+    "badgeFast": "Super Fast",
+    "badgeUnique": "Unique Taste",
+    "feature1Title": "Fresh & Hot From Scratch",
+    "feature1Desc": "We don't rely on freezing; every dish is prepared specially upon your order to enjoy rich, fresh flavor.",
+    "feature2Title": "Global Safety Standards",
+    "feature2Desc": "We apply strict hygiene and sterilization rules in our kitchens to ensure completely safe and healthy food.",
+    "feature3Title": "Lightning Fast Delivery",
+    "feature3Desc": "A delivery fleet equipped with modern heat preservation boxes so your food arrives as fresh as out of the fire.",
+    "feature4Title": "Exclusive Innovative Recipes",
+    "feature4Desc": "A secret blend and cooking secrets inherited and developed with a modern spirit for refined tastes."
+  },
+  "contact": {
+    "badge": "Customer Support 24/7",
+    "title": "We Always Love to Hear From You",
+    "subtitle": "Have a suggestion, an order issue, or want to inquire about the menu? Contact us instantly.",
+    "phoneTitle": "Hotline",
+    "emailTitle": "Email Address",
+    "addressTitle": "Headquarters",
+    "addressVal": "Cairo, Arab Republic of Egypt",
+    "workHoursTitle": "Working Hours",
+    "workHoursVal": "All week days: from 10:00 AM to 2:00 AM",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Enter your full name...",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "01xxxxxxxxx",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "name@example.com",
+    "messageLabel": "Message or Inquiry",
+    "messagePlaceholder": "Type your message details here and we will reply quickly...",
+    "sendBtn": "Send Message Now",
+    "sending": "Sending your message...",
+    "successMsg": "Message received successfully! Support team will contact you within minutes.",
+    "errorEmpty": "Please fill in all required fields successfully"
   },
   "footer": {
     "tagline": "Taste that elevates your mood. Fresh daily, crafted with passion.",
@@ -210,5 +474,83 @@
     "secure_pay_desc": "Cash or online securely",
     "made_with": "Made with",
     "for_lovers": "for food lovers"
+  },
+  "notfound": {
+    "badge": "Error 404",
+    "title": "Oops! Page Not Found",
+    "subtitle": "It seems the dish you are looking for is not on the menu, or it has been moved somewhere else.",
+    "homeBtn": "Back to Home"
+  },
+  "adminProducts": {
+    "title": "Products Management",
+    "subtitle": "Add, edit, or toggle availability of menu items.",
+    "addNewProduct": "Add New Product",
+    "loading": "Loading...",
+    "emptyState": "No products currently available in the menu.",
+    "deleteSuccess": "Product deleted successfully",
+    "deleteError": "An error occurred while deleting",
+    "table": {
+      "image": "Image",
+      "product": "Product",
+      "price": "Price",
+      "prepTime": "Prep Time",
+      "edit": "Edit",
+      "delete": "Delete",
+      "status": "Status",
+      "actions": "Actions",
+      "currency": "EGP",
+      "min": "min",
+      "available": "Available",
+      "unavailable": "Unavailable"
+    },
+    "deleteDialog": {
+      "title": "Confirm Product Deletion",
+      "description": "Are you sure you want to delete this product? This action cannot be undone.",
+      "confirmBtn": "Delete"
+    },
+    "imageUpload": {
+      "previewAlt": "Image Preview",
+      "change": "Change",
+      "upload": "Upload Image",
+      "remove": "Remove Image"
+    },
+    "form": {
+      "isAvailableLabel": "Currently Available",
+      "isAvailableSub": "Toggle whether customers can order this item or not.",
+      "addTitle": "Add New Product",
+      "editTitle": "Edit Product",
+      "addSubtitle": "Enter the new product details to list it on the menu.",
+      "editSubtitle": "Update product details and changes will be saved immediately.",
+      "nameAr": "Name (Arabic)",
+      "nameEn": "Name (English)",
+      "descAr": "Description (Arabic)",
+      "descEn": "Description (English)",
+      "price": "Price",
+      "prepTime": "Preparation Time (mins)",
+      "category": "Category",
+      "selectCategory": "Select Category",
+      "isAvailable": "Currently Available",
+      "isAvailableHelp": "Toggle whether customers can order this item or not.",
+      "cancel": "Cancel",
+      "add": "Add",
+      "save": "Save Changes",
+      "addSuccess": "Product added successfully",
+      "saveSuccess": "Changes saved successfully",
+      "errors": {
+        "required": "Required",
+        "invalidPrice": "Invalid price",
+        "invalidPrepTime": "Invalid time",
+        "selectCategory": "Select a category",
+        "imageRequired": "Image is required",
+        "invalidImageFormat": "Unsupported format",
+        "saveFailed": "Failed to save data"
+      }
+    }
+  },
+  "common": {
+    "back": "Back",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel"
   }
 }

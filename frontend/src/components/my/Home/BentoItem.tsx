@@ -1,4 +1,4 @@
-import { Star, ShoppingBag, Info, Check, Loader2 } from "lucide-react";
+import { Star, ShoppingBag, Info, Check, Loader2, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,9 @@ interface BentoItemProps {
   product: GetAllProductDto;
   spanClass: string;
   onOpenModal: (id: number) => void;
+  isAdded?: boolean;
+  isLoading?: boolean;
+  onAddToCart?: () => void;
 }
 
 export default function BentoItem({
@@ -29,27 +32,25 @@ export default function BentoItem({
   const isAr = i18n.language === "ar";
 
   const [addToCart, { isLoading: isAdding }] = useAddToCartMutation();
-  const [deleteCartItem, { isLoading: isDeleting }] = useDeleteCartItemMutation();
+  const [deleteCartItem, { isLoading: isDeleting }] =
+    useDeleteCartItemMutation();
 
   const { data: cartData } = useGetCartQuery();
 
-  // البحث عن العنصر في السلة واستخراج الـ CartItem ID
   const cartItem = cartData?.find((item) => item.productId === product.id);
   const isAdded = cartItem !== undefined;
 
   const isPending = isAdding || isDeleting;
 
-  // جلب تفاصيل المنتج المفصلة لتعيين التقييمات
   const { data: fullProduct } = useGetProductByIdQuery(product.id);
 
   const productName = isAr && product.nameAr ? product.nameAr : product.name;
-  const productDesc =
-    isAr && product.descriptionAr ? product.descriptionAr : product.description;
 
   const displayImage =
- burgerFallback;
+    product.imageUrl && product.imageUrl.trim() !== ""
+      ? product.imageUrl
+      : burgerFallback;
 
-  // حساب التقييم
   const reviewsCount = fullProduct?.reviews?.length || 0;
   const averageRating =
     reviewsCount > 0
@@ -59,38 +60,42 @@ export default function BentoItem({
         ).toFixed(1)
       : "0.0";
 
-  const handleAddToCart = (productId: number) => async (e: React.MouseEvent) => {
-    e.stopPropagation(); // منع الـ Card من تنفيذ حدث التنقل عند الضغط على زر السلة
+  const handleAddToCart =
+    (productId: number) => async (e: React.MouseEvent) => {
+      e.stopPropagation();
 
-    if (isAdded) {
-      try {
-        const targetId = cartItem?.id ?? productId;
-        await deleteCartItem(targetId).unwrap();
-        toast.success(
-          t("products.removedFromCart", "تمت إزالة المنتج من السلة"),
-        );
-      } catch (error) {
-        const apiErr = error as ApiError<AddToCartDto>;
-        console.error("Error removing product from cart:", apiErr);
-        toast.error(
-          apiErr?.message ||
+      if (isAdded) {
+        try {
+          const targetId = cartItem?.id ?? productId;
+          await deleteCartItem(targetId).unwrap();
+          toast.success(
+            t("products.removedFromCart", "تمت إزالة المنتج من السلة"),
+          );
+        } catch (error) {
+          const apiErr = error as ApiError<AddToCartDto>;
+          console.error("Error removing product from cart:", apiErr);
+          toast.error(
             t(
               "products.removeFromCartError",
               "حدث خطأ أثناء إزالة المنتج من السلة",
             ),
-        );
+          );
+        }
+      } else {
+        try {
+          await addToCart({ productId, dto: { quantity: 1 } }).unwrap();
+          toast.success(
+            t("products.addedToCart", "تمت إضافة المنتج إلى السلة"),
+          );
+        } catch (error) {
+          const apiErr = error as ApiError<AddToCartDto>;
+          console.error("Error adding product to cart:", apiErr);
+          toast.error(
+            t("products.addToCartError", "حدث خطأ أثناء إضافة المنتج إلى السلة"),
+          );
+        }
       }
-    } else {
-      try {
-        await addToCart({ productId, dto: { quantity: 1 } }).unwrap();
-        toast.success(t("products.addedToCart", "تمت إضافة المنتج إلى السلة"));
-      } catch (error) {
-        const apiErr = error as ApiError<AddToCartDto>;
-        console.error("Error adding product to cart:", apiErr);
-        toast.error(apiErr?.message);
-      }
-    }
-  };
+    };
 
   return (
     <div
@@ -98,76 +103,82 @@ export default function BentoItem({
         navigate(`/products?category%2F1=&category=${product.categoryId}`);
         scrollTo({ top: 0, behavior: "smooth" });
       }}
-      className={`group relative overflow-hidden rounded-[2rem] border border-border bg-card p-6 transition-all duration-500 hover:border-primary/80 hover:shadow-2xl flex flex-col justify-between min-h-[320px] cursor-pointer ${spanClass}`}
+      className={`group relative w-full bg-card/60 backdrop-blur-xl border border-border/60 hover:border-primary/50 rounded-[2rem] p-3.5 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 flex flex-col justify-between overflow-hidden cursor-pointer ${spanClass}`}
     >
-      {/* الصورة الخلفية والـ Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-90 transition-transform duration-700 group-hover:scale-105"
-        style={{ backgroundImage: `url(${displayImage})` }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/30" />
-
-      {/* الجزء العلوي: التقييم + زر الـ Info */}
-      <div className="relative z-10 flex items-center justify-between gap-2">
-        {reviewsCount > 0 ? (
-          <div className="flex items-center gap-1 bg-black/50 backdrop-blur-md text-white px-2.5 py-1 rounded-full border border-white/10 text-xs font-bold">
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span>{averageRating}</span>
-            <span className="text-gray-400 text-[10px]">({reviewsCount})</span>
-          </div>
-        ) : (
-          <div className="px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white/70 text-[11px] font-bold">
-            {t("products.noRating", "وجبة مميزة")}
-          </div>
-        )}
-
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onOpenModal(product.id);
+      {/* قسم الصورة العلوية */}
+      <div className="relative h-52 w-full rounded-[1.5rem] overflow-hidden bg-muted">
+        <img
+          src={displayImage}
+          alt={productName}
+          onError={(e) => {
+            e.currentTarget.src = burgerFallback;
           }}
-          className="w-9 h-9 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center backdrop-blur-md border border-white/10 transition-all duration-200 hover:scale-105 active:scale-95 shadow-md cursor-pointer"
-          title={t("products.details", "التفاصيل")}
-        >
-          <Info className="w-4 h-4" />
-        </button>
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        />
+
+        {/* Overlay تدرج ناعم */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+
+        {/* التقييم والتفاصيل فوق الصورة */}
+        <div className="absolute top-3 inset-x-3 flex items-center justify-between z-10">
+          {reviewsCount > 0 ? (
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white text-xs font-black shadow-lg">
+              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              <span>{averageRating}</span>
+              <span className="text-[10px] text-white/70 font-semibold dir-ltr inline-block">
+                ({reviewsCount})
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/20 backdrop-blur-md border border-primary/40 text-primary-foreground text-xs font-black shadow-lg">
+              <Sparkles className="w-3.5 h-3.5 animate-pulse text-primary" />
+              <span>{t("products.noRating", "جديد 🚀")}</span>
+            </div>
+          )}
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenModal(product.id);
+            }}
+            className="w-8 h-8 bg-black/50 hover:bg-primary text-white hover:text-primary-foreground rounded-full flex items-center justify-center backdrop-blur-md border border-white/15 transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg cursor-pointer"
+            title={t("products.details", "التفاصيل")}
+          >
+            <Info className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
-      {/* الجزء السفلي: تفاصيل الوجبة والشراء */}
-      <div className="relative z-10 space-y-4 mt-16">
-        <div className="space-y-1">
-          <h3 className="text-xl md:text-2xl font-black text-white group-hover:text-primary transition-colors line-clamp-1">
-            {productName}
-          </h3>
-          {productDesc && (
-            <p className="text-xs text-gray-300 line-clamp-2 leading-relaxed font-medium">
-              {productDesc}
-            </p>
-          )}
-        </div>
+      {/* معلومات الوجبة والسعر */}
+      <div className="p-2 pt-4 space-y-4">
+        <h3 className="font-black text-lg text-foreground tracking-tight leading-snug line-clamp-1 group-hover:text-primary transition-colors duration-300">
+          {productName}
+        </h3>
 
-        <div className="flex items-center justify-between pt-3 border-t border-white/15">
-          <div>
-            <span className="text-[10px] text-gray-400 block font-semibold">
-              {t("products.priceLabel", "السعر")}
+        <div className="flex items-center justify-between pt-1">
+          {/* السعر */}
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+              {t("products.price", "السعر")}
             </span>
-            <span className="text-lg font-black text-white">
-              {product.price}{" "}
-              <span className="text-xs font-normal">
+            <div className="flex items-baseline gap-1 text-foreground">
+              <span className="text-xl font-black">{product.price}</span>
+              <span className="text-xs font-bold text-primary">
                 {t("products.currency", "EGP")}
               </span>
-            </span>
+            </div>
           </div>
 
+          {/* زر إضافة للسلة */}
           <button
             disabled={!product.isAvailable || isPending}
             onClick={handleAddToCart(product.id)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-black text-xs shadow-lg transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 ${
+            className={`px-4 py-2.5 rounded-2xl font-black text-xs flex items-center gap-2 transition-all duration-300 shadow-md cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${
               !product.isAvailable
-                ? "bg-neutral-800 text-neutral-500 cursor-not-allowed opacity-50"
+                ? "bg-muted text-muted-foreground cursor-not-allowed"
                 : isAdded
-                  ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/30"
-                  : "bg-primary text-white shadow-primary/30 hover:bg-primary/90"
+                  ? "bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-500 border border-emerald-500/30 shadow-emerald-500/10"
+                  : "bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20 hover:shadow-primary/40 hover:scale-105"
             }`}
           >
             {isPending ? (
@@ -175,7 +186,7 @@ export default function BentoItem({
             ) : isAdded ? (
               <>
                 <Check className="w-4 h-4" />
-                <span>{t("products.addedToCart", "تمت الإضافة")}</span>
+                <span>{t("products.addedToCart", "في السلة")}</span>
               </>
             ) : (
               <>

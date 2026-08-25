@@ -85,8 +85,8 @@ export const Auth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-background text-foreground p-4 lg:p-8 selection:bg-primary selection:text-primary-foreground transition-colors duration-300 relative">
-      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 bg-card rounded-3xl border border-border shadow-2xl overflow-hidden min-h-[680px] relative transition-colors duration-300">
+    <div className="min-h-screen w-full flex items-center justify-center  text-foreground p-4 lg:p-8 selection:bg-primary selection:text-primary-foreground transition-colors duration-300 relative">
+      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 rounded-3xl border border-border shadow-2xl overflow-hidden min-h-[680px] relative transition-colors duration-300">
         {/* Left Side Banner */}
         <BrandBanner />
 

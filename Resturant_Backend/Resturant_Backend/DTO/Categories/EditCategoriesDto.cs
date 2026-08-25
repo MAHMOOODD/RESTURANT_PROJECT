@@ -15,9 +15,8 @@ namespace Resturant_Backend.DTO.Categories
 
 
         [Required(ErrorMessage = "Image URL Is Required")]
-        [RegularExpression(pattern: @".+\.(jpg|jpeg|png|gif|webp)$", ErrorMessage = "Invalid Image Format")]
 
-        public required string ImageUrl { get; set; }
+        public IFormFile? ImageUrl { get; set; }
 
     }
 }

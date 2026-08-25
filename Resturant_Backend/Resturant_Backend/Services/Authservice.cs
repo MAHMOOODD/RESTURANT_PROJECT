@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.User;
 using Resturant_Backend.Helpers;
+using Resturant_Backend.Helpers.PhotosHandle;
 using Resturant_Backend.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -21,19 +22,22 @@ public class Authservice : IAuthService
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly SignInManager<Appuser> _signInManager;
     private readonly IEmailService _emailService;
-
+    private readonly IPhotoService _photoService;
     public Authservice(
         UserManager<Appuser> userManager,
         IOptions<JwtHelper> options,
         RoleManager<IdentityRole> roleManager,
         SignInManager<Appuser> signInManager,
-        IEmailService emailService)
+        IEmailService emailService,
+        IPhotoService photoService
+        )
     {
         _userManager = userManager;
         _jwtHelper = options.Value;
         _roleManager = roleManager;
         _signInManager = signInManager;
         _emailService = emailService;
+        _photoService = photoService;
     }
 
     public async Task<UserCreatedModel> RegisterAsync(RegisterModel model, string origin)
@@ -212,8 +216,25 @@ public class Authservice : IAuthService
         user.FullName = model.FullName ?? user.FullName;
         user.Address = model.Address ?? user.Address;
 
+        // التعامل مع صورة البروفايل لو المستخدم رفع صورة جديدة
+        if(model.ImageUrl != null && model.ImageUrl.Length > 0)
+        {
+            // حذف الصورة القديمة من Cloudinary لو موجودة
+            if(!string.IsNullOrEmpty(user.ImagePublicId))
+            {
+                await _photoService.DeletePhotoAsync(user.ImagePublicId);
+            }
+
+            var uploadResult = await _photoService.AddPhotoAsync(model.ImageUrl);
+            Ensure.Check(uploadResult.Error == null, uploadResult.Error?.Message ?? "Image upload failed");
+
+            user.ImageUrl = uploadResult.SecureUrl.ToString();
+            user.ImagePublicId = uploadResult.PublicId;
+        }
+
         var result = await _userManager.UpdateAsync(user);
         Ensure.Check(result.Succeeded, "Failed to update profile");
+
         if(model.PhoneNumber is not null)
         {
             var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);

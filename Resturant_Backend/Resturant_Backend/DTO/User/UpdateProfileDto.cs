@@ -9,4 +9,6 @@ public class UpdateProfileDto
     public string? Address { get; set; }
     [RegularExpression(@"^01[0125]\d{8}$", ErrorMessage = "Invalid phone number")]
     public string? PhoneNumber { get; set; }
+
+    public IFormFile? ImageUrl { get; set; }
 }

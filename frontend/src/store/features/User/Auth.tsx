@@ -20,6 +20,7 @@ export interface GetUserInfo {
   phoneNumber?: string;
   userName: string;
   email: string;
+  imageUrl?: string; // Optional, Regex: .+\.(jpg|jpeg|png|gif|webp)$
 }
 
 export const authApi = createApi({

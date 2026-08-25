@@ -1,45 +1,30 @@
-import { useTheme } from "next-themes";
-import { Toaster as Sonner, type ToasterProps } from "sonner";
-import {
-  CircleCheckIcon,
-  InfoIcon,
-  TriangleAlertIcon,
-  OctagonXIcon,
-  Loader2Icon,
-} from "lucide-react";
+import { Toaster as Sonner } from "sonner";
+
+type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
-
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
+      theme="dark"
       className="toaster group"
       toastOptions={{
         classNames: {
           toast:
-            "group toast group-[.toaster]:bg-card/95 group-[.toaster]:text-card-foreground group-[.toaster]:border-border group-[.toaster]:shadow-2xl group-[.toaster]:backdrop-blur-xl group-[.toaster]:rounded-2xl group-[.toaster]:p-4 group-[.toaster]:font-medium group-[.toaster]:border",
-          description: "group-[.toast]:text-muted-foreground text-xs",
+            "group toast group-[.toaster]:bg-[#120f17]/90 group-[.toaster]:text-foreground group-[.toaster]:border-[rgba(255,255,255,0.12)] group-[.toaster]:shadow-xl group-[.toaster]:shadow-[#ff2a4b]/10 group-[.toaster]:backdrop-blur-xl group-[.toaster]:rounded-2xl group-[.toaster]:p-4",
+          description: "group-[.toast]:text-muted-foreground text-xs font-medium",
           actionButton:
-            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground group-[.toast]:rounded-xl font-bold",
+            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground font-bold rounded-xl px-3 py-1.5 text-xs shadow-md shadow-primary/20",
           cancelButton:
-            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground group-[.toast]:rounded-xl",
+            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground font-semibold rounded-xl px-3 py-1.5 text-xs",
           success:
-            "group-[.toaster]:!border-emerald-500/30 group-[.toaster]:!text-emerald-500 dark:group-[.toaster]:!text-emerald-400 group-[.toaster]:[--success-icon:#10b981]",
+            "group-[.toast]:border-emerald-500/30 group-[.toast]:text-emerald-400",
           error:
-            "group-[.toaster]:!border-red-500/30 group-[.toaster]:!text-red-500 dark:group-[.toaster]:!text-red-400 group-[.toaster]:[--error-icon:#ef4444]",
-          warning:
-            "group-[.toaster]:!border-amber-500/30 group-[.toaster]:!text-amber-500 dark:group-[.toaster]:!text-amber-400 group-[.toaster]:[--warning-icon:#f59e0b]",
+            "group-[.toast]:border-rose-500/30 group-[.toast]:text-rose-400",
           info:
-            "group-[.toaster]:!border-blue-500/30 group-[.toaster]:!text-blue-500 dark:group-[.toaster]:!text-blue-400 group-[.toaster]:[--info-icon:#3b82f6]",
+            "group-[.toast]:border-blue-500/30 group-[.toast]:text-blue-400",
+          warning:
+            "group-[.toast]:border-amber-500/30 group-[.toast]:text-amber-400",
         },
-      }}
-      icons={{
-        success: <CircleCheckIcon className="size-5 text-emerald-500 shrink-0" />,
-        info: <InfoIcon className="size-5 text-blue-500 shrink-0" />,
-        warning: <TriangleAlertIcon className="size-5 text-amber-500 shrink-0" />,
-        error: <OctagonXIcon className="size-5 text-red-500 shrink-0" />,
-        loading: <Loader2Icon className="size-5 text-primary animate-spin shrink-0" />,
       }}
       {...props}
     />

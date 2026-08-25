@@ -166,19 +166,40 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateProfileDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateProfileDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateProfileDto"
+                "type": "object",
+                "properties": {
+                  "FullName": {
+                    "pattern": "^[\\p{L}\\s]+$",
+                    "type": "string"
+                  },
+                  "Address": {
+                    "type": "string"
+                  },
+                  "PhoneNumber": {
+                    "pattern": "^01[0125]\\d{8}$",
+                    "type": "string"
+                  },
+                  "ImageUrl": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "FullName": {
+                  "style": "form"
+                },
+                "Address": {
+                  "style": "form"
+                },
+                "PhoneNumber": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -360,14 +381,14 @@
         }
       }
     },
-    "/api/Cart/DeleteCartItem/{cartItemId}": {
+    "/api/Cart/DeleteCartItem/{id}": {
       "delete": {
         "tags": [
           "Cart"
         ],
         "parameters": [
           {
-            "name": "cartItemId",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -437,19 +458,39 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/AddCategoriesDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddCategoriesDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddCategoriesDto"
+                "required": [
+                  "ImageUrl",
+                  "Name",
+                  "NameAr"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "minLength": 3,
+                    "type": "string"
+                  },
+                  "NameAr": {
+                    "minLength": 3,
+                    "type": "string"
+                  },
+                  "ImageUrl": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "NameAr": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -479,19 +520,39 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/EditCategoriesDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditCategoriesDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditCategoriesDto"
+                "required": [
+                  "ImageUrl",
+                  "Name",
+                  "NameAr"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "minLength": 3,
+                    "type": "string"
+                  },
+                  "NameAr": {
+                    "minLength": 3,
+                    "type": "string"
+                  },
+                  "ImageUrl": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "NameAr": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -1060,19 +1121,81 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/AddProductDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddProductDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddProductDto"
+                "required": [
+                  "CategoryId",
+                  "Description",
+                  "DescriptionAr",
+                  "ImageUrl",
+                  "IsAvailable",
+                  "Name",
+                  "NameAr",
+                  "Price"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "NameAr": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "DescriptionAr": {
+                    "type": "string"
+                  },
+                  "Price": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "PreparingTime": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "ImageUrl": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "IsAvailable": {
+                    "type": "boolean"
+                  },
+                  "CategoryId": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "NameAr": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "DescriptionAr": {
+                  "style": "form"
+                },
+                "Price": {
+                  "style": "form"
+                },
+                "PreparingTime": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                },
+                "IsAvailable": {
+                  "style": "form"
+                },
+                "CategoryId": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -1102,19 +1225,80 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/EditProductDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditProductDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditProductDto"
+                "required": [
+                  "CategoryId",
+                  "Description",
+                  "DescriptionAr",
+                  "IsAvailable",
+                  "Name",
+                  "NameAr",
+                  "Price"
+                ],
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "NameAr": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "DescriptionAr": {
+                    "type": "string"
+                  },
+                  "Price": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "PreparingTime": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "ImageUrl": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "IsAvailable": {
+                    "type": "boolean"
+                  },
+                  "CategoryId": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "encoding": {
+                "Name": {
+                  "style": "form"
+                },
+                "NameAr": {
+                  "style": "form"
+                },
+                "Description": {
+                  "style": "form"
+                },
+                "DescriptionAr": {
+                  "style": "form"
+                },
+                "Price": {
+                  "style": "form"
+                },
+                "PreparingTime": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                },
+                "IsAvailable": {
+                  "style": "form"
+                },
+                "CategoryId": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -1362,30 +1546,6 @@
   },
   "components": {
     "schemas": {
-      "AddCategoriesDto": {
-        "required": [
-          "imageUrl",
-          "name",
-          "nameAr"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "minLength": 3,
-            "type": "string"
-          },
-          "nameAr": {
-            "minLength": 3,
-            "type": "string"
-          },
-          "imageUrl": {
-            "minLength": 1,
-            "pattern": ".+\\.(jpg|jpeg|png|gif|webp)$",
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
       "AddCouponDto": {
         "type": "object",
         "properties": {
@@ -1404,9 +1564,6 @@
             "minimum": 1,
             "type": "number",
             "format": "double"
-          },
-          "isActive": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1421,58 +1578,6 @@
           "coupon": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "AddProductDto": {
-        "required": [
-          "categoryId",
-          "description",
-          "descriptionAr",
-          "imageUrl",
-          "isAvailable",
-          "name",
-          "nameAr",
-          "price"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "nameAr": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "description": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "descriptionAr": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "price": {
-            "type": "number",
-            "format": "double"
-          },
-          "preparingTime": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "imageUrl": {
-            "minLength": 1,
-            "pattern": ".+\\.(jpg|jpeg|png|gif|webp)$",
-            "type": "string"
-          },
-          "isAvailable": {
-            "type": "boolean"
-          },
-          "categoryId": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -1534,30 +1639,6 @@
         },
         "additionalProperties": false
       },
-      "EditCategoriesDto": {
-        "required": [
-          "imageUrl",
-          "name",
-          "nameAr"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "minLength": 3,
-            "type": "string"
-          },
-          "nameAr": {
-            "minLength": 3,
-            "type": "string"
-          },
-          "imageUrl": {
-            "minLength": 1,
-            "pattern": ".+\\.(jpg|jpeg|png|gif|webp)$",
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
       "EditCouponDto": {
         "type": "object",
         "properties": {
@@ -1576,61 +1657,6 @@
             "minimum": 1,
             "type": "number",
             "format": "double"
-          },
-          "isActive": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "EditProductDto": {
-        "required": [
-          "categoryId",
-          "description",
-          "descriptionAr",
-          "imageUrl",
-          "isAvailable",
-          "name",
-          "nameAr",
-          "price"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "nameAr": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "description": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "descriptionAr": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "price": {
-            "type": "number",
-            "format": "double"
-          },
-          "preparingTime": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "imageUrl": {
-            "minLength": 1,
-            "pattern": ".+\\.(jpg|jpeg|png|gif|webp)$",
-            "type": "string"
-          },
-          "isAvailable": {
-            "type": "boolean"
-          },
-          "categoryId": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -1788,26 +1814,6 @@
           "password": {
             "minLength": 1,
             "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateProfileDto": {
-        "type": "object",
-        "properties": {
-          "fullName": {
-            "pattern": "^[\\p{L}\\s]+$",
-            "type": "string",
-            "nullable": true
-          },
-          "address": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "pattern": "^01[0125]\\d{8}$",
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false

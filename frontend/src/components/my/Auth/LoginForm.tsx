@@ -40,81 +40,81 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   });
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3.5">
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       {apiError?.errors && (
-        <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-2.5 text-rose-500 text-xs font-medium">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="p-4 rounded-2xl bg-rose-500/10 border-2 border-rose-500/30 flex items-center gap-3 text-rose-500 text-sm sm:text-base font-bold">
+          <AlertCircle className="w-6 h-6 shrink-0" />
           <span>{t("auth.login_error")}</span>
         </div>
       )}
 
       {/* Email */}
-      <div className="space-y-1">
-        <label className="text-xs font-bold text-foreground">
+      <div className="space-y-2">
+        <label className="text-sm sm:text-base font-extrabold text-foreground">
           {t("auth.email_address")}
         </label>
         <div className="relative">
           <Mail
-            className={`w-4 h-4 absolute ${isRtl ? "right-3.5" : "left-3.5"} top-1/2 -translate-y-1/2 text-muted-foreground`}
+            className={`w-5 h-5 absolute ${isRtl ? "right-4" : "left-4"} top-1/2 -translate-y-1/2 text-muted-foreground`}
           />
           <input
             type="email"
             {...form.register("email")}
             placeholder={t("auth.email_placeholder")}
-            className={`w-full ${isRtl ? "pr-10 pl-4" : "pl-10 pr-4"} py-2.5 rounded-xl bg-muted/50 border ${
+            className={`w-full ${isRtl ? "pr-12 pl-4" : "pl-12 pr-4"} py-3.5 rounded-2xl bg-muted/50 border-2 ${
               form.formState.errors.email ? "border-rose-500" : "border-input"
-            } text-foreground text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary`}
+            } text-foreground text-base sm:text-lg font-medium focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20`}
           />
         </div>
         {form.formState.errors.email && (
-          <p className="text-[11px] text-rose-500 font-medium">
+          <p className="text-xs sm:text-sm text-rose-500 font-bold">
             {form.formState.errors.email.message}
           </p>
         )}
       </div>
 
       {/* Password */}
-      <div className="space-y-1">
+      <div className="space-y-2">
         <div className="flex justify-between items-center">
-          <label className="text-xs font-bold text-foreground">
+          <label className="text-sm sm:text-base font-extrabold text-foreground">
             {t("auth.password")}
           </label>
           <button
             type="button"
             onClick={onOpenForgotModal}
-            className="text-xs text-primary hover:underline font-semibold cursor-pointer"
+            className="text-xs sm:text-sm text-primary hover:underline font-bold cursor-pointer"
           >
             {t("auth.forgot_password")}
           </button>
         </div>
         <div className="relative">
           <Lock
-            className={`w-4 h-4 absolute ${isRtl ? "right-3.5" : "left-3.5"} top-1/2 -translate-y-1/2 text-muted-foreground`}
+            className={`w-5 h-5 absolute ${isRtl ? "right-4" : "left-4"} top-1/2 -translate-y-1/2 text-muted-foreground`}
           />
           <input
             type={showPassword ? "text" : "password"}
             {...form.register("password")}
             placeholder="••••••••"
-            className={`w-full ${isRtl ? "pr-10 pl-10" : "pl-10 pr-10"} py-2.5 rounded-xl bg-muted/50 border ${
+            className={`w-full ${isRtl ? "pr-12 pl-12" : "pl-12 pr-12"} py-3.5 rounded-2xl bg-muted/50 border-2 ${
               form.formState.errors.password
                 ? "border-rose-500"
                 : "border-input"
-            } text-foreground text-sm focus:outline-none focus:border-primary`}
+            } text-foreground text-base sm:text-lg font-medium focus:outline-none focus:border-primary`}
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className={`absolute ${isRtl ? "left-3.5" : "right-3.5"} top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer`}
+            className={`absolute ${isRtl ? "left-4" : "right-4"} top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer`}
           >
             {showPassword ? (
-              <EyeOff className="w-4 h-4" />
+              <EyeOff className="w-5 h-5" />
             ) : (
-              <Eye className="w-4 h-4" />
+              <Eye className="w-5 h-5" />
             )}
           </button>
         </div>
         {form.formState.errors.password && (
-          <p className="text-[11px] text-rose-500 font-medium">
+          <p className="text-xs sm:text-sm text-rose-500 font-bold">
             {form.formState.errors.password.message}
           </p>
         )}
@@ -123,13 +123,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       <button
         disabled={isLoading}
         type="submit"
-        className="w-full mt-2 py-3 px-6 rounded-xl bg-gradient-to-r from-rose-600 via-orange-500 to-amber-500 text-white font-bold text-sm shadow-lg shadow-rose-500/20 hover:shadow-rose-500/35 disabled:opacity-50 transition-all flex items-center justify-center gap-2 cursor-pointer"
+        className="w-full mt-4 py-4 px-8 rounded-2xl bg-gradient-to-r from-rose-600 via-orange-500 to-amber-500 text-white font-extrabold text-base sm:text-lg shadow-xl shadow-rose-500/20 hover:shadow-rose-500/35 disabled:opacity-50 transition-all flex items-center justify-center gap-3 cursor-pointer active:scale-[0.98]"
       >
         <span>{t("auth.sign_in")}</span>
         {isRtl ? (
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-5 h-5" />
         ) : (
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-5 h-5" />
         )}
       </button>
     </form>

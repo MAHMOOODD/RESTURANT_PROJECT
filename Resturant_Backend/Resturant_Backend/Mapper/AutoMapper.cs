@@ -25,12 +25,16 @@ namespace Resturant_Backend.Mapper
             CreateMap<Category, EditCategoriesDto>().ReverseMap();
 
 
-            // products Mapping
-            CreateMap<Product, GetProductDto>().ReverseMap();
-
-            CreateMap<Product, GetAllProductDto>().ReverseMap();
+            // Products Mapping
+            CreateMap<Product, GetProductDto>();
+            CreateMap<Product, GetAllProductDto>();
             CreateMap<Product, AddProductDto>().ReverseMap();
-            CreateMap<Product, EditProductDto>().ReverseMap();
+
+            // نقوم بإنشاء الـ Mapping لـ EditProductDto بشكل منفصل وبدون ReverseMap لمنع التضارب
+            CreateMap<EditProductDto, Product>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+
 
             //cart Mapping
             CreateMap<Cart_Item, AddToCartDto>().ReverseMap();

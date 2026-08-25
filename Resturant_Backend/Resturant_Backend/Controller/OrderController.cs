@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Resturant_Backend.Common.Exceptions;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Order;
 using Resturant_Backend.Interfaces;
@@ -34,7 +33,7 @@ namespace Resturant_Backend.Controller
             var (address, found) = await _unitOfWork.UserRepo.GetUserAddressAsync(userId);
 
 
-            Ensure.Check(found && string.IsNullOrEmpty(dto.UserAddress), "You must provide an address.");
+            Ensure.Check(found || string.IsNullOrEmpty(dto.UserAddress), "You must provide an address.");
 
 
 

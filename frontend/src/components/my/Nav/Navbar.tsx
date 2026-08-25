@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import {  ShoppingBag, User, Menu, X, ArrowLeft } from "lucide-react";
+import { ShoppingBag, User, Menu, X, ArrowLeft } from "lucide-react";
 import LanguageSwitcher from "@/components/my/LanguageSwitcher";
-import { ThemeToggle } from "@/components/my/ThemeToggle";
 import { Link, useNavigate } from "react-router-dom";
+
 import dish from "@/assets/vegetarian.png";
 import {
   useCheckAuthQuery,
@@ -13,6 +13,7 @@ import {
   useRevokeTokenMutation,
   authApi,
 } from "@/store/features/User/Auth";
+import { useGetCartQuery } from "@/store/features/cartApi";
 import { IoMdLogOut } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/store/features/User/authSlice";
@@ -26,29 +27,33 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 🎯 استدعاء حالة التسجيل من Redux State مباشرة
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated,
   );
 
   const [revokeToken, { isLoading }] = useRevokeTokenMutation();
 
-  // 🎯 جلب حالة التوثيق من الـ API بشرط وجود التوكن
   const { data: checkAuthData } = useCheckAuthQuery(undefined, {
     skip: !isAuthenticated,
   });
 
-  // تحديد هل المستخدم مسجل دخول أم لا
   const isLoggedIn = isAuthenticated && (checkAuthData?.data ?? true);
 
-  // 🎯 جلب بيانات المستخدم فقط إذا كان مسجل الدخول
   const { data: userInfo } = useGetUserInfoQuery(undefined, {
     skip: !isLoggedIn,
   });
 
-  // استخراج الاسم والحرف الأول للـ Avatar
+  const { data: cartData } = useGetCartQuery();
+  const cartCount = cartData
+    ? cartData.reduce((acc, item) => acc + item.quantity, 0)
+    : 0;
+
   const userName = userInfo?.fullName || userInfo?.userName;
-  const userInitial = userName ? userName.charAt(0).toUpperCase() : "U";
+  const userInitial = userInfo?.imageUrl ? (
+    <img src={userInfo.imageUrl} alt="User" className="w-full h-full object-cover rounded-full" />
+  ) : (
+    userName?.charAt(0).toUpperCase()
+  );
 
   const handleLogout = async () => {
     try {
@@ -56,13 +61,8 @@ export default function Navbar() {
     } catch (err) {
       console.error("Logout failed:", err);
     } finally {
-      // 1. مسح Redux auth state و LocalStorage
       dispatch(logout());
-
-      // 2. تصفير كاش RTK Query بالكامل وإلغاء الاستعلامات المعلقة
       dispatch(authApi.util.resetApiState());
-
-      // 3. التوجيه لصفحة Auth
       navigate("/auth", { replace: true });
     }
   };
@@ -74,152 +74,117 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-3 w-full z-50 px-4 sm:px-8">
+    <header className="sticky top-0 z-50 w-full px-4 pt-3 pb-1 transition-all duration-300">
       <nav
-        className={`max-w-7xl mx-auto rounded-2xl border transition-all duration-300 ${
+        className={`max-w-[1536px] mx-auto rounded-3xl border transition-all duration-300 ${
           isScrolled
-            ? "bg-card/80 backdrop-blur-xl border-border shadow-xl shadow-black/10 py-3 px-5"
-            : "bg-card/40 backdrop-blur-md border-border/60 py-4 px-6"
-        } flex items-center justify-between gap-4`}
+            ? "bg-card/85 backdrop-blur-2xl border-border shadow-xl shadow-black/10 py-3 px-5 lg:px-6"
+            : "bg-card/50 backdrop-blur-xl border-border/70 py-4 px-5 lg:px-8"
+        } flex items-center justify-between gap-3 lg:gap-4`}
       >
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-rose-500/30 group-hover:scale-105 transition-transform">
-           <img src={dish} alt="Logo" className="w-6 h-6" />
+        <Link to="/" className="flex items-center gap-3 group shrink-0">
+          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-rose-500 to-amber-500 flex items-center justify-center text-white shadow-xl shadow-rose-500/20 group-hover:scale-105 transition-transform duration-300">
+            <img src={dish} alt="Logo" className="w-7 h-7 object-contain" />
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold text-lg sm:text-xl tracking-wider leading-none text-foreground">
+            <span className="text-3xl font-black tracking-widest bg-gradient-to-r from-orange-400 via-rose-500 to-amber-400 bg-clip-text text-transparent">
               {t("brand")}
             </span>
-            <span className="text-[10px] text-muted-foreground font-medium mt-0.5">
+            <span className="text-[11px] text-muted-foreground font-semibold mt-0.5">
               {t("brandSub")}
             </span>
           </div>
         </Link>
 
-        {/* Links */}
-        <div className="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-medium">
-          <a
-            href="#menu"
-            className="px-3.5 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
+        {/* Links - تم تعديلها لتظهر فقط في الشاشات الأكبر من xl (1280px) لمنع التداخل */}
+        <div className="hidden xl:flex items-center gap-2 text-base font-bold">
+          <Link
+            to="/"
+            className="px-4 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
           >
-            {t("nav.menu")}
-          </a>
-          <a
-            href="#categories"
-            className="px-3.5 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
-          >
-            {t("nav.categories")}
-          </a>
+            {t("nav.Home")}
+          </Link>
+
           <Link
             to="/products"
-            className="px-3.5 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
+            className="px-4 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
           >
-            {t("nav.products")}
+            {t("nav.menu")}
           </Link>
-          <a
-            href="#deals"
-            className="px-3.5 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
+          <Link
+            to="/orders"
+            className="px-4 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
           >
-            {t("nav.deals")}
-          </a>
-          <a
-            href="#about"
-            className="px-3.5 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
+            {t("nav.orders")}
+          </Link>
+          
+          <Link
+            to ="/about"
+            className="px-4 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
           >
             {t("nav.about")}
-          </a>
+          </Link>
+          <Link
+            to="/contact"
+            className="px-4 py-2 rounded-xl text-foreground hover:text-primary hover:bg-muted/60 transition-all"
+          >
+            {t("nav.contact")}
+          </Link>
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 lg:gap-3 shrink-0">
           <LanguageSwitcher />
-          <ThemeToggle />
 
-          {/* 🎯 زر الحساب - رأسياً (الصورة فوق والاسم تحتها) + علامة أونلاين */}
+          {/* User Button */}
           <Link
-            to={isLoggedIn ? "/auth/profile" : "/auth"}
-            className="flex flex-col items-center justify-center gap-1 group cursor-pointer transition-all hover:opacity-95"
+            to={isLoggedIn ? "/profile" : "/auth"}
+            className="flex items-center justify-center group cursor-pointer transition-all hover:opacity-95"
           >
             {isLoggedIn ? (
-              <div
-                className="flex items-center gap-2.5 px-2 py-1.5 rounded-full 
-                bg-muted/50 hover:bg-muted 
-                border border-border/50 hover:border-border
-                transition-all duration-200 group"
-              >
-                {/* Avatar */}
+              <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-muted/50 hover:bg-muted border border-border/60 hover:border-border transition-all duration-200">
                 <div className="relative shrink-0">
-                  <div
-                    className="w-9 h-9 rounded-full overflow-hidden
-                    bg-gradient-to-br from-primary to-orange-500
-                    text-white font-bold text-sm
-                    flex items-center justify-center
-                    ring-2 ring-background
-                    shadow-sm
-                    transition-transform duration-200
-                    group-hover:scale-105"
-                  >
+                  <div className="w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-primary to-orange-500 text-white font-black text-sm flex items-center justify-center ring-2 ring-background shadow-md group-hover:scale-105 transition-transform">
                     {userInitial}
                   </div>
-
-                  {/* Online indicator */}
-                  <span
-                    className="absolute bottom-0 right-0
-                 w-2.5 h-2.5
-                 rounded-full
-                 bg-emerald-500
-                 ring-2 ring-background"
-                  />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-background" />
                 </div>
 
-                {/* User info */}
                 <div className="hidden sm:flex flex-col min-w-0 leading-tight">
                   <span className="text-[10px] font-medium text-muted-foreground">
                     {t("nav.welcome", "مرحباً")}
                   </span>
-
-                  <span className="max-w-[110px] truncate text-xs font-semibold text-foreground">
+                  <span className="max-w-[100px] truncate text-xs font-bold text-foreground">
                     {userName || t("nav.account")}
                   </span>
                 </div>
-
-                {/* Chevron */}
               </div>
             ) : (
-              <>
-                <div
-                  className="
-    w-10 h-10
-    rounded-full
-    flex items-center justify-center
-    bg-muted/60
-    border border-border/60
-    text-muted-foreground
-    group-hover:bg-primary/10
-    group-hover:border-primary/40
-    group-hover:text-primary
-    transition-all duration-200
-  "   >
-                  <User className="w-[18px] h-[18px]" strokeWidth={1.8} />
-                </div>
-              </>
+              <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-muted/60 border border-border/60 text-muted-foreground group-hover:bg-primary/10 group-hover:border-primary/40 group-hover:text-primary transition-all duration-200">
+                <User className="w-4 h-4" strokeWidth={2} />
+              </div>
             )}
           </Link>
 
           {/* Shopping Bag */}
-          <button className="relative p-2.5 rounded-xl border border-border bg-card text-foreground hover:border-primary/50 hover:text-primary transition-all cursor-pointer">
+          <button
+            onClick={() => navigate("/cart")}
+            className="relative p-2.5 rounded-2xl border border-border/80 bg-card text-foreground hover:border-primary/50 hover:text-primary transition-all cursor-pointer active:scale-95"
+          >
             <ShoppingBag className="w-4 h-4" />
-            <span className="absolute -top-1.5 -right-1.5 bg-primary text-primary-foreground text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-card shadow-md">
-              3
-            </span>
+            {cartCount > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 bg-primary text-primary-foreground text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-card shadow-md">
+                {cartCount}
+              </span>
+            )}
           </button>
 
-          {/* 1. زر أطلب الآن / تسجيل الدخول (عندما يكون غير مسجل دخول) */}
+          {/* Action Buttons */}
           {!isLoggedIn && (
             <Link
               to="/auth"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold shadow-lg shadow-primary/25 active:scale-95 transition-all cursor-pointer"
+              className="hidden lg:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-black shadow-lg shadow-primary/20 active:scale-95 transition-all cursor-pointer"
             >
               <span>{t("nav.order_now")}</span>
               <ArrowLeft
@@ -228,12 +193,11 @@ export default function Navbar() {
             </Link>
           )}
 
-          {/* 2. زر تسجيل الخروج (عندما يكون مسجل دخول) */}
           {isLoggedIn && (
             <button
               onClick={handleLogout}
               disabled={isLoading}
-              className={`hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-xs font-bold shadow-lg shadow-primary/25 transition-all ${
+              className={`hidden lg:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-primary text-primary-foreground text-xs font-black shadow-lg shadow-primary/20 transition-all ${
                 isLoading
                   ? "opacity-70 cursor-not-allowed"
                   : "hover:bg-primary/90 active:scale-95 cursor-pointer"
@@ -241,16 +205,17 @@ export default function Navbar() {
             >
               <span>{t("nav.log_out")}</span>
               {isLoading ? (
-                <span className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
+                <span className="w-3.5 h-3.5 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
               ) : (
                 <IoMdLogOut className="w-4 h-4" />
               )}
             </button>
           )}
 
+          {/* Mobile Menu Toggle - يظهر الآن في الشاشات الأقل من xl لمنع خروج العناصر */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2.5 rounded-xl border border-border bg-card text-foreground cursor-pointer"
+            className="xl:hidden p-2.5 rounded-2xl border border-border bg-card text-foreground cursor-pointer"
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -261,30 +226,71 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Drawer */}
+      {/* Mobile / Tablet Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-2 p-5 bg-card/95 backdrop-blur-2xl rounded-2xl border border-border shadow-2xl flex flex-col gap-3">
-          <a
-            href="#menu"
-            className="p-3 rounded-xl bg-muted/50 font-bold text-sm text-foreground"
+        <div className="xl:hidden mt-3 max-w-[1536px] mx-auto p-4 bg-card/95 backdrop-blur-2xl rounded-3xl border border-border/80 shadow-2xl flex flex-col gap-2">
+          <Link
+            to="/"
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-3.5 rounded-xl bg-muted/40 hover:bg-muted/80 font-bold text-sm text-foreground transition-colors flex items-center justify-between"
           >
-            {t("nav.menu")}
-          </a>
-          <a
-            href="#categories"
-            className="p-3 rounded-xl bg-muted/50 font-bold text-sm text-foreground"
+            <span>{t("nav.Home")}</span>
+          </Link>
+
+          <Link
+            to="/products"
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-3.5 rounded-xl bg-muted/40 hover:bg-muted/80 font-bold text-sm text-foreground transition-colors flex items-center justify-between"
           >
-            {t("nav.categories")}
-          </a>
+            <span>{t("nav.menu")}</span>
+          </Link>
+
           <a
             href="#deals"
-            className="p-3 rounded-xl bg-muted/50 font-bold text-sm text-foreground"
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-3.5 rounded-xl bg-muted/40 hover:bg-muted/80 font-bold text-sm text-foreground transition-colors flex items-center justify-between"
           >
-            {t("nav.deals")}
+            <span>{t("nav.deals")}</span>
           </a>
-          <button className="w-full py-3 mt-2 rounded-xl bg-primary text-primary-foreground font-bold text-sm shadow-lg shadow-primary/30 cursor-pointer">
-            {t("nav.order_now")}
-          </button>
+
+          <a
+            href="#about"
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-3.5 rounded-xl bg-muted/40 hover:bg-muted/80 font-bold text-sm text-foreground transition-colors flex items-center justify-between"
+          >
+            <span>{t("nav.about")}</span>
+          </a>
+
+          <a
+            href="#contact"
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-3.5 rounded-xl bg-muted/40 hover:bg-muted/80 font-bold text-sm text-foreground transition-colors flex items-center justify-between"
+          >
+            <span>{t("nav.contact")}</span>
+          </a>
+
+          <div className="pt-2 border-t border-border/50 mt-1 flex flex-col gap-2">
+            <Link
+              to={isLoggedIn ? "/profile" : "/auth"}
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full py-3.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-black text-center text-sm shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2"
+            >
+              <span>{isLoggedIn ? t("nav.account") : t("nav.order_now")}</span>
+            </Link>
+
+            {isLoggedIn && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleLogout();
+                }}
+                className="w-full py-3.5 rounded-xl bg-destructive/10 text-destructive hover:bg-destructive/20 font-black text-center text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>{t("nav.log_out")}</span>
+                <IoMdLogOut className="w-5 h-5" />
+              </button>
+            )}
+          </div>
         </div>
       )}
     </header>

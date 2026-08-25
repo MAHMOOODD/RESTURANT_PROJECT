@@ -11,9 +11,6 @@ namespace Resturant_Backend.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime ExpiryDate { get; set; } = DateTime.Now.AddDays(7);
-
-        public bool IsActive { get; set; }
-
         public List<Order> Orders { get; set; }
     }
 }

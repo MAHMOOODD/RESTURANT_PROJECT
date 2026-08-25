@@ -17,7 +17,9 @@
 
         public decimal Price { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? ImagePublicId { get; set; }
+
 
         public int PreparingTime { get; set; } = 18;// in minutes
 

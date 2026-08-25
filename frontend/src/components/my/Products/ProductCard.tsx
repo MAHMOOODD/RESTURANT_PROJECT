@@ -1,9 +1,16 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Star, Check, ShoppingBag, Info, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import {
+  Star,
+  Check,
+  ShoppingBag,
+  Info,
+  Loader2,
+  Sparkles,
+} from "lucide-react";
 import type { AddToCartDto, GetAllProductDto } from "@/types/types";
 import burger from "@/assets/bb.jpg";
-import ProductDetailsModal from "./ProductDetailsModal";
 import { useGetProductByIdQuery } from "@/store/features/productApi";
 import {
   useAddToCartMutation,
@@ -19,31 +26,29 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { t, i18n } = useTranslation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [addToCart, { isLoading: isAdding }] = useAddToCartMutation();
-  const [deleteCartItem, { isLoading: isDeleting }] = useDeleteCartItemMutation();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { data: cartData } = useGetCartQuery();
+  const [addToCart] = useAddToCartMutation();
+  const [deleteCartItem] = useDeleteCartItemMutation();
 
-  const cartItem = cartData?.find((item) => item.productId === product.id);
+  const { data: cartData, isLoading: isCartLoading } = useGetCartQuery();
+
+  const cartItem = cartData?.find(
+    (item) => Number(item.productId) === Number(product.id),
+  );
   const isAdded = cartItem !== undefined;
 
-  const isPending = isAdding || isDeleting;
-
-  // جلب بيانات المنتج التفصيلية بما فيها التقييمات
   const { data: fullProduct } = useGetProductByIdQuery(product.id);
 
   const isAr = i18n.language === "ar";
   const productName = isAr && product.nameAr ? product.nameAr : product.name;
-  const productDesc =
-    isAr && product.descriptionAr ? product.descriptionAr : product.description;
 
   const displayImage =
     product.imageUrl && product.imageUrl.trim() !== ""
       ? product.imageUrl
       : burger;
 
-  // حساب التقييمات الحقيقية من بيانات المنتج المفصلة
   const reviewsCount = fullProduct?.reviews?.length || 0;
   const averageRating =
     reviewsCount > 0
@@ -53,141 +58,145 @@ export default function ProductCard({ product }: ProductCardProps) {
         ).toFixed(1)
       : "0.0";
 
-  const handleAddToCart = (productId: number) => async () => {
-    const TargetId = cartItem?.id??productId; // Use cart item ID if available, otherwise use product ID
-    if (isAdded) {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    async function executeAction() {
+      setIsLoading(true);
       try {
-        await deleteCartItem(TargetId).unwrap();
-        toast.success(
-          t("products.removedFromCart", "تمت إزالة المنتج من السلة"),
-        );
+        if (isAdded && cartItem) {
+          await deleteCartItem(cartItem.id).unwrap();
+          toast.success(
+            t("products.removedFromCart", "تمت إزالة المنتج من السلة"),
+          );
+        } else {
+          await addToCart({
+            productId: product.id,
+            dto: { quantity: 1 },
+          }).unwrap();
+          toast.success(
+            t("products.addedToCart", "تمت إضافة المنتج إلى السلة"),
+          );
+        }
       } catch (error) {
         const apiErr = error as ApiError<AddToCartDto>;
-        console.error("Error removing product from cart:", apiErr);
+        console.error("Error managing cart:", apiErr);
         toast.error(
-          apiErr?.message ||
-            t(
-              "products.removeFromCartError",
-              "حدث خطأ أثناء إزالة المنتج من السلة",
-            ),
+          isAdded
+            ? t(
+                "products.removeFromCartError",
+                "حدث خطأ أثناء إزالة المنتج من السلة",
+              )
+            : t(
+                "products.addToCartError",
+                "يجب تسجيل الدخول لإضافة المنتجات للسلة",
+              ),
         );
-      }
-    } else {
-      try {
-        await addToCart({ productId: TargetId, dto: { quantity: 1 } }).unwrap();
-        toast.success(t("products.addedToCart", "تمت إضافة المنتج إلى السلة"));
-      } catch (error) {
-        const apiErr = error as ApiError<AddToCartDto>;
-        console.error("Error adding product to cart:", apiErr);
-        toast.error(apiErr?.message);
+      } finally {
+        setIsLoading(false);
       }
     }
+    executeAction();
+  };
+
+  const goToDetails = () => {
+    navigate(`/products/${product.id}`);
   };
 
   return (
-    <>
-      <div className="relative h-[380px] w-full rounded-[32px] overflow-hidden border border-border/40 shadow-xl group transition-all duration-300 hover:shadow-2xl hover:border-border/80 flex flex-col justify-between p-5 bg-card">
-        {/* الخلفية والصورة */}
-        <div className="absolute inset-0 z-0 bg-black">
-          <img
-            src={displayImage}
-            alt={productName}
-            onError={(e) => {
-              e.currentTarget.src = burger;
-            }}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-85"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/30" />
-        </div>
+    <div
+      onClick={goToDetails}
+      className="group relative w-full bg-card/60 backdrop-blur-xl border border-border/60 hover:border-primary/50 rounded-[2.5rem] p-4 sm:p-5 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 flex flex-col justify-between overflow-hidden cursor-pointer"
+    >
+      {/* الصورة العلوية */}
+      <div className="relative h-64 sm:h-72 w-full rounded-[2rem] overflow-hidden bg-muted">
+        <img
+          src={displayImage}
+          alt={productName}
+          onError={(e) => {
+            e.currentTarget.src = burger;
+          }}
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        />
 
-        {/* الجزء العلوي: التقييم الحقيقي (أو حالة عدم وجود تقييم) */}
-        <div className="relative z-10 flex items-center justify-between w-full">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+
+        <div className="absolute top-4 inset-x-4 flex items-center justify-between z-10">
           {reviewsCount > 0 ? (
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white text-xs font-black shadow-md">
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white text-xs font-black shadow-lg">
+              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
               <span>{averageRating}</span>
-              <span className="text-[10px] text-white/70 font-semibold">
+              <span className="text-[11px] text-white/70 font-semibold dir-ltr inline-block">
                 ({reviewsCount})
               </span>
             </div>
           ) : (
-            <div className="px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white/70 text-[11px] font-bold">
-              {t("products.noRating", "وجبة مميزة")}
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/20 backdrop-blur-md border border-primary/40 text-primary-foreground text-xs font-black shadow-lg">
+              <Sparkles className="w-4 h-4 animate-pulse text-primary" />
+              <span>{t("products.noRating", "جديد 🚀")}</span>
             </div>
           )}
 
           <button
-            onClick={() => setIsModalOpen(true)}
-            className="w-9 h-9 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center backdrop-blur-md border border-white/10 transition-all duration-200 hover:scale-105 active:scale-95 shadow-md cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              goToDetails();
+            }}
+            className="w-9 h-9 bg-black/50 hover:bg-primary text-white hover:text-primary-foreground rounded-full flex items-center justify-center backdrop-blur-md border border-white/15 transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg cursor-pointer"
             title={t("products.details", "التفاصيل")}
           >
             <Info className="w-4 h-4" />
           </button>
         </div>
-
-        {/* الجزء السفلي */}
-        <div className="relative z-10 space-y-3 pt-6">
-          <div className="space-y-1">
-            <h3 className="font-black text-xl text-white tracking-tight leading-snug line-clamp-1">
-              {productName}
-            </h3>
-            {productDesc && (
-              <p className="text-xs font-medium text-white/80 line-clamp-2 leading-relaxed">
-                {productDesc}
-              </p>
-            )}
-          </div>
-
-          <div className="pt-3 border-t border-white/15 flex items-center justify-between">
-            <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-white/60 uppercase">
-                {t("products.priceLabel", "السعر")}
-              </span>
-              <div className="flex items-baseline gap-1 text-white">
-                <span className="text-xl font-black">{product.price}</span>
-                <span className="text-xs font-bold text-white/80">
-                  {t("products.currency", "EGP")}
-                </span>
-              </div>
-            </div>
-
-            <button
-              disabled={!product.isAvailable || isPending}
-              onClick={handleAddToCart(product.id)}
-              className={`px-4 py-2.5 rounded-2xl font-black text-xs flex items-center gap-2 transition-all duration-200 shadow-lg cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${
-                !product.isAvailable
-                  ? "bg-neutral-800 text-neutral-500 cursor-not-allowed opacity-50"
-                  : isAdded
-                    ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/30"
-                    : "bg-red-600 hover:bg-red-700 text-white shadow-red-600/30"
-              }`}
-            >
-              {isPending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : isAdded ? (
-                <>
-                  <Check className="w-4 h-4" />
-                  <span>{t("products.addedToCart", "تمت الإضافة")}</span>
-                </>
-              ) : (
-                <>
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>{t("products.addToCart", "إضافة")}</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
       </div>
 
-      <ProductDetailsModal
-        productId={product.id}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onAddToCart={handleAddToCart(product.id)}
-        addedToCart={isAdded}
-        fallbackImage={burger}
-      />
-    </>
+      {/* التفاصيل والسعر */}
+      <div className="p-2 pt-5 space-y-4">
+        <h3 className="font-black text-xl sm:text-2xl text-foreground tracking-tight leading-snug line-clamp-1 group-hover:text-primary transition-colors duration-300">
+          {productName}
+        </h3>
+
+        <div className="flex items-center justify-between pt-1">
+          <div className="flex flex-col">
+            <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+              {t("products.price", "السعر")}
+            </span>
+            <div className="flex items-baseline gap-1 text-foreground">
+              <span className="text-2xl sm:text-3xl font-black">
+                {product.price}
+              </span>
+              <span className="text-sm font-bold text-primary">
+                {t("products.currency", "ج.م")}
+              </span>
+            </div>
+          </div>
+
+          <button
+            disabled={!product.isAvailable || isLoading || isCartLoading}
+            onClick={handleAddToCart}
+            className={`px-5 py-3 rounded-2xl font-black text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-md cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${
+              !product.isAvailable
+                ? "bg-muted text-muted-foreground cursor-not-allowed"
+                : isAdded
+                  ? "bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-500 border border-emerald-500/30 shadow-emerald-500/10"
+                  : "bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20 hover:shadow-primary/40 hover:scale-105"
+            }`}
+          >
+            {isLoading || isCartLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : isAdded ? (
+              <>
+                <Check className="w-4 h-4" />
+                <span>{t("products.addedToCart", "في السلة")}</span>
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="w-4 h-4" />
+                <span>{t("products.addToCart", "إضافة")}</span>
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

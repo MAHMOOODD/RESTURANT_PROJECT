@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Resturant_Backend.Common.Exceptions;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.User;
 using Resturant_Backend.Helpers;
@@ -78,7 +77,7 @@ public class AccountController : ControllerBase
 
     [Authorize]
     [HttpPut("UpdateProfile")]
-    public async Task<IActionResult> UpdateProfileAsync([FromBody] UpdateProfileDto model)
+    public async Task<IActionResult> UpdateProfileAsync([FromForm] UpdateProfileDto model)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");

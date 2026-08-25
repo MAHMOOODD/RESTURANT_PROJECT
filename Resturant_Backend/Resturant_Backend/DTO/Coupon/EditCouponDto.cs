@@ -13,6 +13,5 @@ namespace Resturant_Backend.DTO.Coupon
 
 
 
-        public bool IsActive { get; set; }
     }
 }

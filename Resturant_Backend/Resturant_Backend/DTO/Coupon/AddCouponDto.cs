@@ -12,6 +12,5 @@ namespace Resturant_Backend.DTO.Coupon
         public decimal MinimumAmount { get; set; }
 
 
-        public bool IsActive { get; set; }
     }
 }

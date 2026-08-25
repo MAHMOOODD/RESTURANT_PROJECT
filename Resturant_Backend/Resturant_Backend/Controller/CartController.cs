@@ -35,7 +35,12 @@ namespace Resturant_Backend.Controller
             var cartItems = _unitOfWork.CartRepo.GetAllCartItems(userId!);
 
             Ensure.NotNull(cartItems, "Cart was not found.");
-            Ensure.Check(cartItems.Any(), "Make sure you have items in your cart.");
+            if(!cartItems.Any())
+            {
+                return this.Success(cartItems);
+
+            }
+
 
             var cartItemsToShow = _mapper.Map<List<GetCartDto>>(cartItems);
             return this.Success(cartItemsToShow);
@@ -84,10 +89,10 @@ namespace Resturant_Backend.Controller
         }
 
         [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
-        [HttpDelete("DeleteCartItem/{cartItemId:int}")]
-        public async Task<IActionResult> Delete(int cartItemId)
+        [HttpDelete("DeleteCartItem/{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var cartItem = await _unitOfWork.CartRepo.DeleteAsync(cartItemId);
+            var cartItem = await _unitOfWork.CartRepo.DeleteAsync(id);
             Ensure.NotNull(cartItem, "Failed to delete cart item");
 
             await _unitOfWork.SaveChangesAsync();
@@ -103,6 +108,7 @@ namespace Resturant_Backend.Controller
             Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
             var deleted = await _unitOfWork.CartRepo.ClearCart(userId!);
+            await _unitOfWork.SaveChangesAsync();
             Ensure.Check(deleted, "cart is already empty");
 
             return this.SuccessMessage("Cart cleared successfully.");

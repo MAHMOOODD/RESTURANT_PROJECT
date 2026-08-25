@@ -18,10 +18,11 @@ namespace Resturant_Backend.Repository
         {
             return await _dbSet.Include(c => c.Orders).FirstOrDefaultAsync(c => c.Id == id);
         }
-        public override async Task<List<Coupon>> GetAllAsync()
+        public override async Task<List<Coupon>?> GetAllAsync()
         {
-            return await _dbSet.Include(c => c.Orders).ToListAsync();
+            return await _dbSet.Include(c => c.Orders).Where(c => c.ExpiryDate > DateTime.Now).ToListAsync();
         }
+
 
 
         public async Task<(string message, bool isvalid, decimal Discount)> ValidateCoupon(string coupon, decimal amount)

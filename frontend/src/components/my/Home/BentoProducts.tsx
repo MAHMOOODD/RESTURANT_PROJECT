@@ -1,12 +1,19 @@
-import {useState } from "react";
+import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 import { useGetAllProductsQuery } from "@/store/features/productApi";
-import ProductDetailsModal from "@/components/my/Products/ProductDetailsModal";
+import {
+  useAddToCartMutation,
+  useGetCartQuery,
+  useDeleteCartItemMutation,
+} from "@/store/features/cartApi";
+import type { AddToCartDto } from "@/types/types";
+import type { ApiError } from "@/services/baseQuery";
+
 import BentoHeader from "./BentoHeader";
 import BentoItem from "./BentoItem";
-import burgerFallback from "@/assets/bb.jpg";
-
+import { useTranslation } from "react-i18next";
 const BENTO_SPANS = [
   "col-span-1 md:col-span-2 lg:col-span-2",
   "col-span-1 md:col-span-1 lg:col-span-1",
@@ -19,6 +26,12 @@ export default function BentoProducts() {
   const [selectedProductId, setSelectedProductId] = useState<number | null>(
     null,
   );
+  const [actionLoadingId, setActionLoadingId] = useState<number | null>(null);
+  const { t } = useTranslation();
+
+  const [addToCart] = useAddToCartMutation();
+  const [deleteCartItem] = useDeleteCartItemMutation();
+  const { data: cartData } = useGetCartQuery();
 
   const {
     data: productsRes,
@@ -36,10 +49,45 @@ export default function BentoProducts() {
       )
     : [];
 
+  // دالة التعامل مع الإضافة والحذف من السلة
+  const handleAddToCart = (productId: number) => async () => {
+    const cartItem = cartData?.find(
+      (item) => Number(item.productId) === Number(productId),
+    );
+    const isAdded = cartItem !== undefined;
+
+    setActionLoadingId(productId);
+
+    try {
+      if (isAdded && cartItem) {
+        await deleteCartItem(cartItem.id).unwrap();
+        toast.success(
+          t("products.removedFromCart")
+        );
+      } else {
+        await addToCart({
+          productId: productId,
+          dto: { quantity: 1 },
+        }).unwrap();
+        toast.success(t("products.addedToCart"));
+      }
+    } catch (error) {
+      const apiErr = error as ApiError<AddToCartDto>;
+      console.error("Error managing cart:", apiErr);
+      toast.error(
+        isAdded
+          ? t("products.removeFromCartError")
+          : t("products.addToCartError"),
+      );
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
   if (isLoading) {
     return (
-      <div className="flex h-64 items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="flex h-96 items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     );
   }
@@ -48,31 +96,40 @@ export default function BentoProducts() {
     return null;
   }
 
+  // التحقق مما إذا كان المنتج المحدد في المودال مضافاً للسلة أم لا
+  const selectedCartItem = cartData?.find(
+    (item) => Number(item.productId) === Number(selectedProductId),
+  );
+  const isSelectedAdded = selectedCartItem !== undefined;
+  console.log("Selected Product ID:", isSelectedAdded);
+
   return (
-    <section className="py-10 space-y-6">
+    <section className="py-16 space-y-10">
       <BentoHeader />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {topProducts.map((prod, index) => (
-          <BentoItem
-            key={prod.id}
-            product={prod}
-            spanClass={BENTO_SPANS[index % BENTO_SPANS.length]}
-            onOpenModal={(id) => setSelectedProductId(id)}
-          />
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {topProducts.map((prod, index) => {
+          const cartItem = cartData?.find(
+            (item) => Number(item.productId) === Number(prod.id),
+          );
+          const isAdded = cartItem !== undefined;
+
+          return (
+            <BentoItem
+              key={prod.id}
+              product={prod}
+              spanClass={BENTO_SPANS[index % BENTO_SPANS.length]}
+              onOpenModal={(id) => setSelectedProductId(id)}
+              isAdded={isAdded}
+              isLoading={actionLoadingId === prod.id}
+              onAddToCart={handleAddToCart(prod.id)}
+            />
+          );
+        })}
       </div>
 
-      {selectedProductId !== null && (
-        <ProductDetailsModal
-          productId={selectedProductId}
-          isOpen={selectedProductId !== null}
-          onClose={() => setSelectedProductId(null)}
-          onAddToCart={() => {}}
-          addedToCart={false}
-          fallbackImage={burgerFallback}
-        />
-      )}
+      
+    
     </section>
   );
 }

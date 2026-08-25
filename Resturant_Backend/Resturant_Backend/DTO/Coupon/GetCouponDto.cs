@@ -13,7 +13,6 @@ namespace Resturant_Backend.DTO.Coupon
         public DateTime CreatedAt { get; set; }
         public DateTime ExpiryDate { get; set; }
 
-        public bool IsActive { get; set; }
         public List<GetOrderDto> Orders { get; set; } = new();
     }
 }
