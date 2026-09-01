@@ -1,1 +1,10 @@
+# .NET
+bin/
+obj/
+*.csproj.user
 .vs/
+
+# Node / React
+node_modules/
+dist/
+.env
