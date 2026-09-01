@@ -1,4 +1,3 @@
-import type { UserCreatedModel } from "@/types/types";
 import {
   fetchBaseQuery,
   type BaseQueryFn,
@@ -24,6 +23,13 @@ type ApiErrorResponse<TFields = Record<string, string[]>> = {
     errors: TFields | null;
   } | null;
 };
+
+interface RefreshTokenResponse {
+  token?: string;
+  data?: {
+    token?: string;
+  };
+}
 
 const rawBaseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5153/api",
@@ -61,11 +67,10 @@ export const baseQuery = <TFields = Record<string, string[]>>(): BaseQueryFn<
         );
 
         if (refreshResult.data) {
-          const res = refreshResult.data as UserCreatedModel;
-          const newToken = res?.token;
+          const res = refreshResult.data as RefreshTokenResponse;
+          const newToken = res?.data?.token || res?.token;
 
           if (newToken) {
-            // 🎯 1. تحديث Redux State مع localStorage
             api.dispatch(setCredentials({ token: newToken }));
 
             if (typeof args === "string") {
@@ -85,11 +90,9 @@ export const baseQuery = <TFields = Record<string, string[]>>(): BaseQueryFn<
 
             result = await rawBaseQuery(args, api, extraOptions);
           } else {
-            // 🎯 2. تفريغ الـ Redux State في حال عدم وجود توكن
             api.dispatch(logout());
           }
         } else {
-          // 🎯 3. تسجيل الخروج فوراً عند فشل الـ Refresh
           api.dispatch(logout());
         }
       }

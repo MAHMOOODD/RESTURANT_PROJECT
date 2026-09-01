@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -118,14 +117,14 @@ function SidebarContent({ isOpenMobile, onCloseMobile }: AdminSidebarProps) {
 
   return (
     <SidebarBody
-      className="justify-between gap-4 border-r rtl:border-r-0 rtl:border-l border-border/60 bg-card/80 backdrop-blur-md"
+      className="justify-between gap-4  h-screen border-r rtl:border-r-0 rtl:border-l border-border/60 bg-card/80 backdrop-blur-md"
       isOpenMobile={isOpenMobile}
       onCloseMobile={onCloseMobile}
     >
       {/* Header & Links */}
-      <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+      <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden pb-2">
         <HeaderSection />
-        <div className="mt-6 flex flex-col gap-1.5">
+        <div className="mt-6 flex flex-col gap-1">
           {links.map((link, idx) => (
             <SidebarCustomLink
               key={idx}
@@ -138,52 +137,50 @@ function SidebarContent({ isOpenMobile, onCloseMobile }: AdminSidebarProps) {
       </div>
 
       {/* Bottom Utility Actions */}
-      <div className="flex flex-col gap-2.5 pt-3 border-t shrink-0">
-        {/* Theme & Language Box */}
-        <div className="flex flex-col gap-2 p-2 rounded-2xl  ">
-          
+      <div className="flex flex-col gap-2.5 pt-3 border-t border-border/60 shrink-0">
+        {/* Language */}
+        <div className="flex items-center justify-between gap-3 p-2 rounded-2xl min-h-9">
+          {open && (
+            <span className="text-xs font-bold text-muted-foreground shrink-0">
+              {t("adminSidebar.language", "اللغة")}
+            </span>
+          )}
 
-          {/* Language */}
-          <div className="flex items-center justify-between gap-3 pt-2 min-h-9">
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            title={
+              currentLang === "ar"
+                ? "Switch to English"
+                : "التحويل للغة العربية"
+            }
+            className={cn(
+              "h-8 rounded-xl bg-muted/60 flex items-center justify-center gap-2",
+              "text-muted-foreground hover:bg-primary hover:text-primary-foreground",
+              "transition-all duration-200 cursor-pointer px-3 shrink-0 active:scale-95",
+              open ? "w-fit" : "w-9 mx-auto"
+            )}
+          >
             {open && (
-              <span className="text-xs font-bold text-muted-foreground shrink-0">
-                {t("adminSidebar.language", "اللغة")}
+              <span className="text-xs font-semibold whitespace-nowrap">
+                {currentLang === "ar" ? "English" : "العربية"}
               </span>
             )}
-
-            <button
-              type="button"
-              onClick={toggleLanguage}
-              title={
-                currentLang === "ar"
-                  ? "Switch to English"
-                  : "التحويل للغة العربية"
-              }
-              className={cn(
-                "h-8 rounded-xl bg-muted/60 flex items-center justify-center gap-2",
-                "text-muted-foreground hover:bg-primary hover:text-primary-foreground",
-                "transition-all cursor-pointer px-3 shrink-0 active:scale-95",
-                open ? "fit" : "w-9"
-              )}
-            >
-              {open && (
-                <span className="text-xs font-semibold whitespace-nowrap">
-                  {currentLang === "ar" ? "English" : "العربية"}
-                </span>
-              )}
-              <Globe className="w-4 h-4 shrink-0" />
-            </button>
-          </div>
+            <Globe className="w-4 h-4 shrink-0" />
+          </button>
         </div>
 
         {/* Profile Badge */}
         <Link
           to={isLoggedIn ? "/profile" : "/auth"}
           onClick={onCloseMobile}
-          className="flex items-center gap-2.5 p-2 rounded-2xl bg-muted/20 hover:bg-muted/60 transition-all"
+          className={cn(
+            "flex items-center gap-2.5 p-2 rounded-2xl bg-muted/20 hover:bg-muted/60 border border-transparent hover:border-border/60 transition-all duration-200",
+            !open && "justify-center",
+          )}
           title={!open ? userName || t("adminSidebar.myAccount", "حسابي") : undefined}
         >
-          <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground font-black text-xs flex items-center justify-center shrink-0 shadow-sm">
+          <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground font-black text-xs flex items-center justify-center shrink-0 shadow-sm ring-2 ring-primary/20 overflow-hidden">
             {userInitial || "A"}
           </div>
           {open && (
@@ -202,7 +199,7 @@ function SidebarContent({ isOpenMobile, onCloseMobile }: AdminSidebarProps) {
         <Link
           to="/"
           onClick={onCloseMobile}
-          className="flex items-center justify-center gap-2 py-2.5 rounded-2xl bg-primary/10 text-primary hover:bg-primary/20 font-bold text-xs transition-all active:scale-95"
+          className="flex items-center justify-center gap-2 py-2.5 rounded-2xl bg-primary/10 text-primary hover:bg-primary/20 font-bold text-xs transition-all duration-200 active:scale-95"
           title={t("adminSidebar.backToHome", "العودة للموقع الرئيسي")}
         >
           <Home className="w-4 h-4 shrink-0" />
@@ -217,7 +214,7 @@ function SidebarContent({ isOpenMobile, onCloseMobile }: AdminSidebarProps) {
               onCloseMobile?.();
               handleLogout();
             }}
-            className="flex items-center justify-center gap-2 py-2.5 rounded-2xl bg-destructive/10 text-destructive hover:bg-destructive/20 font-semibold text-xs transition-all cursor-pointer active:scale-95"
+            className="flex items-center justify-center gap-2 py-2.5 rounded-2xl bg-destructive/10 text-destructive hover:bg-destructive/20 font-semibold text-xs transition-all duration-200 cursor-pointer active:scale-95"
             title={!open ? t("adminSidebar.logout", "تسجيل الخروج") : undefined}
           >
             <LogOut className="w-4 h-4 shrink-0" />

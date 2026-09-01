@@ -68,7 +68,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </div>
         {form.formState.errors.email && (
           <p className="text-xs sm:text-sm text-rose-500 font-bold">
-            {form.formState.errors.email.message}
+            {t(form.formState.errors.email.message as string)}
           </p>
         )}
       </div>
@@ -115,7 +115,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </div>
         {form.formState.errors.password && (
           <p className="text-xs sm:text-sm text-rose-500 font-bold">
-            {form.formState.errors.password.message}
+            {t(form.formState.errors.password.message as string)}
           </p>
         )}
       </div>

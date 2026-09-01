@@ -8,6 +8,7 @@ using Resturant_Backend.DTO.User;
 using Resturant_Backend.Helpers;
 using Resturant_Backend.Helpers.PhotosHandle;
 using Resturant_Backend.Models;
+using Resturant_Backend.Roles;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -107,7 +108,9 @@ public class Authservice : IAuthService
 
     public async Task<UserCreatedModel> GetTokenAsync(TokenRequestModel model)
     {
-        var user = await _userManager.FindByEmailAsync(model.Email);
+        var user = await _userManager.Users
+            .Include(u => u.RefreshTokens)
+            .FirstOrDefaultAsync(u => u.Email == model.Email);
 
         if(user is null)
         {
@@ -161,7 +164,6 @@ public class Authservice : IAuthService
 
         return authModel;
     }
-
     public async Task<string> ConfirmEmailAsync(ConfirmEmailDto model)
     {
         var user = await _userManager.FindByIdAsync(model.UserId);
@@ -252,10 +254,32 @@ public class Authservice : IAuthService
         var roleExists = await _roleManager.RoleExistsAsync(model.RoleName);
         Ensure.Check(roleExists, "Role does not exist");
 
-        var isInRole = await _userManager.IsInRoleAsync(user, model.RoleName);
-        Ensure.Check(isInRole, "User already assigned to this role");
+        var isInRole = await _userManager.IsInRoleAsync(user!, model.RoleName);
+        Ensure.Check(!isInRole, "User already assigned to this role"); // كان معكوس
 
-        var result = await _userManager.AddToRoleAsync(user, model.RoleName);
+        var result = await _userManager.AddToRoleAsync(user!, model.RoleName);
+        Ensure.Check(result.Succeeded, "Something went wrong");
+
+        return string.Empty;
+    }
+
+    public async Task<string> RemoveRoleAsync(AddRoleDto model)
+    {
+        if(model.RoleName == Role.Admin)
+        {
+            var admins = await _userManager.GetUsersInRoleAsync(Role.Admin);
+            Ensure.Check(admins.Count > 1, "Cannot remove the last remaining Admin");
+        }
+        var user = await _userManager.FindByIdAsync(model.UserId);
+        Ensure.NotNull(user, "Invalid user ID");
+
+        var roleExists = await _roleManager.RoleExistsAsync(model.RoleName);
+        Ensure.Check(roleExists, "Role does not exist");
+
+        var isInRole = await _userManager.IsInRoleAsync(user!, model.RoleName);
+        Ensure.Check(isInRole, "User is not assigned to this role");
+
+        var result = await _userManager.RemoveFromRoleAsync(user!, model.RoleName);
         Ensure.Check(result.Succeeded, "Something went wrong");
 
         return string.Empty;
@@ -263,7 +287,10 @@ public class Authservice : IAuthService
 
     public async Task<UserCreatedModel> RefreshTokenAsync(string token)
     {
-        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
+        var user = await _userManager.Users
+            .Include(u => u.RefreshTokens)
+            .SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
+
         Ensure.NotNull(user, "Invalid token");
 
         var refreshToken = user.RefreshTokens.Single(t => t.Token == token);
@@ -292,7 +319,10 @@ public class Authservice : IAuthService
 
     public async Task<bool> RevokeTokenAsync(string token)
     {
-        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
+        var user = await _userManager.Users
+            .Include(u => u.RefreshTokens)
+            .SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
+
         if(user == null)
             return false;
 

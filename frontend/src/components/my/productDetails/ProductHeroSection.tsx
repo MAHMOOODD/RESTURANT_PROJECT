@@ -92,7 +92,7 @@ export function ProductHeroSection({
       {/* تفاصيل الوجبة */}
       <div className="lg:col-span-6 space-y-6">
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-primary/10 text-primary text-xs font-black tracking-wide">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-background text-white text-xs font-black tracking-wide">
             <Tag className="w-3.5 h-3.5" />
             <span>{t("products.mealDetails", "تفاصيل الوجبة")}</span>
           </div>

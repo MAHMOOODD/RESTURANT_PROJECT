@@ -11,16 +11,20 @@ import type {
   RevokeToken,
   UpdateProfileDto,
   AddRoleDto,
+  FiltersUsers,
+  PagedResponse,
 } from "@/types/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 export interface GetUserInfo {
+  id: string; // ⚠️ يتطلب إضافة الحقل ده في GetUserInfo.cs بالباك اند (راجع الشرح فوق)
   fullName?: string;
   address?: string;
   phoneNumber?: string;
   userName: string;
   email: string;
-  imageUrl?: string; // Optional, Regex: .+\.(jpg|jpeg|png|gif|webp)$
+  imageUrl?: string;
+  roles: string[];
 }
 
 export const authApi = createApi({
@@ -85,6 +89,50 @@ export const authApi = createApi({
       transformResponse: (response: ApiResponse<GetUserInfo>) => response.data,
       providesTags: ["User"],
     }),
+
+    GetAllUsers: builder.query<PagedResponse<GetUserInfo>, FiltersUsers>({
+      query: (filters) => {
+        // بنبني الـ query string يدوي عشان الـ pagination كائن متداخل (nested object)،
+        // والـ serializer الافتراضي بتاع RTK Query (URLSearchParams) بيحوله لنص حرفي
+        // "[object Object]" بدل ما يفككه. صيغة النقطة (pagination.pageNumber) هي
+        // اللي ASP.NET Core بيقدر يربطها تلقائي لـ FiltersUsers.Pagination.
+        const params = new URLSearchParams();
+
+        if (filters.pagination?.pageNumber !== undefined) {
+          params.set("pagination.pageNumber", String(filters.pagination.pageNumber));
+        }
+        if (filters.pagination?.pageSize !== undefined) {
+          params.set("pagination.pageSize", String(filters.pagination.pageSize));
+        }
+        if (filters.searchTerm) {
+          params.set("searchTerm", filters.searchTerm);
+        }
+        // ⚠️ الباك اند (FiltersUsers.cs) اسم الخاصية عنده "UserName" مش "SortByUsername"
+        // (شوف UserRepo.GetUsersAsync: filters.UserName) — لازم نبعت الباراميتر بنفس الاسم
+        // ده بالظبط عشان الـ Model Binder يقدر يربطه، وإلا هيفضل null دايماً والترتيب
+        // مش هيتفعّل خالص حتى لو الريكويست اتبعت صح.
+        if (filters.sortByUsername !== undefined) {
+          params.set("userName", String(filters.sortByUsername));
+        }
+        if (filters.ascending !== undefined) {
+          params.set("ascending", String(filters.ascending));
+        }
+
+        return {
+          url: `User/GetAllUsers?${params.toString()}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: ApiResponse<PagedResponse<GetUserInfo>>) =>
+        response.data,
+      providesTags: ["User"],
+    }),
+    GetUserById: builder.query<GetUserInfo, string>({
+      query: (userId) => `User/GetUserbyId/${userId}`,
+      transformResponse: (response: ApiResponse<GetUserInfo>) => response.data,
+      providesTags: ["User"],
+    }),
+
     UpdateProfile: builder.mutation<string, UpdateProfileDto>({
       query: (dto) => ({
         url: "Account/UpdateProfile",
@@ -101,6 +149,16 @@ export const authApi = createApi({
         body: dto,
       }),
       transformResponse: (response: ApiResponse<null>) => response.message,
+      invalidatesTags: ["User"], // كانت ناقصة — من غيرها الجدول/الديتيلز ميترفريشوش بعد إضافة رول
+    }),
+    RemoveRole: builder.mutation<string, AddRoleDto>({
+      query: (dto) => ({
+        url: "Account/RemoveRole",
+        method: "POST",
+        body: dto,
+      }),
+      transformResponse: (response: ApiResponse<null>) => response.message,
+      invalidatesTags: ["User"],
     }),
     RevokeToken: builder.mutation<ApiResponse<void>, RevokeToken | void>({
       query: (body) => ({
@@ -128,8 +186,11 @@ export const {
   useCheckAuthQuery,
   useGetUserInfoQuery,
   useGetRolesQuery,
+  useGetAllUsersQuery,
+  useGetUserByIdQuery,
   useUpdateProfileMutation,
   useAddRoleMutation,
+  useRemoveRoleMutation,
   useRevokeTokenMutation,
   useRefreshTokenMutation,
 } = authApi;

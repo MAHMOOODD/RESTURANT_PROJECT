@@ -1,11 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
 import {
-  useGetRolesQuery,
   useGetUserInfoQuery,
   useUpdateProfileMutation,
 } from "@/store/features/User/Auth";
@@ -20,6 +19,12 @@ import type { ApiError } from "@/services/baseQuery";
 type EditableFields = "fullName" | "phoneNumber" | "address";
 
 export default function Account() {
+
+
+
+  useEffect(() => {
+    scrollTo({ top: 0, behavior: "smooth" });
+  },[])
   const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -31,7 +36,6 @@ export default function Account() {
 
   const { data: userInfo, isLoading: isFetching } = useGetUserInfoQuery();
   const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
-  const { data: roles } = useGetRolesQuery();
 
   const [localImagePreview, setLocalImagePreview] = useState<string | null>(null);
 
@@ -50,6 +54,7 @@ export default function Account() {
       phoneNumber: userInfo?.phoneNumber || "",
     },
   });
+  console.log("Account component userInfo:", userInfo); // Debugging line to check userInfo
 
   const currentImagePreview = localImagePreview || userInfo?.imageUrl || null;
 
@@ -123,7 +128,7 @@ export default function Account() {
       {/* رأس الصفحة والصلاحيات والصورة */}
       <AccountHeader
         userInfo={userInfo}
-        roles={roles}
+        roles={userInfo?.roles || []}
         currentImagePreview={currentImagePreview}
         fileInputRef={fileInputRef}
         handleImageChange={handleImageChange}

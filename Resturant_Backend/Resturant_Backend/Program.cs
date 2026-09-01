@@ -9,6 +9,7 @@ using Resturant_Backend.Common.Responses;
 using Resturant_Backend.Data;
 using Resturant_Backend.Helpers;
 using Resturant_Backend.Helpers.PhotosHandle;
+using Resturant_Backend.Hubs;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Middlewares;
 using Resturant_Backend.Models;
@@ -51,6 +52,36 @@ namespace Resturant_Backend
                 });
 
             builder.Services.AddEndpointsApiExplorer();
+
+
+
+            builder.Services.AddSignalR();
+
+            // SignalR بيبعت التوكن كـ query string مع الـ WebSocket، لازم الـ JWT middleware يقراه من هناك
+            builder.Services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if(!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
+
+
+
+
+
+
+
 
             // Swagger Config
             builder.Services.AddSwaggerGen(options =>
@@ -165,6 +196,7 @@ namespace Resturant_Backend
             builder.Services.AddScoped<IPhotoService, PhotoService>();
 
             var app = builder.Build();
+            app.MapHub<OrderHub>("/hubs/orders");
 
             app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 

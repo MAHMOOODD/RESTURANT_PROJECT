@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -33,14 +33,18 @@ export function ProductFormFields({
   const isArabic = i18n.language.startsWith("ar");
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
-  const sortedCategories = [...categories].sort((a, b) =>
-    isArabic
-      ? a.nameAr.localeCompare(b.nameAr, "ar")
-      : a.name.localeCompare(b.name, "en"),
-  );
+  // استخدام useMemo لتجنب إعادة الترتيب مع كل حرف يتم كتابته في النموذج
+  const sortedCategories = useMemo(() => {
+    return [...categories].sort((a, b) =>
+      isArabic
+        ? (a.nameAr || "").localeCompare(b.nameAr || "", "ar")
+        : (a.name || "").localeCompare(b.name || "", "en")
+    );
+  }, [categories, isArabic]);
 
-  const selectedCategoryObj = categories.find(
-    (c) => String(c.id) === form.categoryId,
+  const selectedCategoryObj = useMemo(
+    () => categories.find((c) => String(c.id) === form.categoryId),
+    [categories, form.categoryId]
   );
 
   return (
@@ -63,7 +67,7 @@ export function ProductFormFields({
             className={cn(
               "w-full h-11 px-3.5 bg-card/60 backdrop-blur-md border border-border rounded-xl font-medium text-sm text-foreground placeholder:text-muted-foreground shadow-inner transition-all duration-200 outline-none focus:border-primary focus:ring-1 focus:ring-primary/50",
               errors.nameAr &&
-                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50",
+                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50"
             )}
           />
           {errors.nameAr && (
@@ -89,7 +93,7 @@ export function ProductFormFields({
             className={cn(
               "w-full h-11 px-3.5 bg-card/60 backdrop-blur-md border border-border rounded-xl font-medium text-sm text-foreground placeholder:text-muted-foreground shadow-inner transition-all duration-200 outline-none focus:border-primary focus:ring-1 focus:ring-primary/50",
               errors.name &&
-                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50",
+                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50"
             )}
           />
           {errors.name && (
@@ -118,7 +122,7 @@ export function ProductFormFields({
             className={cn(
               "w-full p-3.5 bg-card/60 backdrop-blur-md border border-border rounded-xl font-medium text-sm text-foreground placeholder:text-muted-foreground shadow-inner transition-all duration-200 outline-none resize-none focus:border-primary focus:ring-1 focus:ring-primary/50",
               errors.descriptionAr &&
-                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50",
+                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50"
             )}
           />
           {errors.descriptionAr && (
@@ -144,7 +148,7 @@ export function ProductFormFields({
             className={cn(
               "w-full p-3.5 bg-card/60 backdrop-blur-md border border-border rounded-xl font-medium text-sm text-foreground placeholder:text-muted-foreground shadow-inner transition-all duration-200 outline-none resize-none focus:border-primary focus:ring-1 focus:ring-primary/50",
               errors.description &&
-                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50",
+                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50"
             )}
           />
           {errors.description && (
@@ -175,7 +179,7 @@ export function ProductFormFields({
             className={cn(
               "w-full h-11 px-3.5 bg-card/60 backdrop-blur-md border border-border rounded-xl font-mono font-bold text-sm text-foreground placeholder:text-muted-foreground shadow-inner transition-all duration-200 outline-none focus:border-primary focus:ring-1 focus:ring-primary/50",
               errors.price &&
-                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50",
+                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50"
             )}
           />
           {errors.price && (
@@ -202,7 +206,7 @@ export function ProductFormFields({
             className={cn(
               "w-full h-11 px-3.5 bg-card/60 backdrop-blur-md border border-border rounded-xl font-mono font-bold text-sm text-foreground placeholder:text-muted-foreground shadow-inner transition-all duration-200 outline-none focus:border-primary focus:ring-1 focus:ring-primary/50",
               errors.preparingTime &&
-                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50",
+                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50"
             )}
           />
           {errors.preparingTime && (
@@ -217,14 +221,14 @@ export function ProductFormFields({
             {t("adminProducts.form.category")}
           </label>
 
-          {/* Custom Cyber Dropdown Trigger */}
+          {/* Custom Dropdown Trigger */}
           <button
             type="button"
             onClick={() => setIsCategoryOpen((prev) => !prev)}
             className={cn(
               "w-full h-11 px-3.5 bg-card/60 backdrop-blur-md border border-border rounded-xl font-medium text-sm text-foreground flex items-center justify-between shadow-sm transition-all duration-200 cursor-pointer outline-none focus:border-primary focus:ring-1 focus:ring-primary/50",
               errors.categoryId &&
-                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50",
+                "border-rose-500 focus:border-rose-500 focus:ring-rose-500/50"
             )}
           >
             <span className="truncate">
@@ -237,7 +241,7 @@ export function ProductFormFields({
             <ChevronDown
               className={cn(
                 "h-4 w-4 text-muted-foreground transition-transform duration-200 shrink-0",
-                isCategoryOpen && "rotate-180",
+                isCategoryOpen && "rotate-180"
               )}
             />
           </button>
@@ -269,7 +273,7 @@ export function ProductFormFields({
                       "w-full text-start px-3 py-2.5 rounded-xl text-sm font-medium transition-all cursor-pointer my-0.5",
                       isSelected
                         ? "bg-[#ff2a4b] text-white font-bold shadow-md shadow-[#ff2a4b]/20"
-                        : "text-foreground hover:bg-[rgba(255,42,75,0.18)] hover:text-[#ff5270]",
+                        : "text-foreground hover:bg-[rgba(255,42,75,0.18)] hover:text-[#ff5270]"
                     )}
                   >
                     {categoryName}
@@ -312,7 +316,7 @@ export function ProductFormFields({
             "relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary/50",
             form.isAvailable
               ? "bg-primary shadow-sm shadow-primary/30"
-              : "bg-muted-foreground/30",
+              : "bg-muted-foreground/30"
           )}
         >
           <span
@@ -320,7 +324,7 @@ export function ProductFormFields({
               "pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-md ring-0 transition duration-300 ease-in-out",
               form.isAvailable
                 ? "translate-x-5 rtl:-translate-x-5"
-                : "translate-x-0",
+                : "translate-x-0"
             )}
           />
         </button>

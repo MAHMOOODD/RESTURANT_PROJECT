@@ -11,6 +11,7 @@ export default function CouponsSection() {
   // جلب الكوبونات من الـ API الحقيقي
   const { data: coupons = [], isLoading, isError } = useGetAllCouponsQuery();
 
+
   const handleCopy = (code: string) => {
     navigator.clipboard.writeText(code);
     setCopiedCode(code);

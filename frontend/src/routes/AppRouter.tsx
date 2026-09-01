@@ -15,11 +15,17 @@ import AboutUs from "@/pages/Main/AboutUs";
 import ContactUs from "@/pages/Main/ContactUs";
 import NotFound from "@/pages/Main/NotFound";
 
+import AdminRoute from "@/components/my/Auth/AdminRoute"; // استبدل المسار بمكان الملف عندك
+
 // صفحة الـ Products الخاصة بالأدمن اللي عملناها
 import AdminProducts from "@/pages/admin/ProductsPage";
 // لو عندك صفحة للـ Dashboard الرئيسية للأدمن استوردها هنا، أو استبدلها مؤقتاً لو مش جاهزة
-import AdminDashboard from "@/pages/admin/DashboardPage"; // عدل المسار حسب مكانها عندك أو اربطها بصفحة بديلة
 import ProductDetailsPage from "@/pages/Main/ProductDetailsPage";
+import { CategoriesPage } from "@/pages/admin/CategoriesPage";
+import  AdminOrdersPage  from "@/pages/admin/AdminOrdersPage";
+import AdminCouponsPage from "@/pages/admin/AdminCouponsPage";
+import AdminUsersPage from "@/pages/admin/AdminUsersPage";
+import AdminDashboardPage from "@/pages/admin/AdminDashboardPage";
 
 const router = createBrowserRouter([
   {
@@ -60,7 +66,7 @@ const router = createBrowserRouter([
           { path: "reset-password", element: <ResetPassword /> },
         ],
       },
-      
+
       { path: "*", element: <NotFound /> },
     ],
   },
@@ -68,15 +74,19 @@ const router = createBrowserRouter([
   // 🛡️ 6. لوحة تحكم الأدمن (مسارات مستقلة بـ AdminLayout الخاص بيها)
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <AdminRoute>
+        <AdminLayout />
+      </AdminRoute>
+    ),
     children: [
-      { index: true, element: <AdminDashboard /> },
+      { index: true, element: <AdminDashboardPage /> },
       { path: "products", element: <AdminProducts /> },
-      {path: "*" , element: <NotFound />},
-      // { path: "categories", element: <AdminCategories /> },
-      // { path: "orders", element: <AdminOrders /> },
-      // { path: "coupons", element: <AdminCoupons /> },
-      // { path: "users", element: <AdminUsers /> },
+      { path: "*", element: <NotFound /> },
+      { path: "categories", element: <CategoriesPage /> },
+      { path: "orders", element: <AdminOrdersPage/> },
+      { path: "coupons", element: <AdminCouponsPage /> },
+      { path: "users", element: <AdminUsersPage /> },
     ],
   },
 ]);

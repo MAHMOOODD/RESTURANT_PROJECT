@@ -55,16 +55,14 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
       setSubmittedEmail(data.email);
       setIsSuccess(true);
     } catch (err) {
-      // Handling errors handled via apiError prop
       console.error("Registration error:", err);
     }
   };
 
-  // 🚀 2026 Trendy Success State Screen
+  // شاشة النجاح بعد التسجيل
   if (isSuccess) {
     return (
       <div className="py-8 px-6 text-center space-y-8 animate-in fade-in zoom-in-95 duration-300">
-        {/* Animated Glow Icon */}
         <div className="relative w-28 h-28 mx-auto flex items-center justify-center">
           <div className="absolute inset-0 bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-400 rounded-3xl blur-xl opacity-40 animate-pulse" />
           <div className="relative w-28 h-28 bg-card border-2 border-rose-500/30 rounded-3xl flex items-center justify-center shadow-2xl">
@@ -72,24 +70,25 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           </div>
         </div>
 
-        {/* Text Details */}
         <div className="space-y-3">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs sm:text-sm font-bold">
             <Sparkles className="w-4 h-4" />
-            <span>{t("auth.almost_there", "خطوة واحدة أضافيه!")}</span>
+            <span>{t("auth.almost_there", "خطوة واحدة أخيرة!")}</span>
           </div>
           <h3 className="text-3xl font-black tracking-tight text-foreground">
             {t("auth.check_your_inbox", "تفقد بريدك الإلكتروني 📩")}
           </h3>
           <p className="text-sm sm:text-base text-muted-foreground font-medium leading-relaxed max-w-sm mx-auto">
-            {t("auth.verification_sent_desc", "أرسلنا رابط التفعيل إلى")}
+            {t(
+              "auth.verification_sent_desc",
+              "أرسلنا رابط التأكيد إلى البريد التالي:",
+            )}
           </p>
           <div className="inline-block px-4 py-2 rounded-2xl bg-muted border border-border text-sm sm:text-base font-mono font-bold text-foreground">
             {submittedEmail || "your@email.com"}
           </div>
         </div>
 
-        {/* Helpful Tips / CTA Actions */}
         <div className="pt-4 space-y-4">
           <button
             type="button"
@@ -98,7 +97,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           >
             <RefreshCw className="w-4 h-4" />
             <span>
-              {t("auth.wrong_email", "تعديل البيانات أو إعادة إرسال")}
+              {t("auth.wrong_email", "تعديل البيانات أو إعادة الإرسال")}
             </span>
           </button>
         </div>
@@ -109,7 +108,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   return (
     <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-5">
       {/* Full Name */}
-
       <div className="space-y-2">
         <label className="text-sm sm:text-base font-extrabold text-foreground">
           {t("auth.full_name")}{" "}
@@ -156,7 +154,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         </div>
         {form.formState.errors.userName && (
           <p className="text-xs sm:text-sm text-rose-500 font-bold">
-            {form.formState.errors.userName.message}
+            {t(form.formState.errors.userName.message as string)}
           </p>
         )}
         {apiError?.errors?.userName && (
@@ -209,7 +207,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         </div>
         {form.formState.errors.email && (
           <p className="text-xs sm:text-sm text-rose-500 font-bold">
-            {form.formState.errors.email.message}
+            {t(form.formState.errors.email.message as string)}
           </p>
         )}
         {apiError?.errors?.email && (
@@ -252,7 +250,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         </div>
         {form.formState.errors.password && (
           <p className="text-xs sm:text-sm text-rose-500 font-bold">
-            {form.formState.errors.password.message}
+            {t(form.formState.errors.password.message as string)}
           </p>
         )}
       </div>

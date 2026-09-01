@@ -12,10 +12,10 @@ import {
 import { useTranslation } from "react-i18next";
 import type { UseFormRegister, FieldErrors, UseFormHandleSubmit } from "react-hook-form";
 import type { UpdateProfileDto } from "@/types/types";
-import type { GetUserInfo } from "@/store/features/User/Auth";
+import type { UserInfo } from "@/types/types";
 
 interface AccountFormProps {
-  userInfo: GetUserInfo | undefined;
+  userInfo: UserInfo | undefined;
   register: UseFormRegister<UpdateProfileDto>;
   handleSubmit: UseFormHandleSubmit<UpdateProfileDto>;
   errors: FieldErrors<UpdateProfileDto>;

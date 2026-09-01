@@ -1,54 +1,38 @@
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import * as z from "zod";
 
 export const useAuthSchemas = () => {
-  const { t, i18n } = useTranslation();
+  const loginSchema = z.object({
+    email: z
+      .string()
+      .min(1, "auth.email_required")
+      .email("auth.email_invalid"),
+    password: z.string().min(1, "auth.password_required"),
+    remember: z.boolean().optional(),
+  });
 
-  const loginSchema = useMemo(
-    () =>
-      z.object({
-        email: z
-          .string()
-          .min(1, t("auth.email_required"))
-          .email(t("auth.email_invalid")),
-        password: z.string().min(1, t("auth.password_required")),
-        remember: z.boolean().optional(),
-      }),
-    [i18n.language, t]
-  );
+  const registerSchema = z.object({
+    fullName: z.string().optional(),
+    address: z.string().optional(),
+    userName: z.string().min(1, "auth.username_required"),
+    email: z
+      .string()
+      .min(1, "auth.email_required")
+      .email("auth.email_invalid"),
+    password: z
+      .string()
+      .min(6, "auth.password_min")
+      .regex(/[0-9]/, "auth.password_digit")
+      .regex(/[a-z]/, "auth.password_lowercase")
+      .regex(/[A-Z]/, "auth.password_uppercase")
+      .regex(/[^a-zA-Z0-9]/, "auth.password_special"),
+  });
 
-  const registerSchema = useMemo(
-    () =>
-      z.object({
-        fullName: z.string().optional(),
-        address: z.string().optional(),
-        userName: z.string().min(1, t("auth.username_required")),
-        email: z
-          .string()
-          .min(1, t("auth.email_required"))
-          .email(t("auth.email_invalid")),
-        password: z
-          .string()
-          .min(6, t("auth.password_min"))
-          .regex(/[0-9]/, t("auth.password_digit"))
-          .regex(/[a-z]/, t("auth.password_lowercase"))
-          .regex(/[A-Z]/, t("auth.password_uppercase"))
-          .regex(/[^a-zA-Z0-9]/, t("auth.password_special")),
-      }),
-    [i18n.language, t]
-  );
-
-  const forgotPasswordSchema = useMemo(
-    () =>
-      z.object({
-        email: z
-          .string()
-          .min(1, t("auth.email_required"))
-          .email(t("auth.email_invalid")),
-      }),
-    [i18n.language, t]
-  );
+  const forgotPasswordSchema = z.object({
+    email: z
+      .string()
+      .min(1, "auth.email_required")
+      .email("auth.email_invalid"),
+  });
 
   return { loginSchema, registerSchema, forgotPasswordSchema };
 };

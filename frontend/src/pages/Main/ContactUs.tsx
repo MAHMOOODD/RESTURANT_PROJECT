@@ -54,8 +54,8 @@ export default function ContactUs() {
               <Phone className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-base font-black text-foreground">{t("contact.phoneTitle", "الخط الساخن")}</h3>
-              <p className="text-xs text-muted-foreground font-medium mt-1" dir="ltr">19999</p>
+              <h3 className="text-xl font-black text-foreground">{t("contact.phoneTitle", "الخط الساخن")}</h3>
+              <p className="text-lg text-muted-foreground font-medium mt-1" dir="ltr">19999</p>
             </div>
           </div>
 
@@ -64,8 +64,8 @@ export default function ContactUs() {
               <Mail className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-base font-black text-foreground">{t("contact.emailTitle", "البريد الإلكتروني")}</h3>
-              <p className="text-xs text-muted-foreground font-medium mt-1">support@aklny.com</p>
+              <h3 className="text-xl font-black text-foreground">{t("contact.emailTitle", "البريد الإلكتروني")}</h3>
+              <p className="text-lg text-muted-foreground font-medium mt-1">support@aklny.com</p>
             </div>
           </div>
 
@@ -74,17 +74,17 @@ export default function ContactUs() {
               <MapPin className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-base font-black text-foreground">{t("contact.addressTitle", "المقر الرئيسي")}</h3>
-              <p className="text-xs text-muted-foreground font-medium mt-1">{t("contact.addressVal", "القاهرة، جمهورية مصر العربية")}</p>
+              <h3 className="text-xl font-black text-foreground">{t("contact.addressTitle", "المقر الرئيسي")}</h3>
+              <p className="text-lg text-muted-foreground font-medium mt-1">{t("contact.addressVal", "القاهرة، جمهورية مصر العربية")}</p>
             </div>
           </div>
 
           <div className="p-6 sm:p-8 rounded-[2rem] bg-primary/5 border border-primary/20 shadow-lg space-y-2">
             <div className="flex items-center gap-2 text-primary font-black text-sm">
               <Clock3 className="w-4 h-4" />
-              <span>{t("contact.workHoursTitle", "ساعات العمل")}</span>
+              <span className="text-lg">{t("contact.workHoursTitle", "ساعات العمل")}</span>
             </div>
-            <p className="text-xs text-muted-foreground font-medium">
+            <p className="text-lg text-muted-foreground font-medium">
               {t("contact.workHoursVal", "طوال أيام الأسبوع: من 10:00 صباحاً حتى 3:00 فجراً")}
             </p>
           </div>

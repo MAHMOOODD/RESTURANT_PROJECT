@@ -1,4 +1,5 @@
-﻿using Resturant_Backend.Models;
+﻿using Resturant_Backend.Helpers.Filter;
+using Resturant_Backend.Models;
 
 namespace Resturant_Backend.Interfaces
 {
@@ -9,5 +10,9 @@ namespace Resturant_Backend.Interfaces
 
 
         Task<Appuser?> GetUserInformationAsync(string userId);
+        Task<int> GetTotalUsersCountAsync();
+
+
+        Task<(List<Appuser>, int totalcount)> GetUsersAsync(FiltersUsers filters);
     }
 }

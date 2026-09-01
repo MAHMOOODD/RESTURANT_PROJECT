@@ -14,4 +14,5 @@ public interface IAuthService
     Task<string> ForgetPasswordAsync(ForgetPasswordDto model, string origin);
     Task<string> ResetPasswordAsync(ResetPasswordDto model);
     Task<string> UpdateProfileAsync(string userId, UpdateProfileDto model);
+    Task<string> RemoveRoleAsync(AddRoleDto model);
 }

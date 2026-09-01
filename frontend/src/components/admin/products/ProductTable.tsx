@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { GetAllProductDto } from "@/types/types";
+import { createPortal } from "react-dom";
 
 interface ProductTableProps {
   products: GetAllProductDto[];
@@ -41,7 +42,7 @@ export function ProductTable({
           <UtensilsCrossed className="h-8 w-8 sm:h-10 sm:w-10 stroke-[1.5]" />
         </div>
         <p className="text-base sm:text-lg font-semibold text-foreground">
-          {t("adminProducts.emptyState")}
+          {t("adminProducts.emptyState", "لا توجد منتجات متاحة حالياً")}
         </p>
       </div>
     );
@@ -107,13 +108,13 @@ export function ProductTable({
                         }`}
                       />
                       {p.isAvailable
-                        ? t("adminProducts.table.available")
-                        : t("adminProducts.table.unavailable")}
+                        ? t("adminProducts.table.available", "متاح")
+                        : t("adminProducts.table.unavailable", "غير متاح")}
                     </span>
                   </div>
 
                   {displayDescription && (
-                    <p className="text-xs text-muted-foreground line-clamp-1 overflow-x-clip wrap-break-word w-35 mt-0.5">
+                    <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
                       {displayDescription}
                     </p>
                   )}
@@ -121,11 +122,11 @@ export function ProductTable({
                   <div className="flex items-center gap-3 mt-2">
                     <span className="font-mono font-black text-sm text-foreground">
                       {p.price.toLocaleString()}{" "}
-                      {t("adminProducts.table.currency")}
+                      {t("adminProducts.table.currency", "ج.م")}
                     </span>
                     <span className="text-xs text-muted-foreground flex items-center gap-1 bg-muted px-2 py-0.5 rounded-md font-medium">
                       <Clock className="h-3 w-3 text-primary" />
-                      {p.preparingTime} {t("adminProducts.table.min")}
+                      {p.preparingTime} {t("adminProducts.table.min", "دقيقة")}
                     </span>
                   </div>
                 </div>
@@ -138,7 +139,7 @@ export function ProductTable({
                   className="h-9 px-3 rounded-xl border border-border bg-background text-xs font-semibold gap-1.5 flex items-center justify-center transition-all cursor-pointer active:scale-95"
                 >
                   <SquarePen className="h-4 w-4" />
-                  <span>{t("adminProducts.table.edit")}</span>
+                  <span>{t("adminProducts.table.edit", "تعديل")}</span>
                 </button>
                 <button
                   type="button"
@@ -146,7 +147,7 @@ export function ProductTable({
                   className="h-9 px-3 rounded-xl border border-border bg-background text-rose-600 hover:bg-rose-500/10 hover:border-rose-500/30 text-xs font-semibold gap-1.5 flex items-center justify-center transition-all cursor-pointer active:scale-95"
                 >
                   <Trash className="h-4 w-4" />
-                  <span>{t("adminProducts.table.delete")}</span>
+                  <span>{t("adminProducts.table.delete", "حذف")}</span>
                 </button>
               </div>
             </div>
@@ -160,22 +161,22 @@ export function ProductTable({
           <thead className="bg-muted/80 sticky top-0 z-10 backdrop-blur-md border-b border-border">
             <tr className="hover:bg-transparent border-none">
               <th className="w-[100px] py-4 px-6 text-start font-bold text-sm text-foreground">
-                {t("adminProducts.table.image")}
+                {t("adminProducts.table.image", "الصورة")}
               </th>
               <th className="py-4 px-6 text-start font-bold text-sm text-foreground">
-                {t("adminProducts.table.product")}
+                {t("adminProducts.table.product", "المنتج")}
               </th>
               <th className="py-4 px-6 text-start font-bold text-sm text-foreground">
-                {t("adminProducts.table.price")}
+                {t("adminProducts.table.price", "السعر")}
               </th>
               <th className="py-4 px-6 text-start font-bold text-sm text-foreground">
-                {t("adminProducts.table.prepTime")}
+                {t("adminProducts.table.prepTime", "وقت التحضير")}
               </th>
               <th className="py-4 px-6 text-start font-bold text-sm text-foreground">
-                {t("adminProducts.table.status")}
+                {t("adminProducts.table.status", "الحالة")}
               </th>
               <th className="text-center w-[160px] py-4 px-6 font-bold text-sm text-foreground">
-                {t("adminProducts.table.actions")}
+                {t("adminProducts.table.actions", "الإجراءات")}
               </th>
             </tr>
           </thead>
@@ -227,7 +228,7 @@ export function ProductTable({
                       </span>
                       {displayDescription && (
                         <span
-                          className="text-xs sm:text-sm text-muted-foreground font-normal leading-relaxed line-clamp-2 max-w-50 wrap-break-word overflow-clip"
+                          className="text-xs sm:text-sm text-muted-foreground font-normal leading-relaxed line-clamp-2 max-w-xs"
                           title={displayDescription}
                         >
                           {displayDescription}
@@ -240,7 +241,7 @@ export function ProductTable({
                     <div className="flex items-baseline gap-1.5 font-mono font-extrabold text-base sm:text-lg text-foreground">
                       <span>{p.price.toLocaleString()}</span>
                       <span className="text-xs sm:text-sm text-muted-foreground font-sans font-medium">
-                        {t("adminProducts.table.currency")}
+                        {t("adminProducts.table.currency", "ج.م")}
                       </span>
                     </div>
                   </td>
@@ -249,7 +250,8 @@ export function ProductTable({
                     <div className="inline-flex items-center gap-2 text-xs sm:text-sm text-muted-foreground bg-muted px-3.5 py-1.5 rounded-xl border border-border/60 font-semibold">
                       <Clock className="h-4 w-4 text-primary stroke-[2]" />
                       <span>
-                        {p.preparingTime} {t("adminProducts.table.min")}
+                        {p.preparingTime}{" "}
+                        {t("adminProducts.table.min", "دقيقة")}
                       </span>
                     </div>
                   </td>
@@ -270,8 +272,8 @@ export function ProductTable({
                         }`}
                       />
                       {p.isAvailable
-                        ? t("adminProducts.table.available")
-                        : t("adminProducts.table.unavailable")}
+                        ? t("adminProducts.table.available", "متاح")
+                        : t("adminProducts.table.unavailable", "غير متاح")}
                     </span>
                   </td>
 
@@ -281,7 +283,10 @@ export function ProductTable({
                         type="button"
                         onClick={() => onEdit(p)}
                         className="h-10 w-10 rounded-xl border border-border bg-background hover:bg-blue-500/10 hover:border-blue-500/40 hover:text-blue-600 transition-all shadow-sm active:scale-95 cursor-pointer flex items-center justify-center outline-none"
-                        title={t("adminProducts.form.editTitle")}
+                        title={t(
+                          "adminProducts.form.editTitle",
+                          "تعديل المنتج",
+                        )}
                       >
                         <SquarePen className="h-5 w-5 stroke-[1.8]" />
                       </button>
@@ -289,7 +294,10 @@ export function ProductTable({
                         type="button"
                         onClick={() => setDeleteTargetId(p.id)}
                         className="h-10 w-10 rounded-xl border border-border bg-background hover:bg-red-500/10 hover:border-red-500/40 hover:text-red-600 transition-all shadow-sm active:scale-95 cursor-pointer flex items-center justify-center outline-none"
-                        title={t("adminProducts.deleteDialog.confirmBtn")}
+                        title={t(
+                          "adminProducts.deleteDialog.confirmBtn",
+                          "حذف",
+                        )}
                       >
                         <Trash className="h-5 w-5 stroke-[1.8]" />
                       </button>
@@ -302,51 +310,55 @@ export function ProductTable({
         </table>
       </div>
 
-      {deleteTargetId !== null && (
-        <div
-          dir={isArabic ? "rtl" : "ltr"}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setDeleteTargetId(null)}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-card border border-border/80 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 text-center animate-in zoom-in-95 duration-200"
-          >
-            {/* أيقونة التحذير */}
-            <div className="w-16 h-16 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center mx-auto shadow-inner">
-              <AlertTriangle className="w-8 h-8" />
-            </div>
-
-            {/* النصوص */}
-            <div className="space-y-2">
-              <h3 className="text-2xl font-black text-foreground">
-                {t("adminProducts.deleteDialog.title")}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {t("adminProducts.deleteDialog.description")}
-              </p>
-            </div>
-
-            {/* أزرار التحكم */}
-            <div className="flex items-center gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => setDeleteTargetId(null)}
-                className="flex-1 py-3.5 px-4 rounded-2xl border border-border bg-muted/50 hover:bg-muted text-foreground font-bold text-sm transition-all cursor-pointer active:scale-95 outline-none"
-              >
-                {t("adminProducts.form.cancel")}
-              </button>
-              <button
-                type="button"
-                onClick={handleConfirmDelete}
-                className="flex-1 py-3.5 px-4 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-black text-sm shadow-lg shadow-rose-600/25 transition-all cursor-pointer active:scale-95 flex items-center justify-center gap-2 outline-none"
-              >
-                <span>{t("adminProducts.deleteDialog.confirmBtn")}</span>
-              </button>
-            </div>
-          </div>
+     {deleteTargetId !== null &&
+  createPortal(
+    <div
+      dir={isArabic ? "rtl" : "ltr"}
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={() => setDeleteTargetId(null)}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-card border border-border/80 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 text-center animate-in zoom-in-95 duration-200"
+      >
+        <div className="w-16 h-16 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-500 flex items-center justify-center mx-auto shadow-inner">
+          <AlertTriangle className="w-8 h-8" />
         </div>
-      )}
+
+        <div className="space-y-2">
+          <h3 className="text-2xl font-black text-foreground">
+            {t("adminProducts.deleteDialog.title", "تأكيد الحذف")}
+          </h3>
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            {t(
+              "adminProducts.deleteDialog.description",
+              "هل أنت متأكد من حذف هذا المنتج؟ لا يمكن التراجع عن هذا الإجراء لاحقاً."
+            )}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3 pt-2">
+          <button
+            type="button"
+            onClick={() => setDeleteTargetId(null)}
+            className="flex-1 py-3.5 px-4 rounded-2xl border border-border bg-muted/50 hover:bg-muted text-foreground font-bold text-sm transition-all cursor-pointer active:scale-95 outline-none"
+          >
+            {t("adminProducts.form.cancel", "إلغاء")}
+          </button>
+          <button
+            type="button"
+            onClick={handleConfirmDelete}
+            className="flex-1 py-3.5 px-4 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-black text-sm shadow-lg shadow-rose-600/25 transition-all cursor-pointer active:scale-95 flex items-center justify-center gap-2 outline-none"
+          >
+            <span>
+              {t("adminProducts.deleteDialog.confirmBtn", "حذف نهائي")}
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body
+  )}
     </>
   );
 }

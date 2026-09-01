@@ -36,9 +36,21 @@ export interface PageFilter {
 
 export interface Filter {
   pagination?: PageFilter;
+  searchTerm?: string;
   sortByPrice?: boolean;
   sortBySelling?: boolean;
+  minPrice?: number;
+  maxPrice?: number;
   ascending?: boolean;
+}
+export interface OrderFilter {
+  pagination?: PageFilter;
+  searchTerm?: string;
+  sortByPrice?: boolean;
+  sortByDate?: boolean;
+  ascending?: boolean;
+  status?: number; // جديد
+  paymentStatus?: number; // جديد
 }
 
 // ============ Cart DTOs ============
@@ -63,7 +75,7 @@ export interface GetCartDto {
 export interface AddCategoriesDto {
   name: string; // Required, MinLength: 3
   nameAr: string; // Required, MinLength: 3
-  imageUrl ?: File; // Required, Regex: .+\.(jpg|jpeg|png|gif|webp)$
+  imageUrl?: File; // Required, Regex: .+\.(jpg|jpeg|png|gif|webp)$
 }
 
 export interface EditCategoriesDto {
@@ -112,6 +124,7 @@ export interface GetOrderDto {
   couponId?: number;
   discount?: number;
   orderDetails: GetDetailsDto[];
+  lastModifiedBy?: string; // أضف هذا السطر
 }
 
 export interface ResponseAddDto {
@@ -193,7 +206,6 @@ export interface GetAllProductDto {
   descriptionAr: string;
   isAvailable: boolean;
   categoryId: number;
-
 }
 
 // ============ Review DTOs ============
@@ -280,6 +292,24 @@ export interface UpdateProfileDto {
   imageUrl?: File | string; // Optional, Regex: .+\.(jpg|jpeg|png|gif|webp)$
 }
 
+export interface FiltersUsers {
+  pagination?: PageFilter;
+  sortByUsername?: boolean;
+  searchTerm?: string;
+  ascending?: boolean;
+}
+
+export interface UserInfo {
+  id: string;
+  fullName?: string;
+  address?: string;
+  userName: string;
+  email: string;
+  phoneNumber?: string;
+  imageUrl?: string;
+  roles: string[];
+}
+
 export interface UserCreatedModel {
   message?: string;
   isAuth: boolean;
@@ -299,7 +329,7 @@ export const OrderStatus = {
   processing: 1 as const,
   shipped: 2 as const,
   delivered: 3 as const,
-  cancelled: 4 as const
+  cancelled: 4 as const,
 } as const;
 
 export type PaymentStatus = 0 | 1 | 2 | 3;
@@ -307,5 +337,52 @@ export const PaymentStatus = {
   pending: 0 as const,
   completed: 1 as const,
   failed: 2 as const,
-  refunded: 3 as const
+  refunded: 3 as const,
 } as const;
+// ============ Dashboard DTOs ============
+// ⬇️ الصق القسم ده في نهاية types.tsx الأصلي (مش ملف منفصل، عشان نفضل مصدر واحد للتايبات)
+
+export interface RevenueSummaryDto {
+  totalRevenue: number;
+  netRevenue: number;
+  averageOrderValue: number;
+}
+
+export interface OrdersSummaryDto {
+  totalOrders: number;
+  pending: number;
+  processing: number;
+  shipped: number;
+  delivered: number;
+  cancelled: number;
+}
+
+export interface UsersSummaryDto {
+  totalUsers: number;
+  admins: number;
+  managers: number;
+  regularUsers: number;
+}
+
+export interface TopProductDto {
+  id: number;
+  name: string;
+  nameAr: string;
+  imageUrl?: string;
+  sellCount: number;
+  price: number;
+}
+
+export interface RevenuePointDto {
+  date: string; // ISO date string
+  revenue: number;
+  ordersCount: number;
+}
+
+export interface DashboardOverviewDto {
+  revenue: RevenueSummaryDto;
+  orders: OrdersSummaryDto;
+  users: UsersSummaryDto;
+  topProducts: TopProductDto[];
+  revenueTrend: RevenuePointDto[];
+}

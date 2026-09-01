@@ -1,5 +1,6 @@
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Utensils, Loader2 } from "lucide-react";
+import { Utensils, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useGetAllCategoriesQuery } from "@/store/features/productApi";
 import { useTranslation } from "react-i18next";
 
@@ -7,19 +8,32 @@ const DEFAULT_CATEGORY_IMAGE =
   "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=600";
 
 export default function CategoriesSection() {
-  const navigate = useNavigate(); // 👈 استخدام الانتقال
+  const navigate = useNavigate();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
   const {
     data: categories = [],
     isLoading,
     isError,
   } = useGetAllCategoriesQuery();
 
-  const { t } = useTranslation();
+  const { t , i18n } = useTranslation();
 
+  const isAr = i18n.language === "ar";
   const handleCategoryClick = (categoryId: number) => {
-    // الانتقال لصفحة المنتجات مع تحديد الكاتيجوري
     navigate(`/products?category=${categoryId}`);
-    scrollTo({ top: 0, behavior: "smooth" }); // التمرير للأعلى بسلاسة
+    scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // دالة التمرير يميناً ويساراً للأزرار العصرية
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 300;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
   };
 
   if (isLoading) {
@@ -35,36 +49,65 @@ export default function CategoriesSection() {
   }
 
   return (
-    <section className="py-12 space-y-6">
+    <section className="py-12 w-full h-full space-y-6 px-4 relative group">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl md:text-3xl font-black text-foreground flex items-center gap-3">
           <Utensils className="w-7 h-7 text-primary" />
           <span>{t("categories.available")}</span>
         </h2>
+
+        {/* أزرار التنقل العصرية (تظهر عند الـ Hover على السكشن) */}
+        <div className="hidden sm:flex items-center gap-2">
+          <button
+            onClick={() => scroll("left")}
+            className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300 shadow-lg cursor-pointer active:scale-95"
+            aria-label="Scroll left"
+            hidden={categories.length < 8}
+          >
+            {isAr ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+          </button>
+          <button
+            onClick={() => scroll("right")}
+            hidden={categories.length < 8}
+            className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300 shadow-lg cursor-pointer active:scale-95"
+            aria-label="Scroll right"
+          >
+            {isAr ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-        {categories.map((cat) => {
-          const categoryImage = DEFAULT_CATEGORY_IMAGE;
+      {/* حاوية الأقسام مع إخفاء شريط التمرير الافتراضي */}
+      <div className="relative">
+        <div
+          ref={scrollContainerRef}
+          className="flex items-center gap-6 overflow-x-auto pb-4 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {categories.map((cat) => {
+            const categoryImage = cat.imageUrl || DEFAULT_CATEGORY_IMAGE;
 
-          return (
-            <button
-              key={cat.id}
-              onClick={() => handleCategoryClick(cat.id)}
-              className="group relative overflow-hidden rounded-3xl h-44 border border-border bg-card hover:border-primary/50 transition-all duration-300 p-6 text-start flex flex-col justify-end cursor-pointer shadow-sm hover:shadow-xl"
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110 opacity-90"
-                style={{ backgroundImage: `url(${categoryImage})` }}
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
+            return (
+              <button
+                key={cat.id}
+                onClick={() => handleCategoryClick(cat.id)}
+                className="group/item flex flex-col items-center gap-3 cursor-pointer shrink-0"
+              >
+                {/* الحاوية الدائرية للصورة */}
+                <div className="relative min-w-60 min-h-60 sm:w-28 sm:h-28 rounded-full p-1 border-2 border-transparent group-hover/item:border-primary transition-all duration-300 shadow-md">
+                  <div
+                    className="w-full h-full rounded-full bg-cover bg-center transition-transform duration-500 group-hover/item:scale-105"
+                    style={{ backgroundImage: `url(${categoryImage})` }}
+                  />
+                </div>
 
-              <span className="relative z-10 font-black text-lg sm:text-xl text-white drop-shadow-md group-hover:text-primary transition-colors">
-                {cat.name}
-              </span>
-            </button>
-          );
-        })}
+                {/* اسم القسم تحت الدائرة */}
+                <span className="font-bold text-sm min-w-[250px] sm:text-base text-white group-hover/item:text-primary transition-colors text-center max-w-[100px] truncate">
+                  {isAr ? cat.nameAr : cat.name}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

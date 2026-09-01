@@ -98,7 +98,7 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
                 </div>
                 {form.formState.errors.email && (
                   <p className="text-xs sm:text-sm text-rose-500 font-bold">
-                    {form.formState.errors.email.message}
+                    {t(form.formState.errors.email.message as string)}
                   </p>
                 )}
                 {apiError?.message && (

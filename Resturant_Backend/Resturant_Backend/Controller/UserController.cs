@@ -1,9 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.User;
+using Resturant_Backend.Helpers.Filter;
+using Resturant_Backend.Helpers.Pagination;
 using Resturant_Backend.Interfaces;
+using Resturant_Backend.Models;
+using Resturant_Backend.Roles;
 using System.Security.Claims;
 
 namespace Resturant_Backend.Controller
@@ -16,11 +21,15 @@ namespace Resturant_Backend.Controller
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly IMapper _mapper;
+        private readonly UserManager<Appuser> _userManager; // جديد
 
-        public UserController(IUnitOfWork unitOfWork, IMapper mapper)
+
+
+        public UserController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<Appuser> userManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
 
@@ -38,31 +47,52 @@ namespace Resturant_Backend.Controller
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             Ensure.Unauthorized(userId, "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
             var user = await _unitOfWork.UserRepo.GetUserInformationAsync(userId);
+            var userToShow = _mapper.Map<GetUserInfo>(user);
+            userToShow.Roles = ( await _userManager.GetRolesAsync(user!) ).ToList();
 
-
-            return this.Success(_mapper.Map<GetUserInfo>(user));
+            return this.Success(userToShow);
 
         }
 
 
-        [Authorize]
-        [HttpGet("GetRoles")]
-        public async Task<IActionResult> GetRoles()
+
+
+        [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
+        [HttpGet("GetAllUsers")]
+        public async Task<IActionResult> GetAllUsers([FromQuery] FiltersUsers filters)
         {
-            var roles = User
-                .FindAll(ClaimTypes.Role)
-                .Select(c => c.Value)
-                .ToList();
-            if(!roles.Any())
+            var validFilter = new PaginationFilter(filters.Pagination.PageNumber, filters.Pagination.PageSize);
+            var (users, totalCount) = await _unitOfWork.UserRepo.GetUsersAsync(filters);
+
+            var usersToShow = new List<GetUserInfo>();
+            foreach(var user in users)
             {
-                this.NotFoundEx("Role not found");
+                var dto = _mapper.Map<GetUserInfo>(user);
+                dto.Roles = ( await _userManager.GetRolesAsync(user) ).ToList();
+                usersToShow.Add(dto);
             }
 
-            return this.Success(roles);
+            var response = new PagedResponse<GetUserInfo>(usersToShow, validFilter.PageNumber, validFilter.PageSize, totalCount);
+            return this.Success(response);
         }
+        [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
+        [HttpGet("GetUserbyId/{userId}")]
+        public async Task<IActionResult> GetUserbyId(string userId)
+        {
+            var user = await _unitOfWork.UserRepo.GetUserInformationAsync(userId);
+
+            if(user is null)
+            {
+                this.NotFoundEx("User not found");
+            }
 
 
+            var userToShow = _mapper.Map<GetUserInfo>(user);
+            userToShow.Roles = ( await _userManager.GetRolesAsync(user!) ).ToList();
+            return this.Success(userToShow);
 
+
+        }
 
 
     }

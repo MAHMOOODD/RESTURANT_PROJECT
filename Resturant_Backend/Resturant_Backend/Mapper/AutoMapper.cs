@@ -22,8 +22,11 @@ namespace Resturant_Backend.Mapper
             // categories Mapping
             CreateMap<Category, GetCategoriesDto>().ReverseMap();
             CreateMap<Category, AddCategoriesDto>().ReverseMap();
-            CreateMap<Category, EditCategoriesDto>().ReverseMap();
-
+            CreateMap<Category, EditCategoriesDto>();
+            CreateMap<EditCategoriesDto, Category>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore()) // طنش مابينج الصورة وسيب الكنترولر يهندلها
+                .ForAllMembers(opts =>
+                opts.Condition((src, dest, srcMember) => srcMember != null));
 
             // Products Mapping
             CreateMap<Product, GetProductDto>();

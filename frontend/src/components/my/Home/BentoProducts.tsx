@@ -104,7 +104,7 @@ export default function BentoProducts() {
   console.log("Selected Product ID:", isSelectedAdded);
 
   return (
-    <section className="py-16 space-y-10">
+    <section className="py-16  space-y-10">
       <BentoHeader />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

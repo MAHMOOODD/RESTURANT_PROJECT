@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { IoIosRocket } from "react-icons/io";
+
 import {
   Star,
   Check,
@@ -132,7 +134,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           ) : (
             <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/20 backdrop-blur-md border border-primary/40 text-primary-foreground text-xs font-black shadow-lg">
               <Sparkles className="w-4 h-4 animate-pulse text-primary" />
-              <span>{t("products.noRating", "جديد 🚀")}</span>
+              <span>{t("products.noRating", "جديد 🚀")}
+                <IoIosRocket className="w-4 h-4 ml-1 text-white inline" />
+              </span>
             </div>
           )}
 

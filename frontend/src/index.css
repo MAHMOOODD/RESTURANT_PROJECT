@@ -55,7 +55,7 @@ body {
   --input: rgba(255, 255, 255, 0.15);
 
   /* أحمر نيون مشهي وجذاب */
-  --primary: #ff2a4b;
+  --primary: #ff4d00;
   --primary-foreground: #ffffff;
 
   --accent: rgba(255, 42, 75, 0.18);
@@ -107,6 +107,13 @@ body {
   ::selection {
     background: var(--primary);
     color: var(--primary-foreground);
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 0.75rem;
   }
 }
 

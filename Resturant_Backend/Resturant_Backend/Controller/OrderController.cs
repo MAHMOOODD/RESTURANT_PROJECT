@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Resturant_Backend.Common.Helpers;
 using Resturant_Backend.DTO.Order;
+using Resturant_Backend.Helpers.Filter;
+using Resturant_Backend.Helpers.Pagination;
+using Resturant_Backend.Hubs;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
 using Resturant_Backend.Roles;
@@ -16,10 +20,14 @@ namespace Resturant_Backend.Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public OrderController(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IHubContext<OrderHub> _hubContext;
+
+        public OrderController(IUnitOfWork unitOfWork, IMapper mapper, IHubContext<OrderHub> hubContext)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _hubContext = hubContext;
+
         }
         [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.User}")]
 
@@ -130,12 +138,19 @@ namespace Resturant_Backend.Controller
         [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
 
         [HttpGet("Get")]
-        public async Task<IActionResult> GetOrders()
+        public async Task<IActionResult> GetOrders([FromQuery] FiltersOrders filters)
         {
-            var orders = await _unitOfWork.OrderRepo.GetAllAsync();
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var validFilter = new PaginationFilter(filters.Pagination.PageNumber, filters.Pagination.PageSize);
+            var (orders, totalCount) = await _unitOfWork.OrderRepo.GetAllAsync(filters);
             Ensure.NotNull(orders, "There is no orders in the system");
 
-            var ordersToShow = _mapper.Map<List<GetOrderDto>>(orders);
+            var ordersfromDb = _mapper.Map<List<GetOrderDto>>(orders);
+
+            var ordersToShow = new PagedResponse<GetOrderDto>(ordersfromDb, validFilter.PageNumber, validFilter.PageSize, totalCount);
+
 
             return this.Success(ordersToShow);
         }
@@ -145,9 +160,16 @@ namespace Resturant_Backend.Controller
         [HttpPut("{id:int}/status")]
         public async Task<IActionResult> UpdateStatus(int id, StatusResponseDto dto)
         {
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var lastModifiedBy = await _unitOfWork.OrderRepo.LastModifiedBy(userId);
+
             var order = await _unitOfWork.OrderRepo.GetAsync(id);
 
             Ensure.NotNull(order, $"Order with ID {id} was not found.");
+
+            order.LastModifiedBy = lastModifiedBy;
 
             bool wasOrderActive = order.Status != OrderStatus.Cancelled
                                && order.PaymentStatus != PaymentStatus.Failed;
@@ -177,7 +199,21 @@ namespace Resturant_Backend.Controller
 
             await _unitOfWork.SaveChangesAsync();
 
+
             var orderToShow = _mapper.Map<GetOrderDto>(order);
+
+
+            // إشعار فوري لصاحب الأوردر ولكل الأدمنز
+
+            await _hubContext.Clients.Group($"user-{order.AppuserId}")
+     .SendAsync("OrderStatusUpdated", orderToShow);
+
+            if(userId != order.AppuserId)
+            {
+                await _hubContext.Clients.Group("admins")
+                    .SendAsync("OrderStatusUpdated", orderToShow);
+            }
+
 
             return this.Success(orderToShow);
         }

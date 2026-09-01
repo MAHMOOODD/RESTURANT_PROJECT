@@ -10,6 +10,9 @@
     "about": "قصتنا",
     "contact": " تواصل معنا",
     "account": "حسابي",
+    "notifications": "الإشعارات",
+    "noNotifications": "لا توجد إشعارات جديدة",
+    "orderUpdated": "تم تحديث حالة طلبك",
     "cart": "السلة",
     "order_now": "اطلب الآن",
     "log_out": "تسجيل الخروج",
@@ -77,9 +80,9 @@
     "openMenu": "فتح القائمة",
     "closeMenu": "إغلاق القائمة"
   },
-   "adminLayout" :{
+  "adminLayout": {
     "brand": "أكلني",
-    "menu" :"القائمة"
+    "menu": "القائمة"
   },
   "checkout": {
     "title": "إتمام الطلب",
@@ -221,21 +224,19 @@
   },
   "coupons": {
     "exclusiveDiscount": "خصم حصري",
-    "discountTitle": "خصم {{discount}} ج.م عند الطلب بـ {{min}} ج.م",
+    "discountTitle": "خصم {{discount}}% على الطلبات التي تزيد عن {{min}} ج.م", 
     "usedCount": "تم استخدامه {{count}} مرة",
     "validUntil": "صالح حتى {{date}}",
     "copied": "تم النسخ"
   },
-  "categories": {
-    "available": "الأقسام المتاحة"
-  },
+
   "bentoHeader": {
     "badge": "الأعلى مبيعاً",
-    "title": "الأكثر طلباً هذا الأسبوع 🚀",
+    "title": "الأكثر طلباً هذا الأسبوع ",
     "subtitle": "اختيارات مجربة ومفضلة لدى آلاف العملاء بشكل يومي."
   },
   "auth": {
-    "brand_tagline": "أسرع خدمة توصيل في أسرع وقت 🚀",
+    "brand_tagline": "أسرع خدمة توصيل في أسرع وقت",
     "hero_title": "جعاان ؟",
     "hero_subtitle": "يلا نشوفلك حاجة تاكلها",
     "hero_description": "سجل حسابك الآن وخلي كل وجبة أسهل! استمتع بعروض حصرية، تابع طلبك لحظة بلحظة، واحفظ طلباتك المفضلة واطلبها في ثواني!",
@@ -243,8 +244,8 @@
     "food_lovers": "أكثر من +10K عشاق للوجبات",
     "sign_in": "تسجيل الدخول",
     "sign_up": "إنشاء حساب",
-    "welcome_back": "مرحباً بعودتك! 👋",
-    "create_account": "أنشئ حسابك الآن 😋",
+    "welcome_back": "مرحباً بعودتك! ",
+    "create_account": "أنشئ حسابك الآن ",
     "sign_in_subtitle": "يرجى إدخال بياناتك لتسجيل الدخول.",
     "sign_up_subtitle": "انضم إلى أكلني اليوم واحصل على خصم 20% على طلبك الأول!",
     "full_name": "الاسم الكامل",
@@ -331,21 +332,21 @@
     "reviewError": "حدث خطأ، يرجى التأكد من تسجيل الدخول",
     "reviewDeleted": "تم حذف التقييم بنجاح",
     "deleteReviewError": "حدث خطأ أثناء حذف التقييم",
-  "submitReview": "إرسال التقييم",
-  "updateReview": "تحديث التقييم",
-  "editReview": "تعديل التقييم",
-  "writeCommentPlaceholder": "اكتب تعليقك هنا...",
-  "yourRating": "تقييمك",
-  "addReviewTitle": "أضف تقييمك للوجبة",
-  "editReviewTitle": "تعديل تقييمك للوجبة",
-  
-    "available" : "متوفر الان",
-    "unavailable" : "غير متوفر حالياً",
+    "submitReview": "إرسال التقييم",
+    "updateReview": "تحديث التقييم",
+    "editReview": "تعديل التقييم",
+    "writeCommentPlaceholder": "اكتب تعليقك هنا...",
+    "yourRating": "تقييمك",
+    "addReviewTitle": "أضف تقييمك للوجبة",
+    "editReviewTitle": "تعديل تقييمك للوجبة",
+
+    "available": "متوفر الان",
+    "unavailable": "غير متوفر حالياً",
     "all": "الكل",
-    "mealDetails" : "تفاصيل الوجبة",
+    "mealDetails": "تفاصيل الوجبة",
     "prepTime": "الوقت",
     "price": "السعر",
-    "noRating" :"أحدث الإضافات 🚀",
+    "noRating": "أحدث الإضافات ",
     "descriptionLabel": "وصف الوجبة",
     "previousPage": "الصفحة السابقة",
     "nextPage": "الصفحة التالية",
@@ -381,6 +382,14 @@
     "reviews": "تقييمات العملاء",
     "verifiedPurchase": "مشتري مأكولات",
     "noReviews": "لا توجد تقييمات لهذه الوجبة بعد. كن أول من يشارك رأيه!"
+  },
+
+  "adminRoute": {
+    "loading": "جاري التحقق من الصلاحيات...",
+    "unauthorizedTitle": "غير مصرح لك بالدخول",
+    "unauthorizedDesc": "عذراً، هذه الصفحة مخصصة لمديري النظام فقط. يجب تسجيل الدخول بحساب صلاحياته مديراً (Admin) للوصول إليها.",
+    "homeBtn": "الرئيسية",
+    "loginBtn": "تسجيل الدخول"
   },
   "reviews": {
     "badge": "آراء وتجارب حقيقية",
@@ -488,6 +497,16 @@
     "emptyState": "لا توجد منتجات حالية في المنيو.",
     "deleteSuccess": "تم حذف المنتج بنجاح",
     "deleteError": "حدث خطأ أثناء الحذف",
+    "searchPlaceholder": "بحث عن منتج...",
+"allCategories": "كل التصنيفات",
+"pageInfo": "صفحة {{current}} من {{total}} ({{count}} منتج)",
+"sort": {
+  "default": "الترتيب الافتراضي",
+  "priceAsc": "السعر: من الأقل للأعلى",
+  "priceDesc": "السعر: من الأعلى للأقل",
+  "bestSelling": "الأكثر مبيعاً",
+  "leastSelling": "الأقل مبيعاً"
+},
     "table": {
       "image": "الصورة",
       "product": "المنتج",
@@ -528,13 +547,14 @@
       "prepTime": "وقت التحضير (بالدقائق)",
       "category": "التصنيف",
       "selectCategory": "اختر التصنيف",
-      "isAvailable": "متوفر حالياً",
-      "isAvailableHelp": "تحديد ما إذا كان هذا المنتج متاحاً للطلب من الزبائن أم لا.",
       "cancel": "إلغاء",
       "add": "إضافة",
-      "save": "حفظ التعديلات",
+      "save": "حفظ التغييرات",
       "addSuccess": "تم إضافة المنتج بنجاح",
-      "saveSuccess": "تم حفظ التعديلات بنجاح",
+      "saveSuccess": "تم حفظ التغييرات بنجاح",
+      "isAvailable": "متوفر حالياً",
+      "isAvailableHelp": "تحديد ما إذا كان هذا المنتج متاحاً للطلب من الزبائن أم لا.",
+
       "errors": {
         "required": "مطلوب",
         "invalidPrice": "سعر غير صحيح",
@@ -542,7 +562,11 @@
         "selectCategory": "اختر التصنيف",
         "imageRequired": "الصورة مطلوبة",
         "invalidImageFormat": "صيغة غير مدعومة",
-        "saveFailed": "خطأ في حفظ البيانات"
+        "saveFailed": "حدث خطأ أثناء حفظ البيانات",
+        "nameMin2": "يجب ألا يقل الاسم عن حرفين",
+        "descMin5": "يجب ألا يقل الوصف عن 5 حروف",
+        "mustStartWithLetters": "يجب أن يبدأ النص بحروف ولا يبدأ برموز أو أرقام",
+        "invalidPrepTimeMin5": "يجب ألا يقل وقت التحضير عن 5 دقائق"
       }
     }
   },
@@ -551,6 +575,257 @@
     "edit": "تعديل",
     "delete": "حذف",
     "cancel": "إلغاء"
+  },
+  "categories": {
+    "title": "إدارة الأقسام",
+    "subtitle": "إضافة، تعديل، وإدارة أقسام قائمة الطعام.",
+    "addCategory": "إضافة قسم جديد",
+    "editCategory": "تعديل القسم",
+    "deleteCategory": "حذف القسم",
+    "editSubtitle": "تعديل تفاصيل القسم الحالي",
+    "addSubtitle": "إضافة قسم جديد لقائمة الطعام الخاصة بك",
+    "searchPlaceholder": "البحث عن قسم...",
+    "noCategories": "لا توجد أقسام",
+    "categoryNameAr": "اسم القسم (بالعربي)",
+    "categoryNameEn": "اسم القسم (بالإنجليزي)",
+    "image": "الصورة",
+    "category": "القسم",
+    "actions": "الإجراءات",
+    "saveChanges": "حفظ التغيرات",
+    "available": "الأقسام المتاحة",
+    "unavailable": "غير متاح",
+    "cancel": "إلغاء",
+    "removeImage": "حذف الصورة",
+    "uploadImage": "رفع صورة القسم",
+    "delete":"حذف",
+    "editSuccess": "تم تعديل القسم بنجاح",
+    "addSuccess": "تم إضافة القسم بنجاح",
+    "deleteSuccess": "تم حذف القسم بنجاح",
+    "confirmDeleteTitle": "تأكيد حذف القسم",
+    "confirmDeleteMessage": "هل أنت متأكد من حذف هذا القسم؟ لا يمكن التراجع عن هذا الإجراء."
+  },
+  "errors": {
+    "required": "هذا الحقل مطلوب",
+    "nameMin": "يجب أن يكون ثلاث أحرف على الأقل",
+    "noStartNumber": "لا يمكن أن يبدأ الاسم برقم",
+    "saveError": "حدث خطأ أثناء حفظ البيانات",
+    "deleteError": "حدث خطأ أثناء الحذف",
+    "editError": "حدث خطأ أثناء تعديل البيانات",
+    "updateError": "حدث خطأ أثناء تحديث البيانات",
+    "imageRequired": "صورة القسم مطلوبة",
+    "invalidImage": "صيغة الصورة غير مدعومة"
+    
+  },
+  "adminOrders": {
+    "title": "إدارة الطلبات",
+    "subtitle": "متابعة الطلبات، تعديل حالات الشحن والدفع، وعرض التاصيل الكاملة",
+    "totalOrders": "إجمالي الطلبات",
+    "searchPlaceholder": "ابحث برقم الطلب أو العنوان...",
+    "statusFilterAll": "جميع الحالات",
+    "statusFilterPayment": "جميع حالات الدفع",
+    "orderId": "رقم الطلب",
+    "address": "عنوان الشحن",
+    "totalPrice": "الإجمالي",
+    "status": "حالة الطلب",
+    "paymentStatus": "حالة الدفع",
+    "createdAt": "تاريخ الطلب",
+    "actions": "الإجراءات",
+    "editStatus": "تعديل الحالة",
+    "cancelled": "تم الإلغاء",
+    "pending": "قيد الانتظار",
+    "lastModifiedBy": "آخر تعديل بواسطة",
+    "details": "التفاصيل",
+    "noOrders": "لا توجد طلبات متطابقة مع البحث أو الفلترة",
+    "items": "المنتجات",
+    "itemsCount": "منتج",
+    "quantity": "الكمية",
+    "price": "السعر",
+    "discount": "الخصم",
+    "finalPrice": "السعر النهائي",
+    "modalTitle": "تفاصيل وتحديث الطلب",
+    "updateBtn": "حفظ التغييرات",
+    "close": "إغلاق",
+     "customer": "العميل",
+    "loading": "جاري تحميل الطلبات...",
+    "loadingUser": "جاري التحميل...",
+    "currency": "ج.م",
+    "selectStatus": "اختر الحالة",
+    "selectPaymentStatus": "اختر حالة الدفع",
+    "cancelWarning": "تنبيه: تغيير الحالة إلى ملغي أو فشل الدفع سيؤدي إلى إرجاع الكمية المباعة للمنتجات المرتبطة بهذا الطلب تلقائياً.",
+    "defaultMealName": "منتج #{{id}}",
+    "pageInfo": "صفحة {{current}} من {{total}} ({{count}} طلب)",
+    "updateSuccess": "تم تحديث حالة الطلب بنجاح",
+    "updateError": "حدث خطأ أثناء تحديث حالة الطلب",
+    "statusTypes": {
+      "pending": "قيد الانتظار",
+      "processing": "جاري التحضير",
+      "shipped": "تم الشحن",
+      "delivered": "تم التوصيل",
+      "cancelled": "ملغي"
+    },
+    "paymentTypes": {
+      "pending": "قيد الانتظار",
+      "completed": "مكتمل",
+      "failed": "فشل الدفع",
+      "refunded": "تم المسترد"
+    },
+    "errors": {
+      "required": "هذا الحقل مطلوب"
+    },
+    "userDetails": {
+      "title": "بيانات العميل",
+      "username": "اسم المستخدم",
+      "fullName": "الاسم بالكامل",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "address": "العنوان",
+      "notProvided": "غير محدد",
+      "loading": "جاري تحميل بيانات العميل..."
+    }
+  },
+  "adminCoupons": {
+    "title": "إدارة الكوبونات",
+    "subtitle": "أضف كوبونات الخصم وعدّلها أو احذفها من متجرك.",
+    "addNewCoupon": "إضافة كوبون جديد",
+    "totalCoupons": "إجمالي الكوبونات",
+    "searchPlaceholder": "ابحث بكود الكوبون...",
+    "loading": "جاري تحميل الكوبونات...",
+    "fetchError": "حدث خطأ أثناء تحميل الكوبونات",
+    "emptyState": "لا توجد كوبونات مضافة حالياً.",
+    "noSearchResults": "لا توجد كوبونات تطابق بحثك.",
+    "currency": "ج.م",
+    "deleteSuccess": "تم حذف الكوبون بنجاح",
+    "deleteError": "حدث خطأ أثناء حذف الكوبون",
+    "table": {
+      "code": "الكود",
+      "discount": "نسبة الخصم",
+      "minimumAmount": "الحد الأدنى للطلب",
+      "usedCount": "مرات الاستخدام",
+      "createdAt": "تاريخ الإنشاء",
+      "expiryDate": "تاريخ الانتهاء",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "active": "ساري",
+      "expired": "منتهي",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "copy": "نسخ الكود"
+    },
+    "deleteDialog": {
+      "title": "تأكيد حذف الكوبون",
+      "description": "هل أنت متأكد من حذف الكوبون \"{{code}}\"؟ لا يمكن التراجع عن هذا الإجراء.",
+      "cancelBtn": "إلغاء",
+      "confirmBtn": "حذف"
+    },
+    "form": {
+      "addTitle": "إضافة كوبون جديد",
+      "editTitle": "تعديل الكوبون",
+      "addSubtitle": "أدخل بيانات الكوبون الجديد لإضافته للمتجر.",
+      "editSubtitle": "قم بتحديث بيانات الكوبون وسيتم حفظ التغيير فوراً.",
+      "codeLabel": "كود الكوبون",
+      "codePlaceholder": "مثال: WELCOME20",
+      "discountLabel": "نسبة الخصم (%)",
+      "discountPlaceholder": "من 0 إلى 99",
+      "minimumAmountLabel": "الحد الأدنى للطلب (ج.م)",
+      "minimumAmountPlaceholder": "أدخل الحد الأدنى",
+      "cancelBtn": "إلغاء",
+      "addBtn": "إضافة",
+      "saveBtn": "حفظ التغييرات",
+      "addSuccess": "تم إضافة الكوبون بنجاح",
+      "saveSuccess": "تم حفظ التغييرات بنجاح",
+      "errors": {
+        "codeRequired": "كود الكوبون مطلوب",
+        "codeMin": "يجب ألا يقل الكود عن 3 أحرف",
+        "codeMax": "يجب ألا يزيد الكود عن 20 حرفاً",
+        "codePattern": "الكود يجب أن يحتوي على حروف إنجليزية وأرقام فقط",
+        "invalidDiscount": "نسبة خصم غير صحيحة",
+        "discountRange": "نسبة الخصم يجب أن تكون بين 0 و 99",
+        "invalidMinimumAmount": "قيمة غير صحيحة",
+        "minimumAmountRange": "الحد الأدنى يجب أن يكون أكبر من 0",
+        "saveFailed": "حدث خطأ أثناء حفظ بيانات الكوبون"
+      }
+    }
+  },
+  "adminDashboard": {
+    "title": "لوحة التحكم",
+    "subtitle": "نظرة شاملة على أداء المطعم لحظة بلحظة",
+    "currency": "ج.م",
+    "loadError": "تعذر تحميل بيانات لوحة التحكم",
+    "cards": {
+      "revenue": "الإيرادات",
+      "netRevenue": "صافي الإيرادات",
+      "averageOrderValue": "متوسط قيمة الأوردر",
+      "profit": "صافي الربح",
+      "grossRevenue": "الإيرادات الإجمالية",
+      "discountsGiven": "قيمة الخصومات",
+      "orders": "الأوردرز",
+      "users": "المستخدمين",
+      "admins": "مديري النظام",
+      "managers": "المشرفين",
+      "regularUsers": "المستخدمين العاديين"
+    },
+    "orderStatus": {
+      "pending": "قيد الانتظار",
+      "processing": "قيد التحضير",
+      "shipped": "قيد التوصيل",
+      "delivered": "تم التوصيل",
+      "cancelled": "ملغي"
+    },
+    "charts": {
+      "revenueTrendTitle": "الإيرادات خلال آخر 14 يوم",
+      "revenueLabel": "الإيرادات",
+      "noRevenueYet": "لا توجد إيرادات مسجلة في هذه الفترة",
+      "ordersStatusTitle": "توزيع حالات الأوردرز",
+      "noOrdersYet": "لا توجد أوردرز مسجلة بعد",
+      "topProductsTitle": "المنتجات الأكثر مبيعاً",
+      "noProductsYet": "لا توجد بيانات مبيعات بعد",
+      "sold": "مبيعة"
+    }
+  },
+  "adminUsers": {
+    "title": "إدارة المستخدمين",
+    "subtitle": "استعراض بيانات المستخدمين وإدارة صلاحياتهم",
+    "totalUsers": "إجمالي المستخدمين",
+    "searchPlaceholder": "ابحث بالاسم أو رقم الهاتف...",
+    "sortDefault": "الترتيب الافتراضي",
+    "sortAsc": "الاسم: تصاعدي",
+    "sortDesc": "الاسم: تنازلي",
+    "loading": "جاري تحميل المستخدمين...",
+    "noUsers": "لا يوجد مستخدمين مطابقين للبحث",
+    "pageInfo": "صفحة {{current}} من {{total}} ({{count}} مستخدم)",
+    "roles": {
+      "admin": "مدير النظام",
+      "manager": "مشرف",
+      "user": "مستخدم"
+    },
+    "table": {
+      "user": "المستخدم",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "address": "العنوان",
+      "roles": "الصلاحية",
+      "actions": "الإجراءات",
+      "details": "التفاصيل",
+      "noRole": "بدون صلاحية",
+      "noPhone": "غير مسجل",
+      "noAddress": "غير مسجل"
+    },
+    "modal": {
+      "title": "تفاصيل المستخدم",
+      "close": "إغلاق",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "address": "العنوان",
+      "notProvided": "غير محدد",
+      "loading": "جاري تحميل بيانات المستخدم...",
+      "loadError": "تعذر تحميل بيانات المستخدم",
+      "rolesTitle": "الصلاحيات",
+      "rolesDesc": "اضغط على أي صلاحية لتفعيلها أو إلغائها لهذا المستخدم",
+      "addRoleSuccess": "تم إضافة الصلاحية بنجاح",
+      "addRoleError": "حدث خطأ أثناء إضافة الصلاحية",
+      "removeRoleSuccess": "تم إلغاء الصلاحية بنجاح",
+      "removeRoleError": "حدث خطأ أثناء إلغاء الصلاحية"
+    }
   }
   
 }

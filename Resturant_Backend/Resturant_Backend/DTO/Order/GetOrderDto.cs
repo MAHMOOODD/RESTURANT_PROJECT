@@ -1,5 +1,6 @@
 ﻿using Resturant_Backend.DTO.OrderDetails;
 using Resturant_Backend.Models;
+using System.Text.Json.Serialization;
 
 namespace Resturant_Backend.DTO.Order
 {
@@ -7,8 +8,8 @@ namespace Resturant_Backend.DTO.Order
     {
         public int Id { get; set; }
 
+        [JsonPropertyName("appUserId")]
         public string AppuserId { get; set; }
-
         public string UserAddress { get; set; }
 
         public decimal TotalPrice { get; set; }
@@ -19,6 +20,7 @@ namespace Resturant_Backend.DTO.Order
         public PaymentStatus PaymentStatus { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string? LastModifiedBy { get; set; }
 
         public int? CouponId { get; set; }
 

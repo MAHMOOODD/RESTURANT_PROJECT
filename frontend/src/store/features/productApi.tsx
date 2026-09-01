@@ -22,6 +22,7 @@ const buildFilterParams = (filter?: Filter) => {
     ...(filter.pagination?.pageSize && {
       "Pagination.PageSize": filter.pagination.pageSize,
     }),
+    ...(filter.searchTerm && { SearchTerm: filter.searchTerm }),
     ...(filter.sortByPrice !== undefined && {
       SortByPrice: filter.sortByPrice,
     }),
@@ -29,6 +30,8 @@ const buildFilterParams = (filter?: Filter) => {
       SortBySelling: filter.sortBySelling,
     }),
     ...(filter.ascending !== undefined && { Ascending: filter.ascending }),
+    ...(filter.minPrice !== undefined && { MinPrice: filter.minPrice }),
+    ...(filter.maxPrice !== undefined && { MaxPrice: filter.maxPrice }),
   };
 };
 
@@ -167,7 +170,7 @@ export const productApi = createApi({
       }),
       transformResponse: (response: ApiResponse<GetProductDto>) =>
         response.data,
-      invalidatesTags: ["Products"],
+      invalidatesTags: ["Products",],
     }),
 
     // 7. Edit Product

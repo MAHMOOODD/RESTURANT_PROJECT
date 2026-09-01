@@ -21,6 +21,7 @@
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public int? CouponId { get; set; }
+        public string? LastModifiedBy { get; set; }
 
         public Coupon? Coupon { get; set; }
 
@@ -34,7 +35,8 @@
     {
         Pending,
         Processing,
-        Completed,
+        Shipped,
+        Delivered,
         Cancelled
     }
 
@@ -43,6 +45,7 @@
         Pending,
         Paid,
         Failed,
+        Refunded,
 
     }
 }

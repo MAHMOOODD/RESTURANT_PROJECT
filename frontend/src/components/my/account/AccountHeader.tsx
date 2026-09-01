@@ -1,14 +1,12 @@
-import { Sparkles, Camera, ShieldCheck, Crown, Shield } from "lucide-react";
+import { Sparkles, Camera, ShieldCheck, Crown, Shield, User2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import type { GetUserInfo } from "@/store/features/User/Auth";
+import type { UserInfo } from "@/types/types";
 
-interface RolesResponse {
-  data?: string[];
-}
+
 
 interface AccountHeaderProps {
-  userInfo: GetUserInfo | undefined;
-  roles: RolesResponse | undefined;
+  userInfo: UserInfo | undefined;
+  roles: UserInfo["roles"] | undefined;
   currentImagePreview: string | null;
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -22,6 +20,7 @@ export function AccountHeader({
   handleImageChange,
 }: AccountHeaderProps) {
   const { t } = useTranslation();
+  console.log("AccountHeader roles:", roles); // Debugging line to check roles
 
   const getRoleBadgeStyle = (role: string) => {
     const normalized = role.toLowerCase();
@@ -33,12 +32,12 @@ export function AccountHeader({
     }
     if (normalized.includes("manager")) {
       return {
-        icon: <Shield className="w-4 h-4 text-purple-400" />,
-        style: "bg-purple-500/10 text-purple-400 border-purple-500/30",
+        icon: <Shield className="w-4 h-4 text-rose-400" />,
+        style: "bg-rose-500/10 text-rose-500 border-rose-500/30",
       };
     }
     return {
-      icon: <ShieldCheck className="w-4 h-4 text-emerald-400" />,
+      icon: <User2 className="w-4 h-4 text-emerald-400" />,
       style: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
     };
   };
@@ -100,13 +99,13 @@ export function AccountHeader({
         </div>
 
         {/* Roles */}
-        {roles?.data && roles.data.length > 0 && (
+        {roles && roles.length > 0 && (
           <div className="flex sm:flex-col items-center sm:items-end gap-2.5 pt-4 sm:pt-0 border-t sm:border-t-0 border-border/50 w-full sm:w-auto justify-center">
             <span className="text-xs font-bold text-muted-foreground">
               {t("account.rolesLabel", "الصلاحيات")}
             </span>
             <div className="flex flex-wrap gap-2">
-              {roles.data.map((role: string) => {
+              {roles?.map((role: string) => {
                 const { icon, style } = getRoleBadgeStyle(role);
                 return (
                   <span

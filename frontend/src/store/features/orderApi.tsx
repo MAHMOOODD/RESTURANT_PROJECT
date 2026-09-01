@@ -8,7 +8,32 @@ import type {
 } from "@/types/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { cartApi } from "./cartApi";
-
+import type{ PagedResponse ,OrderFilter } from "@/types/types";
+const buildFilterParams = (filter?: OrderFilter) => {
+  if (!filter) return {};
+  return {
+    ...(filter.pagination?.pageNumber && {
+      "Pagination.PageNumber": filter.pagination.pageNumber,
+    }),
+    ...(filter.pagination?.pageSize && {
+      "Pagination.PageSize": filter.pagination.pageSize,
+    }),
+    ...(filter.searchTerm && {
+      SearchTerm: filter.searchTerm,
+    }),
+    ...(filter.sortByPrice !== undefined && {
+      SortByPrice: filter.sortByPrice,
+    }),
+    ...(filter.sortByDate !== undefined && {
+      SortByDate: filter.sortByDate,
+    }),
+    ...(filter.ascending !== undefined && { Ascending: filter.ascending }),
+    ...(filter.status !== undefined && { OrderStatus: filter.status }),
+    ...(filter.paymentStatus !== undefined && {
+      PaymentState: filter.paymentStatus,
+    }),
+  };
+};
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: baseQuery(),
@@ -70,13 +95,15 @@ export const orderApi = createApi({
     }),
 
     // GET: /api/Order/Get
-    getAllOrders: builder.query<GetOrderDto[], void>({
-      query: () => ({
+    // GET: /api/Order/Get
+    getAllOrders: builder.query<PagedResponse<GetOrderDto>, OrderFilter | void>({
+      query: (OrderFilter) => ({
         url: "/Order/Get",
         method: "GET",
+        params: buildFilterParams(OrderFilter || undefined),
       }),
 
-      transformResponse: (response: ApiResponse<GetOrderDto[]>) =>
+      transformResponse: (response: ApiResponse<PagedResponse<GetOrderDto>>) =>
         response.data,
 
       providesTags: ["Orders"],

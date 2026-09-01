@@ -32,7 +32,7 @@ export function ProductImageUpload({
           <>
             <img
               src={previewUrl}
-              alt={t("adminProducts.imageUpload.previewAlt")}
+              alt={t("adminProducts.imageUpload.previewAlt", "معاينة الصورة")}
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
             <label
@@ -41,7 +41,7 @@ export function ProductImageUpload({
             >
               <Camera className="h-6 w-6 mb-1" />
               <span className="text-[11px] font-medium">
-                {t("adminProducts.imageUpload.change")}
+                {t("adminProducts.imageUpload.change", "تغيير")}
               </span>
             </label>
           </>
@@ -52,7 +52,7 @@ export function ProductImageUpload({
           >
             <ImagePlus className="h-8 w-8 mb-1 opacity-70" />
             <span className="text-xs font-medium">
-              {t("adminProducts.imageUpload.upload")}
+              {t("adminProducts.imageUpload.upload", "رفع صورة")}
             </span>
           </label>
         )}
@@ -74,7 +74,7 @@ export function ProductImageUpload({
           className="flex items-center gap-1 text-xs text-red-500 hover:text-red-600 transition-colors pt-1 cursor-pointer"
         >
           <Trash2 className="h-3.5 w-3.5" />
-          <span>{t("adminProducts.imageUpload.remove")}</span>
+          <span>{t("adminProducts.imageUpload.remove", "حذف الصورة")}</span>
         </button>
       )}
 

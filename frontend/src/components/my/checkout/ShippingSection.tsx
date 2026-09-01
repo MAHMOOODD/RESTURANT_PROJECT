@@ -1,10 +1,10 @@
 import { MapPin, User, Phone, Edit3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import type { GetUserInfo } from "@/store/features/User/Auth"; // استبدلها بالنوع المناسب لديك
+import type {UserInfo } from "@/types/types";
 
 interface ShippingSectionProps {
-  userInfo: GetUserInfo;
+  userInfo: UserInfo;
 }
 
 export function ShippingSection({ userInfo }: ShippingSectionProps) {

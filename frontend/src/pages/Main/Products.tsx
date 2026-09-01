@@ -11,25 +11,28 @@ import Pagination from "@/components/my/Products/Pagination";
 
 import {
   useGetAllProductsQuery,
-  useGetProductByNameQuery,
   useGetProductByCategoryIdQuery,
   useGetAllCategoriesQuery,
 } from "@/store/features/productApi";
 import type { Filter, GetProductDto } from "@/types/types";
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 9;
+const SEARCH_DEBOUNCE_MS = 400;
 
 export default function Products() {
   const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const categoryParam = searchParams.get("category");
   const initialCatId = categoryParam ? Number(categoryParam) : 0;
 
   const [selectedCategoryId, setSelectedCategoryId] =
     useState<number>(initialCatId);
   const [sortBy, setSortBy] = useState<string>("popular");
+  const [minPrice, setMinPrice] = useState<number | "">("");
+  const [maxPrice, setMaxPrice] = useState<number | "">("");
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -39,6 +42,22 @@ export default function Products() {
       }, 0);
     }
   }, [categoryParam]);
+
+  // Debounce السيرش عشان منبعتش ريكوست مع كل حرف
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery.trim());
+    }, SEARCH_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // رجوع لأول صفحة كل ما أي فلتر يتغير
+  useEffect(() => {
+    setTimeout(() => {
+      
+      setCurrentPage(1);
+    }, 1000);
+  }, [debouncedSearchQuery, selectedCategoryId, sortBy, minPrice, maxPrice]);
 
   const { data: categories = [] } = useGetAllCategoriesQuery();
   const isAr = i18n.language === "ar";
@@ -59,38 +78,34 @@ export default function Products() {
         pageNumber: currentPage,
         pageSize: ITEMS_PER_PAGE,
       },
+      searchTerm: debouncedSearchQuery || undefined,
       sortByPrice: sortBy === "price-asc" || sortBy === "price-desc",
       sortBySelling: sortBy === "popular",
       ascending: sortBy === "price-asc",
+      minPrice: minPrice === "" ? undefined : minPrice,
+      maxPrice: maxPrice === "" ? undefined : maxPrice,
     };
-  }, [currentPage, sortBy]);
+  }, [currentPage, debouncedSearchQuery, sortBy, minPrice, maxPrice]);
 
-  const isSearchingByName = searchQuery.trim().length > 0;
-  const isFilteringByCategory = selectedCategoryId !== 0 && !isSearchingByName;
-  const isGetAll = !isSearchingByName && !isFilteringByCategory;
+  const isFilteringByCategory = selectedCategoryId !== 0;
 
-  const { data: allRes, isLoading: isAllLoading } = useGetAllProductsQuery(
-    filterParams,
-    { skip: !isGetAll },
+  const { data: allRes, isLoading: isAllLoading, isFetching: isAllFetching } =
+    useGetAllProductsQuery(filterParams, { skip: isFilteringByCategory });
+
+  const {
+    data: categoryRes,
+    isLoading: isCategoryLoading,
+    isFetching: isCategoryFetching,
+  } = useGetProductByCategoryIdQuery(
+    { categoryId: selectedCategoryId, filter: filterParams },
+    { skip: !isFilteringByCategory },
   );
-  const { data: searchRes, isLoading: isSearchLoading } =
-    useGetProductByNameQuery(
-      { name: searchQuery, filter: filterParams },
-      { skip: !isSearchingByName },
-    );
-  const { data: categoryRes, isLoading: isCategoryLoading } =
-    useGetProductByCategoryIdQuery(
-      { categoryId: selectedCategoryId, filter: filterParams },
-      { skip: !isFilteringByCategory },
-    );
 
-  const isLoading = isAllLoading || isSearchLoading || isCategoryLoading;
+  const isLoading = isFilteringByCategory
+    ? isCategoryLoading || isCategoryFetching
+    : isAllLoading || isAllFetching;
 
-  const activeData = isSearchingByName
-    ? searchRes
-    : isFilteringByCategory
-      ? categoryRes
-      : allRes;
+  const activeData = isFilteringByCategory ? categoryRes : allRes;
 
   const products: GetProductDto[] = activeData?.data || [];
   const totalCount = activeData?.totalRecords || 0;
@@ -99,7 +114,6 @@ export default function Products() {
   const handleSelectCategory = useCallback(
     (id: number) => {
       setSelectedCategoryId(id);
-      setCurrentPage(1);
       if (id === 0) {
         searchParams.delete("category");
       } else {
@@ -117,33 +131,27 @@ export default function Products() {
       <div className="absolute top-1/2 left-10 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto space-y-8">
-      {/* 🔍 Search Bar - بدون خلفية أو حدود خروجية */}
-<div className="sticky top-4 z-30 w-full">
-  <ProductSearch
-    searchQuery={searchQuery}
-    setSearchQuery={(q) => {
-      setSearchQuery(q);
-      setCurrentPage(1);
-    }}
-    sortBy={sortBy}
-    setSortBy={(s) => {
-      setSortBy(s);
-      setCurrentPage(1);
-    }}
-    minPrice={""}
-    setMinPrice={() => {}}
-    maxPrice={""}
-    setMaxPrice={() => {}}
-  />
-</div>
+        {/* 🔍 Search Bar - بدون خلفية أو حدود خروجية */}
+        <div className="sticky top-4 z-30 w-full">
+          <ProductSearch
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            minPrice={minPrice}
+            setMinPrice={setMinPrice}
+            maxPrice={maxPrice}
+            setMaxPrice={setMaxPrice}
+          />
+        </div>
 
-{/* 🏷️ Category Filter - بدون خلفية */}
-<div className="w-full">
-  <CategoryFilter
-    selectedCategoryId={selectedCategoryId}
-    onSelectCategory={handleSelectCategory}
-  />
-</div>
+        {/* 🏷️ Category Filter - بدون خلفية */}
+        <div className="min-h-50 ">
+          <CategoryFilter
+            selectedCategoryId={selectedCategoryId}
+            onSelectCategory={handleSelectCategory}
+          />
+        </div>
 
         {/* 📊 Counter & Category Badge */}
         <div className="flex items-center justify-between px-2 text-sm sm:text-base font-medium text-muted-foreground">
@@ -165,7 +173,7 @@ export default function Products() {
             </span>
           </div>
 
-          <span className="text-xs sm:text-sm bg-primary/15 text-primary backdrop-blur-md px-4 py-1.5 rounded-full border border-primary/25 font-bold flex items-center gap-2 shadow-sm">
+          <span className="text-xs sm:text-sm  text-primary bg-background backdrop-blur-md px-4 py-1.5 rounded-full border border-primary/25 font-bold flex items-center gap-2 shadow-sm">
             <UtensilsCrossed className="w-3.5 h-3.5" />
             {activeCategoryName}
           </span>

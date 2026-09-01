@@ -8,7 +8,7 @@ export default function HeroSection() {
   const isRtl = i18n.dir() === "rtl";
 
   return (
-    <section className="relative w-full h-[90vh] min-h-[650px] mt-6 flex flex-col items-center justify-center text-center px-8 lg:px-20 overflow-hidden rounded-[3rem] border border-border bg-black shadow-2xl">
+    <section className="relative w-full h-[90vh] min-h-[650px] mt-6 flex flex-col items-center justify-center text-center px-8 lg:px-20 overflow-hidden rounded-[3rem] border border-border ">
       {/* 🔴 الصورة واضحة بـ opacity-80 في كل المودات */}
       <div
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-1000 hover:scale-105 opacity-80"

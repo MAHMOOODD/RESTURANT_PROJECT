@@ -1,4 +1,6 @@
-﻿using Resturant_Backend.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Resturant_Backend.Data;
+using Resturant_Backend.Helpers.Filter;
 using Resturant_Backend.Interfaces;
 using Resturant_Backend.Models;
 
@@ -38,6 +40,49 @@ namespace Resturant_Backend.Repository
 
 
             return user is null ? null : user;
+        }
+
+        public async Task<(List<Appuser>, int totalcount)> GetUsersAsync(FiltersUsers filters)
+        {
+
+            var query = SortOrdersBy(_context.Users, filters.UserName, filters.Ascending);
+
+            if(!string.IsNullOrEmpty(filters.SearchTerm))
+            {
+                query = query.Where(u => u.UserName.Contains(filters.SearchTerm) || u.PhoneNumber.Contains(filters.SearchTerm));
+            }
+            var count = await query.CountAsync();
+
+            query = query.Skip(( filters.Pagination.PageNumber - 1 ) * filters.Pagination.PageSize)
+                .Take(filters.Pagination.PageSize);
+
+            return (await query.ToListAsync(), count);
+        }
+        public IQueryable<Appuser> SortOrdersBy(IQueryable<Appuser> users, bool? SortByUsername, bool ascending)
+        {
+
+
+            if(SortByUsername == true)
+            {
+                return ascending ? users.OrderBy(p => p.UserName) : users.OrderByDescending(p => p.UserName);
+            }
+
+
+
+            return users;
+
+
+
+        }
+
+        /// <summary>
+        /// عدد كل المستخدمين المسجلين في النظام (بكل الرولز).
+        /// عدد كل رول على حدة بيتحسب في DashboardController عن طريق UserManager
+        /// (GetUsersInRoleAsync) لأنه محتاج الوصول لجدول AspNetUserRoles.
+        /// </summary>
+        public Task<int> GetTotalUsersCountAsync()
+        {
+            return _context.Users.CountAsync();
         }
     }
 }

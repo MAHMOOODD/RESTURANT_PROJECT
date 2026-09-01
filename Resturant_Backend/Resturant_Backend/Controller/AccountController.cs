@@ -17,12 +17,18 @@ public class AccountController : ControllerBase
     private readonly IAuthService _authService;
     private readonly IMapper _mapper;
     private readonly IOptions<JwtHelper> _jwtOptions;
+    private readonly IWebHostEnvironment _env;
 
-    public AccountController(IAuthService authService, IMapper mapper, IOptions<JwtHelper> jwtOptions)
+    public AccountController(
+        IAuthService authService,
+        IMapper mapper,
+        IOptions<JwtHelper> jwtOptions,
+        IWebHostEnvironment env)
     {
         _authService = authService;
         _mapper = mapper;
         _jwtOptions = jwtOptions;
+        _env = env;
     }
 
     [HttpPost("Register")]
@@ -94,6 +100,14 @@ public class AccountController : ControllerBase
         return this.SuccessMessage("Role added successfully!");
     }
 
+    [Authorize(Roles = "Admin")]
+    [HttpPost("RemoveRole")]
+    public async Task<IActionResult> RemoveRoleAsync([FromBody] AddRoleDto model)
+    {
+        await _authService.RemoveRoleAsync(model);
+        return this.SuccessMessage("Role removed successfully!");
+    }
+
     [HttpPost("RefreshToken")]
     public async Task<IActionResult> RefreshToken()
     {
@@ -121,8 +135,8 @@ public class AccountController : ControllerBase
         Response.Cookies.Delete("refreshToken", new CookieOptions
         {
             HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None
+            Secure = !_env.IsDevelopment(),
+            SameSite = _env.IsDevelopment() ? SameSiteMode.Lax : SameSiteMode.None
         });
 
         return this.SuccessMessage("Token revoked successfully.");
@@ -134,9 +148,9 @@ public class AccountController : ControllerBase
         {
             HttpOnly = true,
             Expires = expires.ToLocalTime(),
-            Secure = true,
             IsEssential = true,
-            SameSite = SameSiteMode.None
+            Secure = !_env.IsDevelopment(),
+            SameSite = _env.IsDevelopment() ? SameSiteMode.Lax : SameSiteMode.None
         };
         Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
     }

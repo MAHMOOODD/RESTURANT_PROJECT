@@ -336,6 +336,9 @@ namespace Resturant_Backend.Migrations
                     b.Property<decimal?>("Discount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PaymentStatus")
                         .HasColumnType("int");
 
