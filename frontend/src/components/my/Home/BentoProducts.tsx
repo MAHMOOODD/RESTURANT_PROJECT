@@ -14,13 +14,7 @@ import type { ApiError } from "@/services/baseQuery";
 import BentoHeader from "./BentoHeader";
 import BentoItem from "./BentoItem";
 import { useTranslation } from "react-i18next";
-const BENTO_SPANS = [
-  "col-span-1 md:col-span-2 lg:col-span-2",
-  "col-span-1 md:col-span-1 lg:col-span-1",
-  "col-span-1 md:col-span-1 lg:col-span-1",
-  "col-span-1 md:col-span-1 lg:col-span-1",
-  "col-span-1 md:col-span-1 lg:col-span-1",
-];
+const EQUAL_SPAN = "col-span-1";
 
 export default function BentoProducts() {
   const [selectedProductId, setSelectedProductId] = useState<number | null>(
@@ -38,7 +32,7 @@ export default function BentoProducts() {
     isLoading,
     isError,
   } = useGetAllProductsQuery({
-    pagination: { pageNumber: 1, pageSize: 5 },
+    pagination: { pageNumber: 1, pageSize: 6 },
     sortBySelling: true,
   });
 
@@ -108,7 +102,7 @@ export default function BentoProducts() {
       <BentoHeader />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {topProducts.map((prod, index) => {
+        {topProducts.map((prod) => {
           const cartItem = cartData?.find(
             (item) => Number(item.productId) === Number(prod.id),
           );
@@ -118,7 +112,7 @@ export default function BentoProducts() {
             <BentoItem
               key={prod.id}
               product={prod}
-              spanClass={BENTO_SPANS[index % BENTO_SPANS.length]}
+              spanClass={EQUAL_SPAN}
               onOpenModal={(id) => setSelectedProductId(id)}
               isAdded={isAdded}
               isLoading={actionLoadingId === prod.id}

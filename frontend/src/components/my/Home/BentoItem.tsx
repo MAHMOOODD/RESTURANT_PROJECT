@@ -105,7 +105,7 @@ export default function BentoItem({ product, spanClass }: BentoItemProps) {
       className={`group relative w-full bg-card/70 backdrop-blur-2xl border border-border/80 hover:border-primary/60 rounded-[2.5rem] p-5 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/15 flex flex-col justify-between overflow-hidden cursor-pointer ${spanClass}`}
     >
       {/* قسم الصورة الكبيرة والبارزة */}
-      <div className="relative h-64 sm:h-120 w-full rounded-[2rem] overflow-hidden bg-muted shadow-inner">
+      <div className="relative aspect-video w-full rounded-[2rem] overflow-hidden bg-muted shadow-inner">
         <img
           src={displayImage}
           alt={productName}
