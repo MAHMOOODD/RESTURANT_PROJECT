@@ -16,6 +16,7 @@ PublishProfiles/
 # Secrets
 appsettings.json
 appsettings.*.json
+!appsettings.Template.json
 *.env
 .env
 .env.local
