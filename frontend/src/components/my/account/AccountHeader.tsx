@@ -1,8 +1,14 @@
-import { Sparkles, Camera, ShieldCheck, Crown, Shield, User2 } from "lucide-react";
+import {
+  Sparkles,
+  Camera,
+  ShieldCheck,
+  Crown,
+  Shield,
+  User2,
+  ComputerIcon,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { UserInfo } from "@/types/types";
-
-
 
 interface AccountHeaderProps {
   userInfo: UserInfo | undefined;
@@ -36,9 +42,16 @@ export function AccountHeader({
         style: "bg-rose-500/10 text-rose-500 border-rose-500/30",
       };
     }
+    if (normalized.includes("user")) {
+      return {
+        icon: <User2 className="w-4 h-4 text-emerald-400" />,
+        style: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+      };
+    }
+
     return {
-      icon: <User2 className="w-4 h-4 text-emerald-400" />,
-      style: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+      icon: <ComputerIcon className="w-4 h-4 text-blue-400" />,
+      style: "bg-blue-500/10 text-blue-400 border-blue-500/30",
     };
   };
 
@@ -60,10 +73,10 @@ export function AccountHeader({
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
+              ) : userInfo?.fullName ? (
+                userInfo.fullName.charAt(0).toUpperCase()
               ) : (
-                userInfo?.fullName
-                  ? userInfo.fullName.charAt(0).toUpperCase()
-                  : userInfo?.userName?.charAt(0).toUpperCase() || "U"
+                userInfo?.userName?.charAt(0).toUpperCase() || "U"
               )}
 
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
@@ -98,22 +111,21 @@ export function AccountHeader({
           </div>
         </div>
 
-        {/* Roles */}
         {roles && roles.length > 0 && (
-          <div className="flex sm:flex-col items-center sm:items-end gap-2.5 pt-4 sm:pt-0 border-t sm:border-t-0 border-border/50 w-full sm:w-auto justify-center">
+          <div className="flex flex-col items-center sm:items-end gap-2.5 pt-4 sm:pt-0 border-t sm:border-t-0 border-border/50 w-full sm:w-auto shrink-0">
             <span className="text-xs font-bold text-muted-foreground">
               {t("account.rolesLabel", "الصلاحيات")}
             </span>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 gap-2 justify-items-center sm:justify-items-end w-full max-w-fit sm:max-w-fit">
               {roles?.map((role: string) => {
                 const { icon, style } = getRoleBadgeStyle(role);
                 return (
                   <span
                     key={role}
-                    className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-2xl border text-xs sm:text-sm font-bold capitalize transition-all hover:scale-105 ${style}`}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl border text-xs sm:text-sm font-bold capitalize transition-all hover:scale-105 shadow-xs w-full justify-center ${style}`}
                   >
                     {icon}
-                    <span>{role}</span>
+                    <span className="truncate max-w-[120px]">{role}</span>
                   </span>
                 );
               })}

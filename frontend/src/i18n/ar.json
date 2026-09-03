@@ -666,7 +666,17 @@
       "address": "العنوان",
       "notProvided": "غير محدد",
       "loading": "جاري تحميل بيانات العميل..."
-    }
+    },
+    "source": "مصدر الطلب",
+    "sourceTypes": {
+      "online": "أونلاين",
+      "pos": "كاشير (محل)"
+    },
+    "guestCustomer": "عميل غير مسجل",
+    "amountPaid": "المبلغ المدفوع",
+    "change": "الفكة",
+    "prevPage": "السابق",
+    "nextPage": "التالي"
   },
   "adminCoupons": {
     "title": "إدارة الكوبونات",
@@ -781,7 +791,8 @@
     "roles": {
       "admin": "مدير النظام",
       "manager": "مشرف",
-      "user": "مستخدم"
+      "user": "مستخدم",
+      "cashier": "كاشير"
     },
     "table": {
       "user": "المستخدم",
@@ -877,6 +888,22 @@
         "amountRequired": "المبلغ المدفوع مطلوب",
         "amountTooLow": "المبلغ المدفوع أقل من الإجمالي"
       }
+    },
+    "invoice": {
+      "title": "فاتورة الأوردر",
+      "orderNumber": "رقم الأوردر",
+      "date": "التاريخ",
+      "customer": "العميل",
+      "guestCustomer": "عميل جديد",
+      "itemCol": "الصنف",
+      "qtyCol": "الكمية",
+      "totalCol": "الإجمالي",
+      "printBtn": "طباعة الفاتورة"
     }
+  },
+  "cashierOrders": {
+    "title": "الأوردرات",
+    "subtitle": "متابعة وتحديث حالة كل الأوردرات (أونلاين وكاشير)",
+    "newOrderCta": "طلب جديد"
   }
 }

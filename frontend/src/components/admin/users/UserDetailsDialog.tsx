@@ -12,6 +12,7 @@ import {
   Shield,
   Loader2,
   type LucideIcon,
+  ComputerIcon,
 } from "lucide-react";
 import {
   useGetUserByIdQuery,
@@ -30,18 +31,22 @@ const ROLE_ICONS: Record<UserRole, LucideIcon> = {
   Admin: ShieldCheck,
   Manager: Shield,
   User: UserIcon,
+  Cashier: ComputerIcon
 };
 
 const ROLE_LABEL_KEYS: Record<UserRole, string> = {
   Admin: "adminUsers.roles.admin",
   Manager: "adminUsers.roles.manager",
+  Cashier: "adminUsers.roles.cashier",
   User: "adminUsers.roles.user",
+
 };
 
 const ROLE_ACTIVE_CLASSES: Record<UserRole, string> = {
   Admin: "bg-rose-500/20 border-rose-500 text-rose-500 shadow-rose-500/20",
   Manager: "bg-amber-500/20 border-amber-500 text-amber-500 shadow-amber-500/20",
   User: "bg-blue-500/20 border-blue-500 text-blue-500 shadow-blue-500/20",
+  Cashier: "bg-emerald-500/20 border-emerald-500 text-emerald-500 shadow-emerald-500/20",
 };
 
 export function UserDetailsDialog({ open, onOpenChange, userId }: UserDetailsDialogProps) {
@@ -186,7 +191,7 @@ export function UserDetailsDialog({ open, onOpenChange, userId }: UserDetailsDia
                   </p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-4 mt-5 gap-2.5">
                   {USER_ROLES.map((role) => {
                     const hasRole = user.roles.includes(role);
                     const Icon = ROLE_ICONS[role];

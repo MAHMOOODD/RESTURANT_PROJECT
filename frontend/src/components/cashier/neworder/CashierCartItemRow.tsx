@@ -12,13 +12,13 @@ interface Props {
 }
 
 function CashierCartItemRowComponent({ item, onIncrement, onDecrement, onRemove }: Props) {
-  const { t } = useTranslation();
-
+  const { t , i18n } = useTranslation();
+ const isArabic = i18n.language.startsWith("ar");
   return (
     <div className="flex items-center gap-2 p-2 rounded-xl bg-muted/30 border border-border/60">
       <img src={item.imageUrl} alt={item.name} loading="lazy" className="w-10 h-10 rounded-lg object-cover shrink-0" />
       <div className="flex-1 min-w-0">
-        <p className="text-xs font-bold text-foreground truncate">{item.name}</p>
+        <p className="text-xs font-bold text-foreground truncate">{isArabic ? item.nameAr : item.name}</p>
         <p className="text-[11px] text-muted-foreground">
           {item.price.toLocaleString()} {t("cashierPos.currency")}
         </p>

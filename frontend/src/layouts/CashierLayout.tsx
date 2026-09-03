@@ -19,21 +19,11 @@ export default function CashierLayout() {
       dir={isArabic ? "rtl" : "ltr"}
       className="h-screen flex relative overflow-x-hidden overflow-y-hidden"
     >
-      {/* Sidebar - fixed on large screens */}
-      <div className="hidden lg:block sticky top-0 h-screen shrink-0 z-40">
-        <CashierSidebar
-          isOpenMobile={isMobileOpen}
-          onCloseMobile={() => setIsMobileOpen(false)}
-        />
-      </div>
-
-      {/* Mobile drawer */}
-      <div className="lg:hidden">
-        <CashierSidebar
-          isOpenMobile={isMobileOpen}
-          onCloseMobile={() => setIsMobileOpen(false)}
-        />
-      </div>
+      {/* Sidebar - بترندر نسخة الديسكتوب والموبايل جواها لوحدها */}
+      <CashierSidebar
+        isOpenMobile={isMobileOpen}
+        onCloseMobile={() => setIsMobileOpen(false)}
+      />
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-y-auto">

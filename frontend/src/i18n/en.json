@@ -654,6 +654,16 @@
       "notProvided": "Not provided",
       "loading": "Loading customer details..."
     },
+    "source": "Order Source",
+    "sourceTypes": {
+      "online": "Online",
+      "pos": "Cashier (In-Store)"
+    },
+    "guestCustomer": "Unregistered Customer",
+    "amountPaid": "Amount Paid",
+    "change": "Change",
+    "prevPage": "Previous",
+    "nextPage": "Next",
     "statusTypes": {
       "pending": "Pending",
       "processing": "Processing",
@@ -781,7 +791,8 @@
     "roles": {
       "admin": "Admin",
       "manager": "Manager",
-      "user": "User"
+      "user": "User",
+      "cashier": "Cashier"
     },
     "table": {
       "user": "User",
@@ -877,6 +888,22 @@
         "amountRequired": "Amount paid is required",
         "amountTooLow": "Amount paid is less than the total"
       }
+    },
+    "invoice": {
+      "title": "Order Invoice",
+      "orderNumber": "Order No.",
+      "date": "Date",
+      "customer": "Customer",
+      "guestCustomer": "New Customer",
+      "itemCol": "Item",
+      "qtyCol": "Qty",
+      "totalCol": "Total",
+      "printBtn": "Print Invoice"
     }
+  },
+  "cashierOrders": {
+    "title": "Orders",
+    "subtitle": "Track and update the status of all orders (online and cashier)",
+    "newOrderCta": "New Order"
   }
 }

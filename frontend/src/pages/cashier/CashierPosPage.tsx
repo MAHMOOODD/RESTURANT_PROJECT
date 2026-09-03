@@ -2,16 +2,25 @@
 import { useCallback, useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useGetAllCategoriesQuery, useGetProductByCategoryIdQuery, useGetProductByNameQuery } from "@/store/features/productApi";
+import {
+  useGetAllCategoriesQuery,
+  useGetProductByCategoryIdQuery,
+  useGetProductByNameQuery,
+} from "@/store/features/productApi";
 import { useDebounce } from "@/hooks/useDebounce";
-import { CashierCategoryCard } from "@/components/cashier/CashierCategoryCard";
-import { CashierProductCard } from "@/components/cashier/CashierProductCard";
-import { CashierCartPanel, type CartLine } from "@/components/cashier/CashierCartPanel";
+import { CashierCategoryCard } from "@/components/cashier/neworder/CashierCategoryCard";
+import { CashierProductCard } from "@/components/cashier/neworder/CashierProductCard";
+import {
+  CashierCartPanel,
+  type CartLine,
+} from "@/components/cashier/neworder/CashierCartPanel";
 import type { GetAllProductDto } from "@/types/types";
 
 export default function CashierPosPage() {
   const { t } = useTranslation();
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null,
+  );
   const [searchInput, setSearchInput] = useState("");
   const [cartItems, setCartItems] = useState<CartLine[]>([]);
 
@@ -20,31 +29,46 @@ export default function CashierPosPage() {
 
   const { data: categories } = useGetAllCategoriesQuery();
 
-  const { data: categoryProducts, isFetching: isLoadingCategoryProducts } = useGetProductByCategoryIdQuery(
-    { categoryId: selectedCategoryId as number, filter: { pagination: { pageNumber: 1, pageSize: 50 } } },
-    { skip: isSearching || selectedCategoryId === null },
-  );
+  const { data: categoryProducts, isFetching: isLoadingCategoryProducts } =
+    useGetProductByCategoryIdQuery(
+      {
+        categoryId: selectedCategoryId as number,
+        filter: { pagination: { pageNumber: 1, pageSize: 50 } },
+      },
+      { skip: isSearching || selectedCategoryId === null },
+    );
 
-  const { data: searchedProducts, isFetching: isLoadingSearch } = useGetProductByNameQuery(
-    { name: debouncedSearch, filter: { pagination: { pageNumber: 1, pageSize: 50 } } },
-    { skip: !isSearching },
-  );
+  const { data: searchedProducts, isFetching: isLoadingSearch } =
+    useGetProductByNameQuery(
+      {
+        name: debouncedSearch,
+        filter: { pagination: { pageNumber: 1, pageSize: 50 } },
+      },
+      { skip: !isSearching },
+    );
 
-  const products = isSearching ? searchedProducts?.data : categoryProducts?.data;
-  const isLoadingProducts = isSearching ? isLoadingSearch : isLoadingCategoryProducts;
+  const products = isSearching
+    ? searchedProducts?.data
+    : categoryProducts?.data;
+  const isLoadingProducts = isSearching
+    ? isLoadingSearch
+    : isLoadingCategoryProducts;
 
   // useCallback يمنع إعادة إنشاء الدوال دي كل رندر، وده اللي بيخلي React.memo بتاع الكاردز يشتغل فعلياً
   const handleAddToCart = useCallback((product: GetAllProductDto) => {
-    setCartItems((prev) => {
+    setCartItems((prev: CartLine[]) => {
       const existing = prev.find((i) => i.productId === product.id);
       if (existing) {
-        return prev.map((i) => (i.productId === product.id ? { ...i, quantity: i.quantity + 1 } : i));
+        return prev.map((i) =>
+          i.productId === product.id ? { ...i, quantity: i.quantity + 1 } : i,
+        );
       }
       return [
         ...prev,
         {
           productId: product.id,
-          name: product.nameAr || product.name,
+          name: product.name,
+          nameAr: product.nameAr,
           price: product.price,
           quantity: 1,
           imageUrl: product.imageUrl,
@@ -54,12 +78,20 @@ export default function CashierPosPage() {
   }, []);
 
   const handleIncrement = useCallback((productId: number) => {
-    setCartItems((prev) => prev.map((i) => (i.productId === productId ? { ...i, quantity: i.quantity + 1 } : i)));
+    setCartItems((prev) =>
+      prev.map((i) =>
+        i.productId === productId ? { ...i, quantity: i.quantity + 1 } : i,
+      ),
+    );
   }, []);
 
   const handleDecrement = useCallback((productId: number) => {
     setCartItems((prev) =>
-      prev.map((i) => (i.productId === productId ? { ...i, quantity: i.quantity - 1 } : i)).filter((i) => i.quantity > 0),
+      prev
+        .map((i) =>
+          i.productId === productId ? { ...i, quantity: i.quantity - 1 } : i,
+        )
+        .filter((i) => i.quantity > 0),
     );
   }, []);
 
@@ -72,7 +104,11 @@ export default function CashierPosPage() {
   const productsGrid = useMemo(
     () =>
       products?.map((product) => (
-        <CashierProductCard key={product.id} product={product} onAdd={handleAddToCart} />
+        <CashierProductCard
+          key={product.id}
+          product={product}
+          onAdd={handleAddToCart}
+        />
       )),
     [products, handleAddToCart],
   );
@@ -105,15 +141,23 @@ export default function CashierPosPage() {
 
         <div className="flex-1 overflow-y-auto min-h-0">
           {!isSearching && selectedCategoryId === null && (
-            <p className="text-sm text-muted-foreground text-center py-16">{t("cashierPos.selectCategoryPrompt")}</p>
+            <p className="text-sm text-muted-foreground text-center py-16">
+              {t("cashierPos.selectCategoryPrompt")}
+            </p>
           )}
           {isLoadingProducts && (
-            <p className="text-sm text-muted-foreground text-center py-16">{t("cashierPos.loadingProducts")}</p>
+            <p className="text-sm text-muted-foreground text-center py-16">
+              {t("cashierPos.loadingProducts")}
+            </p>
           )}
           {!isLoadingProducts && products?.length === 0 && (
-            <p className="text-sm text-muted-foreground text-center py-16">{t("cashierPos.noProducts")}</p>
+            <p className="text-sm text-muted-foreground text-center py-16">
+              {t("cashierPos.noProducts")}
+            </p>
           )}
-          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">{productsGrid}</div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
+            {productsGrid}
+          </div>
         </div>
       </div>
 

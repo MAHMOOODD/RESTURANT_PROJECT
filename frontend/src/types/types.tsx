@@ -153,7 +153,7 @@ export interface AddOrderDto {
 
 export interface GetOrderDto {
   id: number;
-  appUserId: string;
+  appUserId?: string;
   userAddress: string;
   totalPrice: number;
   status: OrderStatus;
@@ -173,7 +173,7 @@ export interface GetOrderDto {
 
 export interface ResponseAddDto {
   id: number;
-  appUserId: string;
+  appUserId ?: string;
   userAddress: string;
   totalPrice: number;
   priceAfterDiscount: number;

@@ -19,7 +19,7 @@ import AdminRoute from "@/components/my/Auth/AdminRoute"; // استبدل الم
 import CashierRoute from "@/components/my/Auth/CashierRoute";
 import CashierLayout from "../layouts/CashierLayout";
 import CashierPosPage from "@/pages/cashier/CashierPosPage"; // TODO: adjust path/name to your actual POS page
-import CashierOrdersPage from "@/pages/cashier/CashierPosPage"; // TODO: adjust path/name to your actual cashier orders page
+import CashierOrdersPage from "@/pages/cashier/CashierOrdersPage"; // TODO: adjust path/name to your actual cashier orders page
 
 // صفحة الـ Products الخاصة بالأدمن اللي عملناها
 import AdminProducts from "@/pages/admin/ProductsPage";

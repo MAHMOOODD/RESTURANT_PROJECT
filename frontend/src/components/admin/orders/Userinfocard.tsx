@@ -3,12 +3,12 @@ import { User, Mail, Phone, MapPin } from "lucide-react";
 import { useGetUserByIdQuery } from "@/store/features/User/Auth";
 
 interface UserInfoCardProps {
-  appUserId: string;
+  appUserId: string | undefined;
 }
 
 export function UserInfoCard({ appUserId }: UserInfoCardProps) {
   const { t } = useTranslation();
-  const { data: user, isLoading, isError } = useGetUserByIdQuery(appUserId, {
+  const { data: user, isLoading, isError } = useGetUserByIdQuery(appUserId ?? "", {
     skip: !appUserId,
   });
 

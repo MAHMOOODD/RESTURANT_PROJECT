@@ -233,20 +233,20 @@ namespace Resturant_Backend.Controller
                 this.UnauthorizedEx("غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
             }
 
-            bool hasCustomerId = !string.IsNullOrWhiteSpace(dto.CustomerId);
-            bool hasGuestInfo = !string.IsNullOrWhiteSpace(dto.GuestName);
-            if(hasCustomerId || hasGuestInfo)
+            bool hasCustomerId = string.IsNullOrWhiteSpace(dto.CustomerId);
+            bool hasGuestInfo = string.IsNullOrWhiteSpace(dto.GuestName);
+            if(hasGuestInfo)
             {
                 this.UnauthorizedEx(" ادخل بيانات العميل المسجل أو اسم الزائر.");
             }
 
-            if(hasCustomerId)
+            if(hasGuestInfo && hasCustomerId)
             {
                 var customer = await _unitOfWork.UserRepo.GetUserInformationAsync(dto.CustomerId!);
                 Ensure.NotNull(customer, "العميل غير موجود.");
             }
 
-            if(dto.Items is not null && dto.Items.Any())
+            if(dto.Items is null || !dto.Items.Any())
             {
                 this.BadRequestEx("يجب إدخال منتجات للفاتورة.");
             }
@@ -309,7 +309,7 @@ namespace Resturant_Backend.Controller
                 AmountPaid = dto.AmountPaid,
                 Source = OrderSource.POS,
                 PaymentStatus = PaymentStatus.Paid,
-                Status = OrderStatus.Processing,
+                Status = OrderStatus.Delivered,
                 LastModifiedBy = cashierName,
                 OrderDetails = orderDetails
             };

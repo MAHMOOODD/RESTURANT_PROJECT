@@ -74,10 +74,12 @@ function PaymentBadge({ status }: { status: number }) {
   );
 }
 
-function CustomerCell({ appUserId }: { appUserId: string }) {
+function CustomerCell({ appUserId }: { appUserId: string|undefined }) {
   const { t } = useTranslation();
-  const { data: user, isLoading } = useGetUserByIdQuery(appUserId, {
+
+  const { data: user, isLoading } = useGetUserByIdQuery(appUserId ?? "", {
     skip: !appUserId,
+    
   });
 
   return (
@@ -231,7 +233,7 @@ export function OrderTable({ orders, onViewDetails }: OrderTableProps) {
                 </td>
 
                 <td className="py-4 px-6 text-start align-middle max-w-[220px]">
-                  <CustomerCell appUserId={o.appUserId} />
+                  <CustomerCell appUserId={o.appUserId ?? undefined} />
                 </td>
                 <td className="py-4 px-6 text-start align-middle max-w-[220px]">
                   <span className="text-sm text-muted-foreground truncate block"
