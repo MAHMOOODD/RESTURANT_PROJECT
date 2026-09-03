@@ -224,12 +224,11 @@
   },
   "coupons": {
     "exclusiveDiscount": "خصم حصري",
-    "discountTitle": "خصم {{discount}}% على الطلبات التي تزيد عن {{min}} ج.م", 
+    "discountTitle": "خصم {{discount}}% على الطلبات التي تزيد عن {{min}} ج.م",
     "usedCount": "تم استخدامه {{count}} مرة",
     "validUntil": "صالح حتى {{date}}",
     "copied": "تم النسخ"
   },
-
   "bentoHeader": {
     "badge": "الأعلى مبيعاً",
     "title": "الأكثر طلباً هذا الأسبوع ",
@@ -262,7 +261,6 @@
     "continue_with": "أو المتابعة بواسطة",
     "google": "جوجل",
     "facebook": "فيسبوك",
-
     "email_required": "البريد الإلكتروني مطلوب",
     "email_invalid": "بريد إلكتروني غير صالح",
     "password_required": "كلمة المرور مطلوبة",
@@ -272,14 +270,12 @@
     "password_lowercase": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
     "password_uppercase": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
     "password_special": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل (!@#$%^&*)",
-
     "reset_password_title": "استعادة كلمة المرور",
     "reset_password_desc": "أدخل بريدك الإلكتروني لإرسال رابط التعيين",
     "send_reset_link": "إرسال رابط الإعادة",
     "reset_sent_title": "تم إرسال الرابط بنجاح",
     "reset_sent_desc": "إذا كان هذا البريد مسجلاً لدينا، فستتلقى تعليمات إعادة تعيين كلمة المرور خلال لحظات.",
     "close": "إغلاق",
-
     "resetPasswordTitle": "تعيين كلمة سر جديدة",
     "resetPasswordSubtitle": "أدخل كلمة السر الجديدة لحسابك في أكلني",
     "newPassword": "كلمة السر الجديدة",
@@ -292,26 +288,20 @@
     "passwordMin": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
     "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
     "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
-
     "resetPasswordSuccess": "تم إعادة تعيين كلمة المرور بنجاح! سيتم توجيهك إلى صفحة تسجيل الدخول خلال 3 ثوانٍ.",
-
     "almost_there": "خطوة واحدة أخيرة!",
     "check_your_inbox": "تفقد بريدك الإلكتروني 📩",
     "verification_sent_desc": "أرسلنا رابط التأكيد إلى البريد التالي:",
     "open_email_app": "فتح البريد الإلكتروني",
     "wrong_email": "تعديل البيانات أو إعادة الإرسال",
-
     "confirmingEmail": "جاري تأكيد حسابك...",
     "emailConfirmedTitle": "تم تأكيد الحساب بنجاح!",
     "emailConfirmedSubtitle": "أهلاً بك في أكلني! حسابك جاهز الآن للبدء واستكشاف أشهى الوجبات.",
     "goToLogin": "تسجيل الدخول الآن",
     "confirmFailedTitle": "فشل تأكيد الحساب",
     "confirmFailedSubtitle": "الرابط المنقضية صلاحيته أو غير صالح. يرجى طلب رابط تأكيد جديد.",
-
     "username_exists": "اسم المستخدم موجود بالفعل",
-
     "server_error": "حدث خطأ في الخادم، يرجى المحاولة لاحقاً",
-
     "email_exists": "البريد الإلكتروني موجود بالفعل",
     "login_error": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
     "forget_password_error": "البريد الإلكتروني غير مسجل لدينا"
@@ -339,7 +329,6 @@
     "yourRating": "تقييمك",
     "addReviewTitle": "أضف تقييمك للوجبة",
     "editReviewTitle": "تعديل تقييمك للوجبة",
-
     "available": "متوفر الان",
     "unavailable": "غير متوفر حالياً",
     "all": "الكل",
@@ -383,7 +372,6 @@
     "verifiedPurchase": "مشتري مأكولات",
     "noReviews": "لا توجد تقييمات لهذه الوجبة بعد. كن أول من يشارك رأيه!"
   },
-
   "adminRoute": {
     "loading": "جاري التحقق من الصلاحيات...",
     "unauthorizedTitle": "غير مصرح لك بالدخول",
@@ -401,7 +389,6 @@
   },
   "about": {
     "kitchenTitle": "مطابخ أكلني",
-
     "titleHighlight": "الشغف",
     "badge": "اكتشف قصة أكلني",
     "title": "حيث يلتقي الشغف",
@@ -498,15 +485,15 @@
     "deleteSuccess": "تم حذف المنتج بنجاح",
     "deleteError": "حدث خطأ أثناء الحذف",
     "searchPlaceholder": "بحث عن منتج...",
-"allCategories": "كل التصنيفات",
-"pageInfo": "صفحة {{current}} من {{total}} ({{count}} منتج)",
-"sort": {
-  "default": "الترتيب الافتراضي",
-  "priceAsc": "السعر: من الأقل للأعلى",
-  "priceDesc": "السعر: من الأعلى للأقل",
-  "bestSelling": "الأكثر مبيعاً",
-  "leastSelling": "الأقل مبيعاً"
-},
+    "allCategories": "كل التصنيفات",
+    "pageInfo": "صفحة {{current}} من {{total}} ({{count}} منتج)",
+    "sort": {
+      "default": "الترتيب الافتراضي",
+      "priceAsc": "السعر: من الأقل للأعلى",
+      "priceDesc": "السعر: من الأعلى للأقل",
+      "bestSelling": "الأكثر مبيعاً",
+      "leastSelling": "الأقل مبيعاً"
+    },
     "table": {
       "image": "الصورة",
       "product": "المنتج",
@@ -554,7 +541,6 @@
       "saveSuccess": "تم حفظ التغييرات بنجاح",
       "isAvailable": "متوفر حالياً",
       "isAvailableHelp": "تحديد ما إذا كان هذا المنتج متاحاً للطلب من الزبائن أم لا.",
-
       "errors": {
         "required": "مطلوب",
         "invalidPrice": "سعر غير صحيح",
@@ -597,7 +583,7 @@
     "cancel": "إلغاء",
     "removeImage": "حذف الصورة",
     "uploadImage": "رفع صورة القسم",
-    "delete":"حذف",
+    "delete": "حذف",
     "editSuccess": "تم تعديل القسم بنجاح",
     "addSuccess": "تم إضافة القسم بنجاح",
     "deleteSuccess": "تم حذف القسم بنجاح",
@@ -614,7 +600,6 @@
     "updateError": "حدث خطأ أثناء تحديث البيانات",
     "imageRequired": "صورة القسم مطلوبة",
     "invalidImage": "صيغة الصورة غير مدعومة"
-    
   },
   "adminOrders": {
     "title": "إدارة الطلبات",
@@ -645,7 +630,7 @@
     "modalTitle": "تفاصيل وتحديث الطلب",
     "updateBtn": "حفظ التغييرات",
     "close": "إغلاق",
-     "customer": "العميل",
+    "customer": "العميل",
     "loading": "جاري تحميل الطلبات...",
     "loadingUser": "جاري التحميل...",
     "currency": "ج.م",
@@ -826,6 +811,72 @@
       "removeRoleSuccess": "تم إلغاء الصلاحية بنجاح",
       "removeRoleError": "حدث خطأ أثناء إلغاء الصلاحية"
     }
+  },
+  "cashierRoute": {
+    "loading": "جاري التحقق من صلاحيات الكاشير...",
+    "unauthorizedTitle": "غير مصرح لك بالدخول",
+    "unauthorizedDesc": "عذراً، هذه الصفحة مخصصة للكاشير فقط. يجب تسجيل الدخول بحساب صلاحياته كاشير (Cashier) للوصول إليها.",
+    "homeBtn": "الرئيسية",
+    "loginBtn": "تسجيل الدخول"
+  },
+  "cashierLayout": {
+    "menu": "القائمة"
+  },
+  "cashierSidebar": {
+    "language": "اللغة",
+    "myAccount": "حسابي",
+    "cashierRole": "كاشير",
+    "backToHome": "العودة للرئيسية",
+    "logout": "تسجيل الخروج",
+    "links": {
+      "newOrder": "طلب جديد",
+      "orders": "الأوردرات"
+    }
+  },
+  "cashierPos": {
+    "searchPlaceholder": "دوّر باسم المنتج...",
+    "selectCategoryPrompt": "اختار قسم للبدء",
+    "loadingProducts": "بيتم التحميل...",
+    "noProducts": "مفيش منتجات",
+    "productUnavailable": "غير متاح حالياً",
+    "currency": "ج.م",
+    "cart": {
+      "title": "الفاتورة الحالية",
+      "emptyCart": "السلة فاضية — اختار منتجات من القايمة",
+      "customerModes": {
+        "guest": "عميل جديد",
+        "registered": "عميل مسجل"
+      },
+      "guestNamePlaceholder": "اسم العميل *",
+      "guestPhonePlaceholder": "رقم التليفون (اختياري)",
+      "customerSearchPlaceholder": "دوّر باسم أو رقم العميل...",
+      "searching": "بيدوّر...",
+      "noCustomersFound": "مفيش نتائج",
+      "couponPlaceholder": "كود الخصم (اختياري)",
+      "applyCoupon": "تطبيق",
+      "couponApplied": "✓ خصم {{discount}}% اتطبق",
+      "subtotal": "الإجمالي الفرعي",
+      "discount": "الخصم",
+      "finalTotal": "الإجمالي النهائي",
+      "amountPaidLabel": "المبلغ المدفوع",
+      "amountPaidPlaceholder": "0",
+      "changeDue": "الفكة المستحقة",
+      "amountShort": "المبلغ ناقص",
+      "submitBtn": "إتمام الأوردر",
+      "submitting": "بيتم إنشاء الأوردر...",
+      "toast": {
+        "orderSuccess": "تم إنشاء الأوردر بنجاح 🎉",
+        "orderError": "حدث خطأ أثناء إنشاء الأوردر",
+        "couponSuccess": "تم تطبيق كوبون {{code}} بنجاح",
+        "couponError": "الكوبون غير صالح"
+      },
+      "errors": {
+        "guestNameRequired": "اسم العميل مطلوب (حرفين على الأقل)",
+        "customerRequired": "لازم تختار عميل مسجل",
+        "phonePattern": "رقم الهاتف غير صحيح (مثال: 01012345678)",
+        "amountRequired": "المبلغ المدفوع مطلوب",
+        "amountTooLow": "المبلغ المدفوع أقل من الإجمالي"
+      }
+    }
   }
-  
 }

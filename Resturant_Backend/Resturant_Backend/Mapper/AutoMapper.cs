@@ -64,6 +64,10 @@ namespace Resturant_Backend.Mapper
             CreateMap<ResponseAddDto, Order>().ReverseMap();
             CreateMap<Order, GetOrderDto>();
 
+
+            CreateMap<Order, GetOrderDto>()
+    .ForMember(d => d.Change, opt => opt.MapFrom(s => s.AmountPaid - s.TotalPrice));
+
             // Order Details Mapping
             CreateMap<OrderDetails, GetDetailsDto>();
 

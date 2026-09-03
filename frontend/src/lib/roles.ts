@@ -1,11 +1,12 @@
 // src/lib/roles.ts
 // المصدر الوحيد لأسماء الرولز — لازم تفضل مطابقة تماماً لـ Role.cs في الباك اند
-export const USER_ROLES = ["Admin", "Manager", "User"] as const;
+export const USER_ROLES = ["Admin", "Manager", "User", "Cashier"] as const;
 export type UserRole = (typeof USER_ROLES)[number];
 
 const ROLE_PRIORITY: Record<UserRole, number> = {
-  Admin: 3,
-  Manager: 2,
+  Admin: 4,
+  Manager: 3,
+  Cashier: 2,
   User: 1,
 };
 

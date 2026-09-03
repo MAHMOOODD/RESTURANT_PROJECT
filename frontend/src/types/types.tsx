@@ -53,7 +53,45 @@ export interface OrderFilter {
   paymentStatus?: number; // جديد
 }
 
+
+
+
+//=============POS DTOs====================
+
+export type OrderSource = 0 | 1;
+export const OrderSource = {
+  online: 0 as const,
+  pos: 1 as const,
+} as const;
+
+export interface PosOrderItemDto {
+  productId: number;
+  quantity: number;
+}
+
+export interface AddPosOrderDto {
+  customerId?: string;
+  guestName?: string;
+  guestPhone?: string;
+  items: PosOrderItemDto[];
+  couponCode?: string;
+  amountPaid: number;
+}
+
 // ============ Cart DTOs ============
+
+
+
+
+
+
+
+
+
+
+
+
+
 export interface AddToCartDto {
   appUserId: string;
   productId: number;
@@ -124,7 +162,13 @@ export interface GetOrderDto {
   couponId?: number;
   discount?: number;
   orderDetails: GetDetailsDto[];
-  lastModifiedBy?: string; // أضف هذا السطر
+  lastModifiedBy?: string; 
+
+   guestName?: string;
+  guestPhone?: string;
+  amountPaid?: number;
+  change?: number;
+  source?: OrderSource;
 }
 
 export interface ResponseAddDto {

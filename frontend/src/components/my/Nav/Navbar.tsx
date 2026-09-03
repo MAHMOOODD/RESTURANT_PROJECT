@@ -15,6 +15,7 @@ import {
   Bike,
   CheckCircle2,
   XCircle,
+  Loader2,
 } from "lucide-react";
 import LanguageSwitcher from "@/components/my/LanguageSwitcher";
 import { Link, useNavigate } from "react-router-dom";
@@ -86,7 +87,11 @@ export default function Navbar() {
 
   const [revokeToken, { isLoading }] = useRevokeTokenMutation();
 
-  const { data: checkAuthData } = useCheckAuthQuery(undefined, {
+  const {
+    data: checkAuthData,
+    isLoading: isCheckAuthLoading,
+    isFetching: isCheckAuthFetching,
+  } = useCheckAuthQuery(undefined, {
     skip: !isAuthenticated,
   });
 
@@ -103,7 +108,11 @@ export default function Navbar() {
 
   const userName = userInfo?.fullName || userInfo?.userName;
   const userInitial = userInfo?.imageUrl ? (
-    <img src={userInfo.imageUrl} alt="User" className="w-full h-full object-cover rounded-full" />
+    <img
+      src={userInfo.imageUrl}
+      alt="User"
+      className="w-full h-full object-cover rounded-full"
+    />
   ) : (
     userName?.charAt(0).toUpperCase()
   );
@@ -239,7 +248,9 @@ export default function Navbar() {
                           to={`/orders/${n.orderId}`}
                           onClick={() => setIsNotifOpen(false)}
                           className={`flex items-center gap-3 p-2.5 rounded-xl transition-colors ${
-                            n.read ? "hover:bg-muted/50" : "bg-primary/5 hover:bg-primary/10"
+                            n.read
+                              ? "hover:bg-muted/50"
+                              : "bg-primary/5 hover:bg-primary/10"
                           }`}
                         >
                           <span
@@ -249,7 +260,8 @@ export default function Navbar() {
                           </span>
                           <div className="min-w-0 flex-1">
                             <p className="text-xs font-bold text-foreground truncate">
-                              {t("nav.orderUpdated", "تحديث للطلب")} #{n.orderId}
+                              {t("nav.orderUpdated", "تحديث للطلب")} #
+                              {n.orderId}
                             </p>
                             <p className="text-[11px] text-muted-foreground font-medium truncate">
                               {config ? t(config.labelKey) : ""}
@@ -268,34 +280,38 @@ export default function Navbar() {
           )}
 
           {/* User Button */}
-          <Link
-            to={isLoggedIn ? "/profile" : "/auth"}
-            className="flex items-center justify-center group cursor-pointer transition-all hover:opacity-95"
-          >
-            {isLoggedIn ? (
-              <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-muted/50 hover:bg-muted border border-border/60 hover:border-border transition-all duration-200">
-                <div className="relative shrink-0">
-                  <div className="w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-primary to-orange-500 text-white font-black text-sm flex items-center justify-center ring-2 ring-background shadow-md group-hover:scale-105 transition-transform">
-                    {userInitial}
+          {isCheckAuthLoading || isCheckAuthFetching ? (
+            <Loader2 className="h-5 w-5 animate-spin text-primary" />
+          ) : (
+            <Link
+              to={isLoggedIn ? "/profile" : "/auth"}
+              className="flex items-center justify-center group cursor-pointer transition-all hover:opacity-95"
+            >
+              {isLoggedIn ? (
+                <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-muted/50 hover:bg-muted border border-border/60 hover:border-border transition-all duration-200">
+                  <div className="relative shrink-0">
+                    <div className="w-9 h-9 rounded-full overflow-hidden bg-gradient-to-br from-primary to-orange-500 text-white font-black text-sm flex items-center justify-center ring-2 ring-background shadow-md group-hover:scale-105 transition-transform">
+                      {userInitial}
+                    </div>
+                    <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-background" />
                   </div>
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-background" />
-                </div>
 
-                <div className="hidden sm:flex flex-col min-w-0 leading-tight">
-                  <span className="text-[10px] font-medium text-muted-foreground">
-                    {t("nav.welcome", "مرحباً")}
-                  </span>
-                  <span className="max-w-[100px] truncate text-xs font-bold text-foreground">
-                    {userName || t("nav.account")}
-                  </span>
+                  <div className="hidden sm:flex flex-col min-w-0 leading-tight">
+                    <span className="text-[10px] font-medium text-muted-foreground">
+                      {t("nav.welcome", "مرحباً")}
+                    </span>
+                    <span className="max-w-[100px] truncate text-xs font-bold text-foreground">
+                      {userName || t("nav.account")}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-muted/60 border border-border/60 text-muted-foreground group-hover:bg-primary/10 group-hover:border-primary/40 group-hover:text-primary transition-all duration-200">
-                <User className="w-4 h-4" strokeWidth={2} />
-              </div>
-            )}
-          </Link>
+              ) : (
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-muted/60 border border-border/60 text-muted-foreground group-hover:bg-primary/10 group-hover:border-primary/40 group-hover:text-primary transition-all duration-200">
+                  <User className="w-4 h-4" strokeWidth={2} />
+                </div>
+              )}
+            </Link>
+          )}
 
           {/* Shopping Bag */}
           <button

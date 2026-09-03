@@ -6,7 +6,7 @@
 
         public int Id { get; set; }
 
-        public string AppuserId { get; set; }
+        public string? AppuserId { get; set; }
         public Appuser Appuser { get; set; }
 
         public string UserAddress { get; set; }
@@ -25,8 +25,24 @@
 
         public Coupon? Coupon { get; set; }
 
+
         public decimal? Discount { get; set; }
+
+
+
+
+        public string? GuestName { get; set; }
+        public string? GuestPhone { get; set; }
+        public decimal AmountPaid { get; set; }
+        public OrderSource Source { get; set; } = OrderSource.Online;
+
+
+
+
+
         public List<OrderDetails> OrderDetails { get; set; }
+
+
 
 
     }
@@ -47,5 +63,10 @@
         Failed,
         Refunded,
 
+    }
+    public enum OrderSource
+    {
+        Online = 0,
+        POS = 1
     }
 }

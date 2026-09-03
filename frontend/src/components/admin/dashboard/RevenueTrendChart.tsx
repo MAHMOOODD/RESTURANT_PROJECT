@@ -45,14 +45,35 @@ export function RevenueTrendChart({ data }: RevenueTrendChartProps) {
       {hasRevenue ? (
         <div className="h-64 sm:h-80" dir="ltr">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+            <AreaChart
+              data={chartData}
+              margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+            >
               <defs>
-                <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.35} />
-                  <stop offset="95%" stopColor="var(--primary)" stopOpacity={0} />
+                <linearGradient
+                  id="revenueGradient"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop
+                    offset="5%"
+                    stopColor="var(--primary)"
+                    stopOpacity={0.35}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="var(--primary)"
+                    stopOpacity={0}
+                  />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="var(--border)"
+                vertical={false}
+              />
               <XAxis
                 dataKey="label"
                 stroke="var(--muted-foreground)"
@@ -75,11 +96,19 @@ export function RevenueTrendChart({ data }: RevenueTrendChartProps) {
                   fontSize: "12px",
                   direction: isArabic ? "rtl" : "ltr",
                 }}
-                labelStyle={{ color: "var(--foreground)", fontWeight: 700, marginBottom: 4 }}
-                formatter={(value: number) => [
-                  `${value.toLocaleString()} ${t("adminDashboard.currency")}`,
-                  t("adminDashboard.charts.revenueLabel"),
-                ]}
+                labelStyle={{
+                  color: "var(--foreground)",
+                  fontWeight: 700,
+                  marginBottom: 4,
+                }}
+                formatter={(value) => {
+                  const numValue =
+                    typeof value === "number" ? value : Number(value) || 0;
+                  return [
+                    `${numValue.toLocaleString()} ${t("adminDashboard.currency")}`,
+                    t("adminDashboard.charts.revenueLabel"),
+                  ];
+                }}
               />
               <Area
                 type="monotone"

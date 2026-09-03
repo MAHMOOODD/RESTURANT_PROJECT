@@ -123,7 +123,7 @@ namespace Resturant_Backend.Controller
             return this.Success(ordersToShow);
         }
 
-        [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
+        [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.Cashier}")]
 
         [HttpGet("Get{id:int}")]
         public async Task<IActionResult> GetOrder(int id)
@@ -135,7 +135,7 @@ namespace Resturant_Backend.Controller
 
             return this.Success(orderToShow);
         }
-        [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
+        [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.Cashier}")]
 
         [HttpGet("Get")]
         public async Task<IActionResult> GetOrders([FromQuery] FiltersOrders filters)
@@ -156,7 +156,8 @@ namespace Resturant_Backend.Controller
         }
 
 
-        [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
+
+        [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.Cashier}")]
         [HttpPut("{id:int}/status")]
         public async Task<IActionResult> UpdateStatus(int id, StatusResponseDto dto)
         {
@@ -214,6 +215,115 @@ namespace Resturant_Backend.Controller
                     .SendAsync("OrderStatusUpdated", orderToShow);
             }
 
+
+            return this.Success(orderToShow);
+        }
+
+
+
+
+        [Authorize(Roles = $"{Role.Cashier},{Role.Admin},{Role.Manager}")]
+        [HttpPost("AddPosOrder")]
+        public async Task<IActionResult> AddPosOrder(AddPosOrderDto dto)
+        {
+            var cashierId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if(string.IsNullOrEmpty(cashierId))
+            {
+                this.UnauthorizedEx("غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
+            }
+
+            bool hasCustomerId = !string.IsNullOrWhiteSpace(dto.CustomerId);
+            bool hasGuestInfo = !string.IsNullOrWhiteSpace(dto.GuestName);
+            if(hasCustomerId || hasGuestInfo)
+            {
+                this.UnauthorizedEx(" ادخل بيانات العميل المسجل أو اسم الزائر.");
+            }
+
+            if(hasCustomerId)
+            {
+                var customer = await _unitOfWork.UserRepo.GetUserInformationAsync(dto.CustomerId!);
+                Ensure.NotNull(customer, "العميل غير موجود.");
+            }
+
+            if(dto.Items is not null && dto.Items.Any())
+            {
+                this.BadRequestEx("يجب إدخال منتجات للفاتورة.");
+            }
+
+            var orderDetails = new List<OrderDetails>();
+            var productsCache = new Dictionary<int, Product>();
+            decimal totalPrice = 0;
+
+            foreach(var item in dto.Items!)
+            {
+                var product = await _unitOfWork.ProductsRepo.GetAsync(item.ProductId);
+                if(product is null)
+                {
+                    this.NotFoundEx($"المنتج بالمعرف {item.ProductId} غير موجود.");
+                }
+
+                productsCache[item.ProductId] = product!;
+                orderDetails.Add(new OrderDetails
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    Price = product!.Price
+                });
+                totalPrice += item.Quantity * product.Price;
+            }
+
+            decimal discount = 0;
+            decimal finalTotal = totalPrice;
+            Coupon? coupon = null;
+
+            if(!string.IsNullOrWhiteSpace(dto.CouponCode))
+            {
+                var (message, isValid, discountPercent) = await _unitOfWork.CouponRepo.ValidateCoupon(dto.CouponCode, totalPrice);
+                if(!isValid)
+                {
+                    this.BadRequestEx(message);
+                }
+
+                discount = discountPercent;
+                finalTotal = totalPrice - ( discountPercent / 100 * totalPrice );
+                coupon = await _unitOfWork.CouponRepo.GetCoupon(dto.CouponCode!);
+            }
+
+            if(dto.AmountPaid < finalTotal)
+            {
+                this.BadRequestEx("المبلغ المدفوع أقل من إجمالي الفاتورة.");
+            }
+
+            var cashierName = await _unitOfWork.OrderRepo.LastModifiedBy(cashierId!);
+
+            var order = new Order
+            {
+                AppuserId = hasCustomerId ? dto.CustomerId : null,
+                GuestName = hasCustomerId ? null : dto.GuestName,
+                GuestPhone = hasCustomerId ? null : dto.GuestPhone,
+                UserAddress = "استلام من الفرع",
+                TotalPrice = finalTotal,
+                Discount = discount,
+                CouponId = coupon?.Id,
+                AmountPaid = dto.AmountPaid,
+                Source = OrderSource.POS,
+                PaymentStatus = PaymentStatus.Paid,
+                Status = OrderStatus.Processing,
+                LastModifiedBy = cashierName,
+                OrderDetails = orderDetails
+            };
+
+            var addedOrder = await _unitOfWork.OrderRepo.AddAsync(order);
+
+            foreach(var item in dto.Items)
+                productsCache[item.ProductId].SellCount += item.Quantity;
+
+            await _unitOfWork.SaveChangesAsync();
+
+            var orderToShow = _mapper.Map<GetOrderDto>(addedOrder);
+
+            await _hubContext.Clients.Group("admins").SendAsync("NewOrderCreated", orderToShow);
 
             return this.Success(orderToShow);
         }

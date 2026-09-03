@@ -5,6 +5,7 @@ import type {
   GetOrderDto,
   ResponseAddDto,
   StatusResponseDto,
+  AddPosOrderDto,
 } from "@/types/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { cartApi } from "./cartApi";
@@ -65,6 +66,17 @@ export const orderApi = createApi({
         }
       },
     }),
+
+    // POST: /api/Order/AddPosOrder
+addPosOrder: builder.mutation<GetOrderDto, AddPosOrderDto>({
+  query: (dto) => ({
+    url: "/Order/AddPosOrder",
+    method: "POST",
+    body: dto,
+  }),
+  transformResponse: (response: ApiResponse<GetOrderDto>) => response.data,
+  invalidatesTags: ["Orders"],
+}),
 
     // GET: /api/Order/MyOrders
     getMyOrders: builder.query<GetOrderDto[], void>({
@@ -135,6 +147,7 @@ export const {
   useAddOrderMutation,
   useGetMyOrdersQuery,
   useGetOrderByIdQuery,
+  useAddPosOrderMutation,
   useGetAllOrdersQuery,
   useUpdateOrderStatusMutation,
 } = orderApi;

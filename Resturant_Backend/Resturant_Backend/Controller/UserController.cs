@@ -57,7 +57,8 @@ namespace Resturant_Backend.Controller
 
 
 
-        [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
+
+        [Authorize(Roles = $"{Role.Admin},{Role.Manager},{Role.Cashier}")]
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers([FromQuery] FiltersUsers filters)
         {
@@ -75,7 +76,7 @@ namespace Resturant_Backend.Controller
             var response = new PagedResponse<GetUserInfo>(usersToShow, validFilter.PageNumber, validFilter.PageSize, totalCount);
             return this.Success(response);
         }
-        [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
+        [Authorize(Roles = $"{Role.Admin},{Role.Manager}.{Role.Cashier}")]
         [HttpGet("GetUserbyId/{userId}")]
         public async Task<IActionResult> GetUserbyId(string userId)
         {

@@ -25,6 +25,16 @@ namespace Resturant_Backend.DTO.Order
         public int? CouponId { get; set; }
 
         public decimal? Discount { get; set; }
+
+
+
+
+
+        public string? GuestName { get; set; }
+        public string? GuestPhone { get; set; }
+        public decimal AmountPaid { get; set; }
+        public decimal Change { get; set; }        // AmountPaid - TotalPrice
+        public OrderSource Source { get; set; }
         public List<GetDetailsDto> OrderDetails { get; set; } = new();
 
     }

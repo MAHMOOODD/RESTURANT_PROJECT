@@ -1,10 +1,9 @@
-import AppRouter from "./routes/AppRouter";
 import "./i18n/config";
 import { Toaster } from "@/components/ui/sonner";
 import { useTranslation } from "react-i18next";
 import bg from "@/assets/bg.avif";
-import {ScrollToTop} from "./components/ui/ScrollToTop";
-
+import { ScrollToTop } from "./components/ui/ScrollToTop";
+import AppRouter from "./routes/AppRouter";
 export default function App() {
   const { i18n } = useTranslation();
   const isAr = i18n.language === "ar";
@@ -38,8 +37,15 @@ export default function App() {
       </div>
 
       {/* 🚀 App Content Above Background */}
+      {/* <div className="relative z-10 flex h-screen w-full flex-col items-center justify-center gap-4">
+        <DemoOne />
+        <p className="text-lg font-medium text-muted-foreground animate-pulse">
+          please wait...
+        </p>
+      </div> */}
       <div className="relative z-10">
-        <AppRouter />
+
+        <AppRouter/>
       </div>
 
       <ScrollToTop />

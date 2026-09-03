@@ -85,6 +85,7 @@ const CategoryFilter = memo(function CategoryFilter({
         onClick={() => scroll("left")}
         className="hidden sm:flex absolute left-0 top-[40%] -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300 shadow-xl cursor-pointer active:scale-95 opacity-0 group-hover:opacity-100"
         aria-label="Scroll left"
+        hidden={categoriesWithAll.length < 8}
       >
         <ChevronLeft className="w-5 h-5 " />
       </button>
@@ -94,6 +95,7 @@ const CategoryFilter = memo(function CategoryFilter({
         onClick={() => scroll("right")}
         className="hidden sm:flex absolute right-0 top-[40%] -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300 shadow-xl cursor-pointer active:scale-95 opacity-0 group-hover:opacity-100"
         aria-label="Scroll right"
+        hidden={categoriesWithAll.length < 8}
       >
         <ChevronRight className="w-5 h-5" />
       </button>

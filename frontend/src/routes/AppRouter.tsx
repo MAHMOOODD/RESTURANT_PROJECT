@@ -16,6 +16,10 @@ import ContactUs from "@/pages/Main/ContactUs";
 import NotFound from "@/pages/Main/NotFound";
 
 import AdminRoute from "@/components/my/Auth/AdminRoute"; // استبدل المسار بمكان الملف عندك
+import CashierRoute from "@/components/my/Auth/CashierRoute";
+import CashierLayout from "../layouts/CashierLayout";
+import CashierPosPage from "@/pages/cashier/CashierPosPage"; // TODO: adjust path/name to your actual POS page
+import CashierOrdersPage from "@/pages/cashier/CashierPosPage"; // TODO: adjust path/name to your actual cashier orders page
 
 // صفحة الـ Products الخاصة بالأدمن اللي عملناها
 import AdminProducts from "@/pages/admin/ProductsPage";
@@ -87,6 +91,19 @@ const router = createBrowserRouter([
       { path: "orders", element: <AdminOrdersPage/> },
       { path: "coupons", element: <AdminCouponsPage /> },
       { path: "users", element: <AdminUsersPage /> },
+    ],
+  },
+  {
+    path: "/cashier",
+    element: (
+      <CashierRoute>
+        <CashierLayout />
+      </CashierRoute>
+    ),
+    children: [
+      { index: true, element: <CashierPosPage /> },
+      { path: "orders", element: <CashierOrdersPage /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
