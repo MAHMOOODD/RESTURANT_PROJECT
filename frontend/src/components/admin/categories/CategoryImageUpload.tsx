@@ -16,10 +16,8 @@ export const CategoryImageUpload: React.FC<CategoryImageUploadProps> = ({
   const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // احتفظ فقط بالملف المختار محلياً
   const [selectedFileUrl, setSelectedFileUrl] = useState<string | null>(null);
 
-  // حساب الـ preview مباشرة أثناء الـ render بدون useEffect أو setState زائدة
   const preview = selectedFileUrl || currentImageUrl || null;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

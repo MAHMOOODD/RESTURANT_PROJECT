@@ -151,8 +151,8 @@ namespace Resturant_Backend.Repository
 
 
         /// <summary>
-        /// أعلى (count) منتج مبيعاً بناءً على SellCount (بيتحدّث فعلياً في OrderController
-        /// عند إضافة/إلغاء الأوردرز، فمفيش داعي لأي منطق إضافي هنا).
+        /// most sold products based on the SellCount property, limited to the specified count.
+        ///
         /// </summary>
         public async Task<List<TopProductDto>> GetTopSellingProductsAsync(int count)
         {

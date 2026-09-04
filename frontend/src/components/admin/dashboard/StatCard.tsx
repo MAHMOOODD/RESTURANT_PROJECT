@@ -25,7 +25,6 @@ export function StatCard({
 }: StatCardProps) {
   return (
     <div className="group relative flex h-full w-full flex-col justify-between overflow-hidden rounded-2xl border border-border/60 bg-card p-4 transition-colors duration-300 hover:border-primary/40 sm:rounded-3xl sm:p-5">
-      {/* رأس الكارت: القيمة + التسمية + الأيقونة */}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1 space-y-1">
           <p className="truncate text-xs font-medium text-muted-foreground sm:text-sm">
@@ -43,7 +42,6 @@ export function StatCard({
         </div>
       </div>
 
-      {/* التفاصيل */}
       {details && details.length > 0 && (
         <div className="mt-4 flex flex-col gap-2 border-t border-border/50 pt-3 sm:mt-5 sm:pt-4">
           {details.map((d) => (

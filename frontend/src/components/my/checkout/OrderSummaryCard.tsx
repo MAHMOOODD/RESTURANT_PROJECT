@@ -40,7 +40,7 @@ export function OrderSummaryCard({
         {t("checkout.summary.title")}
       </h2>
 
-      {/* تفاصيل العناصر */}
+      {/* details */}
       <div className="max-h-64 overflow-y-auto pr-2 mb-6 space-y-3 custom-scrollbar">
         {cartItems.map((item) => {
           const product = getProductDetails(item.productId);
@@ -70,7 +70,7 @@ export function OrderSummaryCard({
         })}
       </div>
 
-      {/* الفاتورة وتفاصيل الأسعار */}
+      {/* summary */}
       <div className="space-y-4 text-sm font-semibold border-t border-border/60 pt-6">
         <div className="flex justify-between items-center text-muted-foreground">
           <span className="text-base">{t("checkout.summary.subtotal")}</span>
@@ -110,7 +110,7 @@ export function OrderSummaryCard({
         </div>
       </div>
 
-      {/* زر التأكيد */}
+      {/* place order button */}
       <button
         type="button"
         onClick={onPlaceOrder}

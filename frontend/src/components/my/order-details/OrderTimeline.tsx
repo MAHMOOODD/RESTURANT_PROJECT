@@ -14,7 +14,6 @@ interface OrderTimelineProps {
   step: number;
 }
 
-// إعدادات الألوان والأيقونات الموحدة لكل الحالات (تشمل الـ 5 أشكال)
 const TIMELINE_VISUALS: Record<number, { icon: LucideIcon; activeColor: string }> = {
   [OrderStatus.pending]: {
     icon: Clock,
@@ -41,7 +40,6 @@ const TIMELINE_VISUALS: Record<number, { icon: LucideIcon; activeColor: string }
 export default function OrderTimeline({ status, step }: OrderTimelineProps) {
   const { t } = useTranslation();
 
-  // لو الأوردر ملغي، ممكن نعرض شكل الإلغاء أو نخفيه حسب رغبتك
   const isCancelled = status === OrderStatus.cancelled;
 
   const steps = [
@@ -82,7 +80,6 @@ export default function OrderTimeline({ status, step }: OrderTimelineProps) {
         );
       })}
 
-      {/* لو الأوردر ملغي بنظهر شكل الـ Cancelled كحاضر بقوة */}
       {isCancelled && (
         <div className="flex flex-col items-center text-center group">
           <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center transition-all duration-300 transform border bg-rose-500/20 border-rose-500 text-rose-500 shadow-rose-500/20 border-2 shadow-lg scale-105">

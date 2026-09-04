@@ -23,11 +23,11 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="w-full  text-foreground border-t-2 border-border/60 relative overflow-hidden transition-colors duration-300">
-      {/* Glow Backdrops - لمسات إضاءة خلفية ناعمة */}
+      {/* Glow Backdrops */}
       <div className="absolute top-0 left-1/4 w-[28rem] h-[28rem] bg-rose-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[28rem] h-[28rem] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Top Value Badges - شريط الميزات السريعة */}
+      {/* Top Value Badges*/}
       <div className="border-b-2 border-border/60 bg-muted/30">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-start">

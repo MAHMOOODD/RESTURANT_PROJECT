@@ -65,7 +65,7 @@ public class Authservice : IAuthService
 
         if(!result.Succeeded)
         {
-            // تجميع أخطاء Identity وإرجاعها بشكل دقيق ومناسب للـ Frontend
+            //gather all errors and group them by field for better clarity
             var errorsDict = new Dictionary<string, List<string>>();
             foreach(var error in result.Errors)
             {
@@ -218,10 +218,10 @@ public class Authservice : IAuthService
         user.FullName = model.FullName ?? user.FullName;
         user.Address = model.Address ?? user.Address;
 
-        // التعامل مع صورة البروفايل لو المستخدم رفع صورة جديدة
+        // handle profile image update
         if(model.ImageUrl != null && model.ImageUrl.Length > 0)
         {
-            // حذف الصورة القديمة من Cloudinary لو موجودة
+            // delete the old image from cloudinary if it exists
             if(!string.IsNullOrEmpty(user.ImagePublicId))
             {
                 await _photoService.DeletePhotoAsync(user.ImagePublicId);
@@ -255,7 +255,7 @@ public class Authservice : IAuthService
         Ensure.Check(roleExists, "Role does not exist");
 
         var isInRole = await _userManager.IsInRoleAsync(user!, model.RoleName);
-        Ensure.Check(!isInRole, "User already assigned to this role"); // كان معكوس
+        Ensure.Check(!isInRole, "User already assigned to this role");
 
         var result = await _userManager.AddToRoleAsync(user!, model.RoleName);
         Ensure.Check(result.Succeeded, "Something went wrong");

@@ -131,7 +131,7 @@ public class AccountController : ControllerBase
         var isRevoked = await _authService.RevokeTokenAsync(token!);
         Ensure.Check(isRevoked, "Token is invalid!");
 
-        // حذف الـ Cookie من متصفح العميل بعد نجاح الـ Revoke
+        // delete the refresh token cookie when revoking the token
         Response.Cookies.Delete("refreshToken", new CookieOptions
         {
             HttpOnly = true,

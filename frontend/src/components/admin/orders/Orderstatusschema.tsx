@@ -20,7 +20,6 @@ export const PAYMENT_OPTIONS: { value: PaymentStatusType; labelKey: string }[] =
   { value: PaymentStatus.refunded, labelKey: "adminOrders.paymentTypes.refunded" },
 ];
 
-// الـ Schema ثابتة ولا تعتمد على دالة t مباشرة، نفس نمط productSchema
 export const createOrderStatusSchema = () =>
   z.object({
     status: z

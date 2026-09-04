@@ -76,9 +76,7 @@ namespace Resturant_Backend.Repository
         }
 
         /// <summary>
-        /// عدد كل المستخدمين المسجلين في النظام (بكل الرولز).
-        /// عدد كل رول على حدة بيتحسب في DashboardController عن طريق UserManager
-        /// (GetUsersInRoleAsync) لأنه محتاج الوصول لجدول AspNetUserRoles.
+        /// return the total count of users in the database. 
         /// </summary>
         public Task<int> GetTotalUsersCountAsync()
         {

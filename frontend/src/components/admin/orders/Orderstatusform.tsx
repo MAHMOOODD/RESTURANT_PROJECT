@@ -22,7 +22,6 @@ interface OrderStatusFormProps {
   ) => void;
 }
 
-// إعدادات الشكل (أيقونة + لون) لكل قيمة من قيم الـ Enum
 const STATUS_VISUALS: Record<number, { icon: LucideIcon; activeColor: string }> = {
   [OrderStatus.pending]: {
     icon: Clock,

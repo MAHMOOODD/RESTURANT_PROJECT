@@ -19,7 +19,7 @@ export default function CashierLayout() {
       dir={isArabic ? "rtl" : "ltr"}
       className="h-screen flex relative overflow-x-hidden overflow-y-hidden"
     >
-      {/* Sidebar - بترندر نسخة الديسكتوب والموبايل جواها لوحدها */}
+      {/* Sidebar */}
       <CashierSidebar
         isOpenMobile={isMobileOpen}
         onCloseMobile={() => setIsMobileOpen(false)}

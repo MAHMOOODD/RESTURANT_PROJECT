@@ -15,21 +15,20 @@ import AboutUs from "@/pages/Main/AboutUs";
 import ContactUs from "@/pages/Main/ContactUs";
 import NotFound from "@/pages/Main/NotFound";
 
-import AdminRoute from "@/components/my/Auth/AdminRoute"; // استبدل المسار بمكان الملف عندك
+import AdminRoute from "@/components/my/Auth/AdminRoute"; 
 import CashierRoute from "@/components/my/Auth/CashierRoute";
 import CashierLayout from "../layouts/CashierLayout";
-import CashierPosPage from "@/pages/cashier/CashierPosPage"; // TODO: adjust path/name to your actual POS page
-import CashierOrdersPage from "@/pages/cashier/CashierOrdersPage"; // TODO: adjust path/name to your actual cashier orders page
+import CashierPosPage from "@/pages/cashier/CashierPosPage"; 
+import CashierOrdersPage from "@/pages/cashier/CashierOrdersPage"; 
 
-// صفحة الـ Products الخاصة بالأدمن اللي عملناها
 import AdminProducts from "@/pages/admin/ProductsPage";
-// لو عندك صفحة للـ Dashboard الرئيسية للأدمن استوردها هنا، أو استبدلها مؤقتاً لو مش جاهزة
 import ProductDetailsPage from "@/pages/Main/ProductDetailsPage";
 import { CategoriesPage } from "@/pages/admin/CategoriesPage";
 import  AdminOrdersPage  from "@/pages/admin/AdminOrdersPage";
 import AdminCouponsPage from "@/pages/admin/AdminCouponsPage";
 import AdminUsersPage from "@/pages/admin/AdminUsersPage";
 import AdminDashboardPage from "@/pages/admin/AdminDashboardPage";
+import PaymentResultPage from "@/pages/Main/PaymentResultPage";
 
 const router = createBrowserRouter([
   {
@@ -37,8 +36,8 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <Home /> },
+      { path: "payment-result", element: <PaymentResultPage /> },
 
-      // 1. مسار تفاصيل الطلب
       {
         path: "orders",
         children: [
@@ -47,7 +46,6 @@ const router = createBrowserRouter([
         ],
       },
 
-      // 2. السلة والدفع
       { path: "cart", element: <Cart /> },
       { path: "checkout", element: <Checkout /> },
       { path: "products/:id", element: <ProductDetailsPage /> },
@@ -55,13 +53,10 @@ const router = createBrowserRouter([
       { path: "about", element: <AboutUs /> },
       { path: "contact", element: <ContactUs /> },
 
-      // 3. المنتجات
       { path: "products", element: <Products /> },
 
-      // 4. البروفايل
       { path: "profile", element: <Account /> },
 
-      // 5. مصادقة المستخدم
       {
         path: "auth",
         children: [
@@ -75,7 +70,6 @@ const router = createBrowserRouter([
     ],
   },
 
-  // 🛡️ 6. لوحة تحكم الأدمن (مسارات مستقلة بـ AdminLayout الخاص بيها)
   {
     path: "/admin",
     element: (

@@ -7,15 +7,13 @@ interface RoleBadgeProps {
   roles: string[];
 }
 
-// مطابقة الأيقونات مع التصميم الجديد (الريفرنس)
 const ROLE_ICONS: Record<UserRole, LucideIcon> = {
-  Admin: Crown, // أو ShieldCheck حسب الرغبة، الأفضل Crown زي الهيدر
+  Admin: Crown,         
   Manager: Shield,
-  User: User2, // أو UserIcon
-  Cashier: ComputerIcon, // أو أي أيقونة مناسبة للـ Cashier
+  User: User2, 
+  Cashier: ComputerIcon, 
 };
 
-// مطابقة الألوان والستايلات تماماً مع الأكونت هيدر
 const ROLE_CLASSES: Record<UserRole, string> = {
   Admin: "bg-amber-500/15 text-amber-400 dark:text-amber-400 border border-amber-500/30",
   Manager: "bg-rose-500/15 text-rose-500 dark:text-rose-400 border border-rose-500/30",

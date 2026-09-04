@@ -99,6 +99,7 @@
       "address": "Registered Delivery Address",
       "no_address": "No address registered! Click \"Edit Info\" above."
     },
+    
     "coupon": {
       "title": "Discount Coupon",
       "desc": "Enter code and click apply to discount your bill",
@@ -110,7 +111,11 @@
     },
     "payment": {
       "title": "Payment Method",
-      "cod": "Cash on Delivery"
+      "cod": "Cash on Delivery",
+     
+    "card": "Pay with Card (Paymob)",
+    "complete_payment": "Complete your payment"
+  
     },
     "summary": {
       "title": "Order Summary",
@@ -905,5 +910,13 @@
     "title": "Orders",
     "subtitle": "Track and update the status of all orders (online and cashier)",
     "newOrderCta": "New Order"
-  }
+  },
+  
+"payment_result": {
+  "success_title": "Payment Successful",
+  "success_desc": "Your order confirmation is on its way",
+  "failure_title": "Payment Failed",
+  "failure_desc": "You can try again or choose another payment method",
+  "back_to_orders": "Back to Orders"
+}
 }

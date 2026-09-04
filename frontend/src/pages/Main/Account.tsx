@@ -93,7 +93,6 @@ export default function Account() {
         formData.append("ImageUrl", data.imageUrl);
       }
 
-      // إرسال الـ FormData للـ Mutation (مع عمل Cast للـ type المتوقع)
       const response = await updateProfile(formData as unknown as UpdateProfileDto).unwrap();
       
       const successMessage =
@@ -134,9 +133,7 @@ export default function Account() {
         handleImageChange={handleImageChange}
       />
 
-      {/* ويدجت آخر طلب للمستخدم */}
 
-      {/* نموذج تعديل البيانات الشخصية */}
       <AccountForm
         userInfo={userInfo}
         register={register}

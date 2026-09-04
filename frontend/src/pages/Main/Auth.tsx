@@ -49,7 +49,6 @@ export const Auth: React.FC = () => {
       const response = await Login(data).unwrap();
       console.log("Login response:", response);
 
-      //  التأكد من وجود التوكن وحفظه في localStorage
       if (response?.data?.token) {
         dispatch(setCredentials({ token: response.data.token }));
       } else {

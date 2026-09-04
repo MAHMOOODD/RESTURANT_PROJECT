@@ -1,4 +1,4 @@
-// 1. غلاف الاستجابة الموحد (ApiResponse)
+// 1.(ApiResponse)
 export interface ApiResponse<T> {
   isSuccess: boolean;
   data: T;
@@ -10,7 +10,7 @@ export interface ApiResponse<T> {
   } | null;
 }
 
-// 2. كائن الصفحة (PagedResponse)
+// 2. (PagedResponse)
 export interface PagedResponse<T> {
   data: T[];
   pageNumber: number;
@@ -19,7 +19,7 @@ export interface PagedResponse<T> {
   totalPages: number;
 }
 
-// 3. GetCategoriesDto المتوافق مع C# Backend
+// 3. GetCategoriesDto 
 export interface GetCategoriesDto {
   id: number;
   name: string;
@@ -28,7 +28,6 @@ export interface GetCategoriesDto {
   products?: GetProductDto[];
 }
 
-// 4. الفلاتر إرسالاً للسيرفر
 export interface PageFilter {
   pageNumber: number;
   pageSize: number;
@@ -49,8 +48,8 @@ export interface OrderFilter {
   sortByPrice?: boolean;
   sortByDate?: boolean;
   ascending?: boolean;
-  status?: number; // جديد
-  paymentStatus?: number; // جديد
+  status?: number; 
+  paymentStatus?: number; 
 }
 
 
@@ -366,6 +365,17 @@ export interface UserCreatedModel {
   refreshTokenExpiration: Date;
 }
 
+// ============ Payment DTOs ============
+export type PaymentMethod = 0 | 1;
+export const PaymentMethod = {
+  cod: 0 as const,
+  online: 1 as const,
+} as const;
+
+export interface InitiatePaymentResponseDto {
+  iframeUrl: string;
+}
+
 // ============ Enums ============
 export type OrderStatus = 0 | 1 | 2 | 3 | 4;
 export const OrderStatus = {
@@ -384,7 +394,6 @@ export const PaymentStatus = {
   refunded: 3 as const,
 } as const;
 // ============ Dashboard DTOs ============
-// ⬇️ الصق القسم ده في نهاية types.tsx الأصلي (مش ملف منفصل، عشان نفضل مصدر واحد للتايبات)
 
 export interface RevenueSummaryDto {
   totalRevenue: number;

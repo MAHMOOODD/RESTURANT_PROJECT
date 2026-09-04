@@ -33,7 +33,6 @@ export function ProductFormFields({
   const isArabic = i18n.language.startsWith("ar");
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
-  // استخدام useMemo لتجنب إعادة الترتيب مع كل حرف يتم كتابته في النموذج
   const sortedCategories = useMemo(() => {
     return [...categories].sort((a, b) =>
       isArabic
@@ -49,7 +48,6 @@ export function ProductFormFields({
 
   return (
     <div className="grid gap-5 py-3">
-      {/* الأسماء */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="grid gap-1.5 text-start">
           <label
@@ -104,7 +102,6 @@ export function ProductFormFields({
         </div>
       </div>
 
-      {/* الوصف */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="grid gap-1.5 text-start">
           <label
@@ -159,7 +156,6 @@ export function ProductFormFields({
         </div>
       </div>
 
-      {/* السعر / وقت التحضير / التصنيف */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="grid gap-1.5 text-start">
           <label
@@ -291,7 +287,6 @@ export function ProductFormFields({
         </div>
       </div>
 
-      {/* حالة التوفر */}
       <div className="flex items-center justify-between p-4 rounded-2xl bg-muted/40 border border-border/50 hover:border-border/80 transition-all duration-200 mt-2">
         <div className="space-y-0.5 text-start">
           <label

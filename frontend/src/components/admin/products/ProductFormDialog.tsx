@@ -41,7 +41,6 @@ export function ProductFormDialog({
   const [editProduct, { isLoading: isEditing }] = useEditProductMutation();
   const isSubmitting = isAdding || isEditing;
 
-  // الـ Schema ثابتة الآن ولا تعتمد على دالة t مباشرة
   const productSchema = useMemo(() => createProductSchema(), []);
 
   const {
@@ -81,7 +80,6 @@ export function ProductFormDialog({
     image: watchedValues.image ?? null,
   };
 
-  // ترجمة الأخطاء القادمة من Zod ديناميكياً
   const translatedErrors = useMemo(() => {
     return Object.fromEntries(
       Object.entries(errors).map(([key, val]) => [
@@ -91,7 +89,6 @@ export function ProductFormDialog({
     );
   }, [errors, t]);
 
-  // إعادة ضبط النموذج عند فتح المودال أو تغيير المنتج
   useEffect(() => {
     if (open) {
       reset({
@@ -111,7 +108,6 @@ export function ProductFormDialog({
     }
   }, [open, product, reset]);
 
-  // حساب رابط المعاينة تلقائياً
   const previewUrl = useMemo(() => {
     if (watchedImage instanceof File) {
       return URL.createObjectURL(watchedImage);

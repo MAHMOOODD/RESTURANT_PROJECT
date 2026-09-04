@@ -24,7 +24,6 @@ import { toast } from "sonner";
 import type { ApiError } from "@/services/baseQuery";
 import type { AddToCartDto, GetReviewDto } from "@/types/types";
 
-// المكونات المقسمة
 import { ProductHeroSection } from "@/components/my/productDetails/ProductHeroSection";
 import { ReviewForm } from "@/components/my/productDetails/ReviewForm";
 import { ReviewList } from "@/components/my/productDetails/ReviewList";
@@ -36,7 +35,6 @@ export default function ProductDetailsPage() {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
 
-  // جلب معلومات المستخدم الحالي من الـ API المعرفة في authApi
   const { data: userInfo } = useGetUserInfoQuery();
 
   const [isActionLoading, setIsActionLoading] = useState(false);
@@ -67,7 +65,6 @@ export default function ProductDetailsPage() {
   );
   const isAdded = cartItem !== undefined;
 
-  // التعامل مع السلة
   const handleCartToggle = async () => {
     if (!productId) return;
     setIsActionLoading(true);
@@ -97,7 +94,6 @@ export default function ProductDetailsPage() {
     }
   };
 
-  // التعامل مع إضافة أو تعديل التقييم
   const handleReviewSubmit = async (rating: number, comment?: string) => {
     if (!productId) return;
 
@@ -147,7 +143,6 @@ export default function ProductDetailsPage() {
     }
   };
 
-  // التعامل مع حذف التقييم
   const handleDeleteReview = async (reviewId: number) => {
     try {
       setDeletingId(reviewId);
@@ -198,7 +193,6 @@ export default function ProductDetailsPage() {
 
   return (
     <div className="container max-w-384 mx-auto px-4 py-6 sm:py-10 space-y-10">
-      {/* زر العودة */}
       <button
         onClick={() => navigate(-1)}
         className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-card border border-border/70 hover:bg-muted text-foreground text-sm font-bold transition-all shadow-sm cursor-pointer"
@@ -211,7 +205,6 @@ export default function ProductDetailsPage() {
         <span>{t("common.back", "رجوع")}</span>
       </button>
 
-      {/* قسم الوجبة والتفاصيل */}
       <ProductHeroSection
         productDetails={productDetails}
         isAdded={isAdded}
@@ -220,7 +213,6 @@ export default function ProductDetailsPage() {
         onCartToggle={handleCartToggle}
       />
 
-      {/* قسم التقييمات والتعليقات */}
       <div className="pt-8 space-y-8 border-t border-border/60">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -236,7 +228,6 @@ export default function ProductDetailsPage() {
           </span>
         </div>
 
-        {/* نموذج الإضافة والتعديل */}
         <ReviewForm
           key={editingReview ? editingReview.id : "new-review"}
           isEditing={Boolean(editingReview)}
@@ -247,7 +238,6 @@ export default function ProductDetailsPage() {
           onCancelEdit={() => setEditingReview(null)}
         />
 
-        {/* عرض قائمة التقييمات */}
         <ReviewList
           reviews={productDetails.reviews || []}
           currentUserId={userInfo?.userName}

@@ -13,6 +13,7 @@ import {
 import { useGetCartQuery } from "@/store/features/cartApi";
 import { useGetUserInfoQuery } from "@/store/features/User/Auth";
 import { useAddOrderMutation } from "@/store/features/orderApi";
+import { useInitiatePaymentMutation } from "@/store/features/paymentApi";
 import { useGetAllProductsQuery } from "@/store/features/productApi";
 import { useGetAllCouponsQuery } from "@/store/features/couponApi";
 
@@ -22,10 +23,12 @@ import { PaymentMethodSection } from "@/components/my/checkout/PaymentMethodSect
 import { OrderSummaryCard } from "@/components/my/checkout/OrderSummaryCard";
 
 import { toast } from "sonner";
+import { PaymentMethod } from "@/types/types";
 import type {
   AddOrderDto,
   GetAllProductDto,
   GetCouponDto,
+  PaymentMethod as PaymentMethodType,
 } from "@/types/types";
 import type { ApiError } from "@/services/baseQuery";
 
@@ -46,9 +49,15 @@ export default function Checkout() {
     useGetAllCouponsQuery();
 
   const [addOrder, { isLoading: isSubmitting }] = useAddOrderMutation();
+  const [initiatePayment, { isLoading: isInitiatingPayment }] =
+    useInitiatePaymentMutation();
 
   const [couponInput, setCouponInput] = useState<string>("");
   const [appliedCoupon, setAppliedCoupon] = useState<GetCouponDto | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>(
+    PaymentMethod.cod,
+  );
+  const [iframeUrl, setIframeUrl] = useState<string | null>(null);
 
   const productsList: GetAllProductDto[] = Array.isArray(productsData)
     ? productsData
@@ -116,8 +125,14 @@ export default function Checkout() {
     };
     try {
       const response = await addOrder(orderDto).unwrap();
-      toast.success(t("checkout.toast.order_success"));
-      navigate(`/orders/${response.id}`);
+
+      if (paymentMethod === PaymentMethod.online) {
+        const paymentResult = await initiatePayment(response.id).unwrap();
+        setIframeUrl(paymentResult.iframeUrl);
+      } else {
+        toast.success(t("checkout.toast.order_success"));
+        navigate(`/orders/${response.id}`);
+      }
     } catch (err: unknown) {
       const error = err as ApiError;
       toast.error(error?.message || t("checkout.toast.order_error"));
@@ -157,7 +172,7 @@ export default function Checkout() {
     );
   }
 
-  if (cartItems.length === 0) {
+  if (cartItems.length === 0 && !iframeUrl) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-6">
         <ShoppingBag className="w-24 h-24 text-muted-foreground mb-6 opacity-40" />
@@ -174,6 +189,23 @@ export default function Checkout() {
           {t("checkout.errors.back_menu")}
         </Link>
       </div>
+    );
+  }
+
+  if (iframeUrl) {
+    return (
+      <main className="max-w-3xl mx-auto px-4 sm:px-8 py-12 animate-in fade-in duration-500">
+        <div className="p-8 rounded-3xl bg-card/90 backdrop-blur-2xl border border-border/80 shadow-2xl">
+          <h2 className="text-xl font-black text-foreground mb-6 text-center">
+            {t("checkout.payment.complete_payment")}
+          </h2>
+          <iframe
+            src={iframeUrl}
+            title="Paymob Checkout"
+            className="w-full h-[650px] rounded-2xl border border-border/60"
+          />
+        </div>
+      </main>
     );
   }
 
@@ -213,7 +245,10 @@ export default function Checkout() {
             handleApplyCoupon={handleApplyCoupon}
             handleRemoveCoupon={handleRemoveCoupon}
           />
-          <PaymentMethodSection />
+          <PaymentMethodSection
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+          />
         </div>
 
         <div className="lg:col-span-5 sticky top-24">
@@ -224,7 +259,7 @@ export default function Checkout() {
             discountAmount={discountAmount}
             finalTotal={finalTotal}
             appliedCoupon={appliedCoupon}
-            isSubmitting={isSubmitting}
+            isSubmitting={isSubmitting || isInitiatingPayment}
             hasAddress={Boolean(userInfo.address)}
             onPlaceOrder={handlePlaceOrder}
           />

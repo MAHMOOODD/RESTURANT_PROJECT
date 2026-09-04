@@ -1,4 +1,3 @@
-// المسار المقترح: src/components/admin/coupons/DeleteCouponDialog.tsx
 import { useTranslation } from "react-i18next";
 import { AlertTriangle, Loader2, X } from "lucide-react";
 import { toast } from "sonner";

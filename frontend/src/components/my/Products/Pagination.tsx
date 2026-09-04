@@ -19,7 +19,6 @@ export default function Pagination({
 
   return (
     <div className="flex items-center justify-center gap-3 pt-8">
-      {/* زر الصفحة السابقة */}
       <button
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
@@ -33,7 +32,6 @@ export default function Pagination({
         )}
       </button>
 
-      {/* أزرار أرقام الصفحات */}
       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
         <button
           key={page}
@@ -48,7 +46,6 @@ export default function Pagination({
         </button>
       ))}
 
-      {/* زر الصفحة التالية */}
       <button
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}

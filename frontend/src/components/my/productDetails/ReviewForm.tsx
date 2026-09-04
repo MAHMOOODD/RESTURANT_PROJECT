@@ -76,7 +76,6 @@ export function ReviewForm({
         )}
       </div>
 
-      {/* النجوم */}
       <div className="flex items-center gap-3">
         <span className="text-xs font-bold text-muted-foreground">
           {t("products.yourRating", "تقييمك:")}
@@ -103,7 +102,6 @@ export function ReviewForm({
         </div>
       </div>
 
-      {/* نص التعليق */}
       <textarea
         rows={3}
         value={comment}

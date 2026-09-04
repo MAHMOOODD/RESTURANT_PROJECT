@@ -1,10 +1,6 @@
-// المسار المقترح: src/components/admin/coupons/Couponschema.tsx
 import { z } from "zod";
 import type { GetCouponDto } from "@/types/types";
 
-// الـ Schema ثابتة ولا تعتمد على دالة t مباشرة، نفس نمط createOrderStatusSchema.
-// كل رسائل الأخطاء هنا هي "مفاتيح ترجمة" فقط، وبيتم ترجمتها فعلياً عند الرندرة
-// جوه الـ Dialog (translatedErrors) مش هنا، عشان كده منعرفش نستخدم useTranslation جوه ملف الـ schema.
 export const createCouponSchema = () =>
   z.object({
     code: z
@@ -33,7 +29,6 @@ export const createCouponSchema = () =>
 type CouponSchemaType = ReturnType<typeof createCouponSchema>;
 export type CouponFormValues = z.infer<CouponSchemaType>;
 
-// قيم افتراضية موحدة للفورم سواء في وضع الإضافة (coupon = null) أو التعديل
 export const getInitialCouponValues = (
   coupon?: GetCouponDto | null,
 ): CouponFormValues => ({

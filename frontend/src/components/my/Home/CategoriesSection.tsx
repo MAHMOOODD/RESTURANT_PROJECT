@@ -25,7 +25,6 @@ export default function CategoriesSection() {
     scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // دالة التمرير يميناً ويساراً للأزرار العصرية
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
       const scrollAmount = 300;
@@ -56,7 +55,6 @@ export default function CategoriesSection() {
           <span>{t("categories.available")}</span>
         </h2>
 
-        {/* أزرار التنقل العصرية (تظهر عند الـ Hover على السكشن) */}
         <div className="hidden sm:flex items-center gap-2">
           <button
             onClick={() => scroll("left")}
@@ -77,7 +75,6 @@ export default function CategoriesSection() {
         </div>
       </div>
 
-      {/* حاوية الأقسام مع إخفاء شريط التمرير الافتراضي */}
       <div className="relative">
         <div
           ref={scrollContainerRef}
@@ -92,7 +89,6 @@ export default function CategoriesSection() {
                 onClick={() => handleCategoryClick(cat.id)}
                 className="group/item flex flex-col items-center gap-3 cursor-pointer shrink-0"
               >
-                {/* الحاوية الدائرية للصورة */}
                 <div className="relative min-w-60 min-h-60 sm:w-28 sm:h-28 rounded-full p-1 border-2 border-transparent group-hover/item:border-primary transition-all duration-300 shadow-md">
                   <div
                     className="w-full h-full rounded-full bg-cover bg-center transition-transform duration-500 group-hover/item:scale-105"
@@ -100,7 +96,6 @@ export default function CategoriesSection() {
                   />
                 </div>
 
-                {/* اسم القسم تحت الدائرة */}
                 <span className="font-bold text-sm min-w-[250px] sm:text-base text-white group-hover/item:text-primary transition-colors text-center max-w-[100px] truncate">
                   {isAr ? cat.nameAr : cat.name}
                 </span>

@@ -21,7 +21,7 @@ namespace Resturant_Backend.Controller
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly IMapper _mapper;
-        private readonly UserManager<Appuser> _userManager; // جديد
+        private readonly UserManager<Appuser> _userManager;
 
 
 

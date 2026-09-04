@@ -53,11 +53,11 @@ namespace Resturant_Backend.Controller
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             Ensure.Unauthorized(userId, message: "غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
 
-            // التحقق أولاً من وجود المنتج في قاعدة البيانات
+            // check if the product exists in the database
             var product = await _unitOfWork.ProductsRepo.GetAsync(productId);
             Ensure.NotNull(product, message: "Product Not Found");
 
-            // التحقق من عدم وجود المنتج مسبقاً في السلة
+            // check if the item already exists in the cart for the user
             var exist = await _unitOfWork.CartRepo.IsItemExist(productId, userId!);
             Ensure.Check(!exist, "Item already exist in your cart.");
 

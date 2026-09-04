@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { useUpdateOrderStatusMutation } from "@/store/features/orderApi";
 import { useGetUserByIdQuery } from "@/store/features/User/Auth";
 import type { GetOrderDto, OrderStatus, PaymentStatus } from "@/types/types";
-// ⚠️ عدّل المسار ده حسب مكان الملفات الحقيقي عندك (نفس فولدر OrderDetailsDialog)
 import { OrderStatusForm } from "@/components/admin/orders/Orderstatusform";
 import {
   createOrderStatusSchema,
@@ -88,7 +87,6 @@ export function CashierOrderStatusModal({ order, open, onOpenChange }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
       <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-card/95 border border-border/80 shadow-2xl overflow-hidden">
-        {/* Header مبسط */}
         <div className="px-5 pt-5 pb-4 flex items-center justify-between border-b border-border/40 shrink-0">
           <div className="min-w-0">
             <p className="text-sm font-mono font-black text-foreground">#{order.id}</p>
@@ -107,7 +105,6 @@ export function CashierOrderStatusModal({ order, open, onOpenChange }: Props) {
           </button>
         </div>
 
-        {/* بس الفورم — من غير items/discount/user card */}
         <form onSubmit={handleSubmit(onSubmit)} id="cashier-status-form" className="flex-1 overflow-y-auto px-5 py-5">
           <OrderStatusForm
             form={formValues}

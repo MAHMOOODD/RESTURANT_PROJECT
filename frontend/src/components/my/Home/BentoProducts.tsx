@@ -36,14 +36,12 @@ export default function BentoProducts() {
     sortBySelling: true,
   });
 
-  // حساب القائمة مباشرة - React Compiler سيهتم بالـ Memoization تلقائيًا
   const topProducts = productsRes?.data
     ? [...productsRes.data].sort(
         (a, b) => (b.sellCount || 0) - (a.sellCount || 0),
       )
     : [];
 
-  // دالة التعامل مع الإضافة والحذف من السلة
   const handleAddToCart = (productId: number) => async () => {
     const cartItem = cartData?.find(
       (item) => Number(item.productId) === Number(productId),
@@ -90,7 +88,6 @@ export default function BentoProducts() {
     return null;
   }
 
-  // التحقق مما إذا كان المنتج المحدد في المودال مضافاً للسلة أم لا
   const selectedCartItem = cartData?.find(
     (item) => Number(item.productId) === Number(selectedProductId),
   );

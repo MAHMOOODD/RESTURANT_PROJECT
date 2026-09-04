@@ -44,5 +44,4 @@ function CashierProductCardComponent({ product, onAdd }: Props) {
   );
 }
 
-// منع إعادة الرندر إلا لو المنتج نفسه أو الـ handler اتغيروا فعلاً
 export const CashierProductCard = memo(CashierProductCardComponent);

@@ -17,7 +17,7 @@ export default function MainLayout() {
         <Outlet />
       </main>
 
-      {/* Footer ثابت */}
+      {/* Footer  */}
      <Footer/>
     </div>
   );

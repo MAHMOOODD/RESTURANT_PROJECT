@@ -44,8 +44,5 @@ public static class ControllerExtensions
     // ✅ Data = null, Message = null
     #endregion
 
-    #region Failure Responses (Optional - يمكن حذفها)
-    // لو هتستخدم الـ Ex versions، دول مش محتاجهم
-    // لكن لو محتاجهم للـ Responses المباشرة، خليهم
-    #endregion
+
 }

@@ -8,7 +8,8 @@ namespace Resturant_Backend.Hubs
     {
         public override async Task OnConnectedAsync()
         {
-            var userId = Context.UserIdentifier; // بيتاخد من ClaimTypes.NameIdentifier تلقائيًا
+            // Get the user ID from the claims
+            var userId = Context.UserIdentifier;
             if(!string.IsNullOrEmpty(userId))
             {
                 await Groups.AddToGroupAsync(Context.ConnectionId, $"user-{userId}");

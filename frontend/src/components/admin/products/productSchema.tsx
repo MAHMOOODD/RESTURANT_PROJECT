@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const createProductSchema = () =>
   z.object({
-    // الاسم بالإنجليزية (مطلوب + لا يقل عن حرفين ويبدأ بحرف)
     name: z
       .string()
       .min(1, "adminProducts.form.errors.required")
@@ -12,7 +11,6 @@ export const createProductSchema = () =>
         "adminProducts.form.errors.mustStartWithLetters"
       ),
 
-    // الاسم بالعربية (مطلوب + لا يقل عن حرفين ويبدأ بحرف)
     nameAr: z
       .string()
       .min(1, "adminProducts.form.errors.required")
@@ -22,7 +20,6 @@ export const createProductSchema = () =>
         "adminProducts.form.errors.mustStartWithLetters"
       ),
 
-    // الوصف بالإنجليزية (مطلوب + لا يقل عن 5 حروف ويبدأ بحرف)
     description: z
       .string()
       .min(1, "adminProducts.form.errors.required")
@@ -32,7 +29,6 @@ export const createProductSchema = () =>
         "adminProducts.form.errors.mustStartWithLetters"
       ),
 
-    // الوصف بالعربية (مطلوب + لا يقل عن 5 حروف ويبدأ بحرف)
     descriptionAr: z
       .string()
       .min(1, "adminProducts.form.errors.required")
@@ -42,7 +38,6 @@ export const createProductSchema = () =>
         "adminProducts.form.errors.mustStartWithLetters"
       ),
 
-    // السعر (مطلوب + رقم موجب أكبر من الصفر)
     price: z
       .string()
       .min(1, "adminProducts.form.errors.required")
@@ -56,7 +51,6 @@ export const createProductSchema = () =>
         }
       ),
 
-    // وقت التحضير (مطلوب + لا يقل عن 5 دقائق)
     preparingTime: z
       .string()
       .min(1, "adminProducts.form.errors.required")

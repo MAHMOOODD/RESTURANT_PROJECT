@@ -19,7 +19,7 @@ export default function AdminLayout() {
       dir={isArabic ? "rtl" : "ltr"}
   className="h-screen flex relative overflow-x-hidden overflow-y-hidden"
     >
-      {/* Sidebar - ثابت على الشاشات الكبيرة */}
+      {/* Sidebar */}
       <div className="hidden lg:block sticky top-0 h-screen shrink-0 z-40">
         <AdminSidebar
           isOpenMobile={isMobileOpen}
@@ -27,7 +27,6 @@ export default function AdminLayout() {
         />
       </div>
 
-      {/* للموبايل (لو مكون الـ Sidebar بياخد Drawer من جوا، سيبه يشتغل حسب تصميمه) */}
       <div className="lg:hidden">
         <AdminSidebar
           isOpenMobile={isMobileOpen}
@@ -35,7 +34,7 @@ export default function AdminLayout() {
         />
       </div>
 
-      {/* Main Content Area - بياخد باقي المساحة وما يدخلش تحت السايبر */}
+      {/* Main Content Area*/}
 <div className="flex-1 flex flex-col min-w-0 h-full overflow-y-auto">        {/* Mobile Bar Only */}
         <div className="lg:hidden p-3 sm:p-4 border-b border-border flex items-center justify-between backdrop-blur-md sticky top-0 z-30 ">
           <button
@@ -48,7 +47,7 @@ export default function AdminLayout() {
           </button>
         </div>
 
-        {/* محتوى الصفحة الرئيسي */}
+        {/* Main Content */}
         <main className="w-full flex-1 mx-auto max-w-[2000px] p-4 sm:p-6 lg:p-8 animate-in fade-in duration-300">
           <Outlet />
         </main>

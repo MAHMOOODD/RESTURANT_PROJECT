@@ -1,4 +1,3 @@
-// المسار المقترح: src/components/admin/coupons/CouponTable.tsx
 import {  useState } from "react";
 import type { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
@@ -59,7 +58,7 @@ function CopyCodeButton({ code }: { code: string }) {
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), COPY_FEEDBACK_MS);
     } catch {
-      // تجاهل بصمت في حالة عدم دعم المتصفح لواجهة الـ Clipboard
+     // Handle error if needed
     }
   };
 

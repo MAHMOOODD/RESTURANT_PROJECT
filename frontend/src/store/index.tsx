@@ -16,8 +16,8 @@ import { addOrderNotification } from "./features/notificationsSlice";import {
 } from "@/services/signalr";
 import type { GetOrderDto } from "@/types/types";
 import { dashboardApi } from "./features/dashboardApi";
+import { paymentApi } from "./features/paymentApi";
 
-// Middleware بيربط اتصال SignalR بحركة تسجيل الدخول/الخروج
 const signalRMiddleware: Middleware = () => (next) => (action) => {
   if (setCredentials.match(action)) {
     startOrderHubConnection();
@@ -40,12 +40,14 @@ export const store = configureStore({
     [orderApi.reducerPath]: orderApi.reducer,
     [couponApi.reducerPath]: couponApi.reducer,
     [dashboardApi.reducerPath]: dashboardApi.reducer,
+    [paymentApi.reducerPath]: paymentApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authApi.middleware,
       productApi.middleware,
       cartApi.middleware,
+      paymentApi.middleware,
       reviewApi.middleware,
       orderApi.middleware,
       couponApi.middleware,
@@ -57,10 +59,9 @@ export const store = configureStore({
 setupListeners(store.dispatch);
 orderHubConnection.off("OrderStatusUpdated");
 
-// SignalR: تحديث فوري لكاش الأوردرز + صوت تنبيه لما حالة أي أوردر تتغير
 orderHubConnection.on("OrderStatusUpdated", (updatedOrder: GetOrderDto) => {
   store.dispatch(orderApi.util.invalidateTags(["Orders"]));
-  store.dispatch(addOrderNotification(updatedOrder)); // 👈 السطر الجديد
+  store.dispatch(addOrderNotification(updatedOrder));  
   playNotificationSound();
 });
 
@@ -68,7 +69,6 @@ orderHubConnection.onreconnected(() => {
   store.dispatch(orderApi.util.invalidateTags(["Orders"]));
 });
 
-// لو فيه توكن محفوظ بالفعل (يعني اليوزر داخل من قبل وعمل ريفرش)، ابدأ الاتصال على طول
 if (store.getState().auth.token) {
   startOrderHubConnection();
 }

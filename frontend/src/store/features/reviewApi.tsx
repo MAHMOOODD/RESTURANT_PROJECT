@@ -59,7 +59,7 @@ export const reviewApi = createApi({
       invalidatesTags: (_result, _error, arg) => [
         { type: "Reviews", id: arg.productId },
         { type: "Reviews", id: "TOP_10" },
-        { type: "Products", id: arg.productId }, // إجبار صفحة تفاصيل المنتج على إعادة الجلب فوراً
+        { type: "Products", id: arg.productId }, 
       ],
     }),
 
@@ -78,7 +78,7 @@ export const reviewApi = createApi({
       invalidatesTags: (_result, _error, arg) => [
         { type: "Reviews", id: arg.dto.productId },
         { type: "Reviews", id: "TOP_10" },
-        { type: "Products", id: arg.dto.productId }, // تحديث المنتج وتقييماته فوراً عند التعديل
+        { type: "Products", id: arg.dto.productId },
       ],
     }),
 
@@ -94,7 +94,7 @@ export const reviewApi = createApi({
         ...(arg.productId
           ? [
               { type: "Reviews" as const, id: arg.productId },
-              { type: "Products" as const, id: arg.productId }, // تحديث المنتج فوراً عند الحذف
+              { type: "Products" as const, id: arg.productId }, 
             ]
           : [{ type: "Reviews" as const, id: "LIST" }]),
       ],

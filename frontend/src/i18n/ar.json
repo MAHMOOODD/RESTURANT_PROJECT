@@ -109,7 +109,9 @@
     },
     "payment": {
       "title": "طريقة الدفع",
-      "cod": "الدفع نقداً عند الاستلام (Cash on Delivery)"
+      "cod": "الدفع نقداً عند الاستلام (Cash on Delivery)",
+       "card": "الدفع بالكارت (Paymob)",
+    "complete_payment": "أكمل عملية الدفع"
     },
     "summary": {
       "title": "ملخص عناصر الطلب",
@@ -905,5 +907,12 @@
     "title": "الأوردرات",
     "subtitle": "متابعة وتحديث حالة كل الأوردرات (أونلاين وكاشير)",
     "newOrderCta": "طلب جديد"
-  }
+  },
+  "payment_result": {
+  "success_title": "تم الدفع بنجاح",
+  "success_desc": "هيوصلك تأكيد الأوردر قريب",
+  "failure_title": "فشلت عملية الدفع",
+  "failure_desc": "ممكن تحاول تاني أو تختار وسيلة دفع تانية",
+  "back_to_orders": "رجوع للأوردرات"
+}
 }

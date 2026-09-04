@@ -59,7 +59,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     }
   };
 
-  // شاشة النجاح بعد التسجيل
   if (isSuccess) {
     return (
       <div className="py-8 px-6 text-center space-y-8 animate-in fade-in zoom-in-95 duration-300">

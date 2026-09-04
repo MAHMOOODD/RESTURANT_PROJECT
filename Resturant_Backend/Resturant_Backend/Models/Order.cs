@@ -16,7 +16,6 @@
         public OrderStatus Status { get; set; }
 
 
-        public PaymentStatus PaymentStatus { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
@@ -29,8 +28,9 @@
         public decimal? Discount { get; set; }
 
 
-
-
+        public int? PaymobOrderId { get; set; }
+        public string? TransactionId { get; set; }
+        public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Pending;
         public string? GuestName { get; set; }
         public string? GuestPhone { get; set; }
         public decimal AmountPaid { get; set; }

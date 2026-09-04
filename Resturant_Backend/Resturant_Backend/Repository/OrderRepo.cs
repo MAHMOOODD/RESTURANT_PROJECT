@@ -156,12 +156,13 @@ namespace Resturant_Backend.Repository
         }
 
 
-        // ============ Dashboard Analytics — إضافات جديدة ============
+        // ============ Dashboard Analytics — new ============
 
         /// <summary>
-        /// إجمالي الإيرادات وصافي الربح ومتوسط قيمة الأوردر، بناءً على الأوردرز
-        /// المكتملة (Delivered) فقط. صافي الربح = الإجمالي ناقص قيمة الخصومات
-        /// المطبّقة (مفيش حقل Cost في المنتج حالياً، فده أقرب مقياس متاح للربح).
+        /// used to get the total revenue, net revenue (after discounts),
+        /// and average order value for all delivered orders.
+        /// also calculates the total discount amount by summing up the discount applied to each order.
+        /// 
         /// </summary>
         public async Task<RevenueSummaryDto> GetRevenueSummaryAsync()
         {
@@ -172,7 +173,7 @@ namespace Resturant_Backend.Repository
                 {
                     DeliveredCount = g.Count(),
                     TotalRevenue = g.Sum(o => o.TotalPrice),
-                    // تحويل النسبة الرقمية إلى قيمة خصم حقيقية
+                    // transform the discount percentage into a decimal and multiply by the total price to get the discount 
                     TotalDiscountAmount = g.Sum(o => o.TotalPrice * ( ( o.Discount ?? 0 ) / 100m ))
                 })
                 .FirstOrDefaultAsync();
@@ -199,7 +200,7 @@ namespace Resturant_Backend.Repository
         }
 
         /// <summary>
-        /// عدد الأوردرز الكلي، مقسّم على كل حالة من حالات OrderStatus الخمسة.
+        /// number of orders in each status (Pending, Processing, Shipped, Delivered, Cancelled) and the total number of orders.
         /// </summary>
         public async Task<OrdersSummaryDto> GetOrdersSummaryAsync()
         {
@@ -223,8 +224,9 @@ namespace Resturant_Backend.Repository
         }
 
         /// <summary>
-        /// الإيرادات اليومية وعدد الأوردرز المكتملة لكل يوم خلال آخر (days) يوم،
-        /// بما فيهم الأيام اللي معندهاش أي أوردر (بترجع صفر عشان الـ Chart يفضل متصل).
+        /// order revenue trend for the last N days,
+        /// including days with no orders (returns zero for those days to keep the chart continuous).
+        ///
         /// </summary>
         public async Task<List<RevenuePointDto>> GetRevenueTrendAsync(int days)
         {

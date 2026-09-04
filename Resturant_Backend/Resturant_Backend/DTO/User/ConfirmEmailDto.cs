@@ -2,7 +2,6 @@
 
 namespace Resturant_Backend.DTO.User;
 
-// ➕ الـ DTOs الجديدة
 public class ConfirmEmailDto
 {
     [Required]

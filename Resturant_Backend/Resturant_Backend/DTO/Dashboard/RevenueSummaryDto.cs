@@ -2,13 +2,13 @@ namespace Resturant_Backend.DTO.Dashboard
 {
     public class RevenueSummaryDto
     {
-        // إجمالي قيمة الأوردرز المكتملة (Delivered) قبل خصم الكوبونات
+        // total revenue before applying any coupons or discounts, i.e., the sum of all completed orders' total amounts
         public decimal TotalRevenue { get; set; }
 
-        // صافي الربح: TotalRevenue بعد خصم قيمة الكوبونات المطبّقة
+        // net revenue after applying coupons and discounts, i.e., the sum of all completed orders' total amounts minus any discounts applied
         public decimal NetRevenue { get; set; }
 
-        // متوسط قيمة الأوردر الواحد المكتمل
+        // average revenue per order, calculated as NetRevenue divided by the number of completed orders
         public decimal AverageOrderValue { get; set; }
     }
 }

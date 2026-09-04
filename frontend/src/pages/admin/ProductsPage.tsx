@@ -77,7 +77,6 @@ export default function ProductsPage() {
   const selectedSort =
     SORT_OPTIONS.find((s) => s.id === selectedSortId) ?? SORT_OPTIONS[0];
 
-  // Debounce السيرش عشان منبعتش ريكوست مع كل حرف
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchQuery.trim());
@@ -85,7 +84,6 @@ export default function ProductsPage() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // رجوع لأول صفحة كل ما السيرش/التصنيف/الترتيب يتغير
   useEffect(() => {
     setTimeout(() => {
       setCurrentPage(1);

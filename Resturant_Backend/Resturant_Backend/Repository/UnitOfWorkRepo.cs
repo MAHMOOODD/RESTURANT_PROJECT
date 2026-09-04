@@ -9,9 +9,7 @@ namespace Resturant_Backend.Repository
 
         // private field for each repository
 
-        //private IStockRepository? _stockRepository;
-        //private ICommentRepository? _commentRepository;
-        //private IPortfolioRepository? _portfolioRepository;
+
 
         private ICategoreis _categoreisRepo;
         private IProducts _productsRepo;

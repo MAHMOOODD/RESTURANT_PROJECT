@@ -16,8 +16,7 @@ export const dashboardApi = createApi({
       query: (args) => ({
         url: "/Dashboard/Overview",
         method: "GET",
-        // trendDays رقم مفرد بسيط (مش nested object) فالـ serializer الافتراضي
-        // بتاع RTK Query هيسريلايزه صح من غير أي مشكلة "[object Object]"
+       
         params: args?.trendDays ? { trendDays: args.trendDays } : undefined,
       }),
       transformResponse: (response: ApiResponse<DashboardOverviewDto>) =>

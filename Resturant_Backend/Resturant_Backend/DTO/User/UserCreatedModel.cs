@@ -1,6 +1,5 @@
 ﻿namespace Resturant_Backend.DTO.User;
 
-// DTO الموحد لنتائج عمليات المصادقة
 public class UserCreatedModel
 {
     public string? Message { get; set; }

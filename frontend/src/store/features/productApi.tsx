@@ -35,16 +35,13 @@ const buildFilterParams = (filter?: Filter) => {
   };
 };
 
-// 1. تعريف الـ Types بوضوح (يا اما منتج يا اما كاتيجوري من ملفات التايبس)
 type ProductDtoType = AddProductDto | EditProductDto;
 type CategoryDtoType = AddCategoriesDto | EditCategoriesDto;
 type AppDto = ProductDtoType | CategoryDtoType;
 
-// 2. دالة بناء الـ FormData باستخدام الـ Type Narrowing الآمن تماماً
 const createFormDataFromDto = (dto: AppDto): FormData => {
   const formData = new FormData();
 
-  // التحقق الذكي: لو الكائن يحتوي على price فهو بالتأكيد "منتج"
   if ("price" in dto) {
     formData.append("Name", dto.name);
     formData.append("NameAr", dto.nameAr);
@@ -55,12 +52,10 @@ const createFormDataFromDto = (dto: AppDto): FormData => {
     formData.append("CategoryId", String(dto.categoryId));
     formData.append("IsAvailable", String(dto.isAvailable));
   } else {
-    // غير ذلك فهو بالتأكيد "كاتيجوري"
     formData.append("Name", dto.name);
     formData.append("NameAr", dto.nameAr);
   }
 
-  // معالجة الصورة المشتركة بين الاثنين
   if (dto.imageUrl instanceof File) {
     formData.append("ImageUrl", dto.imageUrl, dto.imageUrl.name);
   } else if (dto.imageUrl === null) {

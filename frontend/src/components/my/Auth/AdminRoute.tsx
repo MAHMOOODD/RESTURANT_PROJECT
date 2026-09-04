@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 export default function AdminRoute({ children }: { children: React.ReactNode }) {
   const { t } = useTranslation();
   const { data: userInfo, isLoading, isError } = useGetUserInfoQuery();
-  // لو لسه البيانات بتحمل
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background text-foreground">

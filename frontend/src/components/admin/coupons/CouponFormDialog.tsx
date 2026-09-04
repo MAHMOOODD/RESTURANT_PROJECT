@@ -35,7 +35,6 @@ export function CouponFormDialog({
   const [editCoupon, { isLoading: isEditing }] = useEditCouponMutation();
   const isSubmitting = isAdding || isEditing;
 
-  // الـ Schema ثابتة ولا تعتمد على دالة t مباشرة، نفس نمط orderStatusSchema
   const couponSchema = useMemo(() => createCouponSchema(), []);
 
   const {
@@ -48,7 +47,6 @@ export function CouponFormDialog({
     defaultValues: getInitialCouponValues(coupon),
   });
 
-  // ترجمة الأخطاء القادمة من Zod ديناميكياً عند الرندرة (نفس نمط OrderDetailsDialog)
   const translatedErrors = useMemo(
     () =>
       Object.fromEntries(
@@ -60,7 +58,6 @@ export function CouponFormDialog({
     [errors, t],
   );
 
-  // إعادة ضبط الفورم عند فتح المودال أو تغيير الكوبون المحدد (إضافة أو تعديل)
   useEffect(() => {
     if (open) {
       reset(getInitialCouponValues(coupon));

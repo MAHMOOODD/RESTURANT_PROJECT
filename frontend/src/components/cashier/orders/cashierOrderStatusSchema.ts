@@ -32,6 +32,5 @@ export const buildOrderStatusSchema = (t: TFunction) =>
       }),
   });
 
-// 🆕 نوعين منفصلين: قبل المعالجة (Input) وبعدها (Output)
 export type OrderStatusFormInput = z.input<ReturnType<typeof buildOrderStatusSchema>>;
 export type OrderStatusFormValues = z.output<ReturnType<typeof buildOrderStatusSchema>>;

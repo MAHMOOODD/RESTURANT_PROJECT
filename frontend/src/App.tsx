@@ -36,13 +36,7 @@ export default function App() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent dark:via-black/20 to-white/40 dark:to-black/70" />
       </div>
 
-      {/* 🚀 App Content Above Background */}
-      {/* <div className="relative z-10 flex h-screen w-full flex-col items-center justify-center gap-4">
-        <DemoOne />
-        <p className="text-lg font-medium text-muted-foreground animate-pulse">
-          please wait...
-        </p>
-      </div> */}
+     
       <div className="relative z-10">
 
         <AppRouter/>

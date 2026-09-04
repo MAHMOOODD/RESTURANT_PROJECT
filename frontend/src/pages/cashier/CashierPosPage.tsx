@@ -54,7 +54,6 @@ export default function CashierPosPage() {
     ? isLoadingSearch
     : isLoadingCategoryProducts;
 
-  // useCallback يمنع إعادة إنشاء الدوال دي كل رندر، وده اللي بيخلي React.memo بتاع الكاردز يشتغل فعلياً
   const handleAddToCart = useCallback((product: GetAllProductDto) => {
     setCartItems((prev: CartLine[]) => {
       const existing = prev.find((i) => i.productId === product.id);

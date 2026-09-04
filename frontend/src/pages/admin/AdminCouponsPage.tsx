@@ -20,8 +20,6 @@ export default function AdminCouponsPage() {
     null,
   );
 
-  // فلترة بالكود على الداتا الموجودة بالفعل عند الكلاينت،
-  // لأن endpoint الـ GetAllCoupons بيرجع الليستة كاملة من غير Pagination من الباك.
   const filteredCoupons = useMemo(() => {
     if (!coupons) return [];
 

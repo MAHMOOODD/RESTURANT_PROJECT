@@ -54,7 +54,7 @@ export default function OrderDetails() {
     ? productsData
     : productsData?.data || [];
 
-  // 🎨 حالات الطلب (OrderStatus Enum)
+  // (OrderStatus Enum)
   const getStatusConfig = (status: number) => {
     switch (status) {
       case OrderStatus.pending:
@@ -102,7 +102,7 @@ export default function OrderDetails() {
     }
   };
 
-  // 💳 حالة الدفع (PaymentStatus Enum)
+  // (PaymentStatus Enum)
   const getPaymentStatusConfig = (paymentStatus: number) => {
     switch (paymentStatus) {
       case PaymentStatus.pending:
@@ -215,7 +215,6 @@ export default function OrderDetails() {
       </div>
 
       <div className="space-y-8">
-        {/* 1. شريط حالة الطلب */}
         <div className="p-8 rounded-3xl bg-card/80 backdrop-blur-xl border border-border/80 shadow-md">
           <div className="flex items-center justify-between mb-8">
             <span className="text-sm font-bold text-muted-foreground">
@@ -232,7 +231,6 @@ export default function OrderDetails() {
           <OrderTimeline status={order.status} step={currentStatus.step} />
         </div>
 
-        {/* 2. عنوان التوصيل ومعلومات الدفع */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-7 rounded-3xl bg-card/80 border border-border/80 shadow-md flex items-start gap-4">
             <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
@@ -263,7 +261,6 @@ export default function OrderDetails() {
           </div>
         </div>
 
-        {/* 3. أصناف الوجبات والملخص */}
         <OrderItemsList order={order} productsList={productsList} />
       </div>
     </main>

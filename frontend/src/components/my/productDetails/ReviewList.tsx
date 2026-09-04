@@ -72,7 +72,6 @@ export function ReviewList({
                 ))}
               </div>
 
-              {/* أزرار التحكم */}
               {isOwner ? (
                 <div className="flex items-center gap-1.5">
                   <button
@@ -111,14 +110,12 @@ export function ReviewList({
               )}
             </div>
 
-            {/* التعليق */}
             {rev.comment && (
               <p className="text-lg font-medium text-foreground/90 leading-relaxed break-words">
               {rev.comment}
               </p>
             )}
 
-            {/* معلومات المستخدم */}
             <div className="pt-3 border-t border-border/40 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs overflow-hidden shrink-0 border border-primary/20">

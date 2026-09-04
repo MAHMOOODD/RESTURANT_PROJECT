@@ -1,5 +1,4 @@
 // src/lib/roles.ts
-// المصدر الوحيد لأسماء الرولز — لازم تفضل مطابقة تماماً لـ Role.cs في الباك اند
 export const USER_ROLES = ["Admin", "Manager", "User", "Cashier"] as const;
 export type UserRole = (typeof USER_ROLES)[number];
 
@@ -14,10 +13,7 @@ function isKnownRole(role: string): role is UserRole {
   return (USER_ROLES as readonly string[]).includes(role);
 }
 
-/**
- * بيرجع أعلى رول (أهم صلاحية) من مصفوفة الرولز بتاعة اليوزر، لعرضه كـ badge واحد في الجدول.
- * بيرجع null لو اليوزر مالوش أي رول معروف.
- */
+
 export function getPrimaryRole(roles: string[] | undefined | null): UserRole | null {
   if (!roles || roles.length === 0) return null;
 

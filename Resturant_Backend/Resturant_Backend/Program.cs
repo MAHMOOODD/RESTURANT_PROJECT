@@ -28,7 +28,7 @@ namespace Resturant_Backend
 
             // Add services to the container.
 
-            // توحيد أخطاء الـ Model Validation التلقائية لترجع داخل ApiResponse الموحد
+            // Unifying automatic Model Validation errors to be returned within the unified ApiResponse
             builder.Services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
                 {
@@ -57,7 +57,6 @@ namespace Resturant_Backend
 
             builder.Services.AddSignalR();
 
-            // SignalR بيبعت التوكن كـ query string مع الـ WebSocket، لازم الـ JWT middleware يقراه من هناك
             builder.Services.Configure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.Events = new JwtBearerEvents
@@ -113,7 +112,6 @@ namespace Resturant_Backend
                 op.Lockout.MaxFailedAccessAttempts = 3;
                 op.Lockout.AllowedForNewUsers = true;
 
-                // ⚠️ التعديل هنا: سماح بالأحرف والأرقام والرموز الشائعة واللغة العربية بآمان
                 op.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ أبتثجحخدذرزسشصضطظعغفقكلمنهوي";
 
                 op.Password.RequireDigit = true;
@@ -142,12 +140,12 @@ namespace Resturant_Backend
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]!))
                 };
 
-                // ✅ التعديل هنا: التعامل مع أخطاء التوكن من الـ Framework بنفس شكل الـ ApiResponse
+                // handle unauthorized and forbidden responses in a unified way
                 o.Events = new JwtBearerEvents
                 {
                     OnChallenge = async context =>
                     {
-                        context.HandleResponse(); // إلغاء الاستجابة الافتراضية للـ Framework
+                        context.HandleResponse();
                         context.Response.StatusCode = 401;
                         context.Response.ContentType = "application/json";
 
@@ -184,6 +182,15 @@ namespace Resturant_Backend
             builder.Services.AddAutoMapper(cfg => { }, typeof(Program).Assembly);
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
             builder.Services.AddTransient<IEmailService, EmailService>();
+
+
+
+            builder.Services.Configure<PaymobSettings>(builder.Configuration.GetSection("Paymob"));
+            builder.Services.AddHttpClient<PaymobService>();
+
+
+
+
 
             builder.Services.AddDbContext<AppDbContext>(op =>
             {

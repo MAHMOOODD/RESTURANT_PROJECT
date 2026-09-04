@@ -4,7 +4,7 @@
     {
         public int StatusCode { get; set; }
         public string Message { get; set; }
-        // دعم أخطاء الحقول المخصصة (Key-Value) للفرونت إند
+        // for validation errors
         public IDictionary<string, List<string>>? Errors { get; set; }
 
         public ApiError(int statusCode, string message, IDictionary<string, List<string>>? errors = null)

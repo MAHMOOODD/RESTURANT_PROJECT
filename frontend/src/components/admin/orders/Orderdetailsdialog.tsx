@@ -39,7 +39,6 @@ export function OrderDetailsDialog({
   const [updateOrderStatus, { isLoading: isUpdating }] =
     useUpdateOrderStatusMutation();
 
-  // الـ Schema ثابتة ولا تعتمد على دالة t مباشرة، نفس نمط ProductFormDialog
   const orderStatusSchema = useMemo(() => createOrderStatusSchema(), []);
 
   const {
@@ -64,7 +63,6 @@ export function OrderDetailsDialog({
     paymentStatus: watchedPaymentStatus,
   };
 
-  // ترجمة الأخطاء القادمة من Zod ديناميكياً
   const translatedErrors = useMemo(() => {
     return Object.fromEntries(
       Object.entries(errors).map(([key, val]) => [
@@ -74,7 +72,6 @@ export function OrderDetailsDialog({
     );
   }, [errors, t]);
 
-  // إعادة ضبط الفورم عند فتح المودال أو تغيير الطلب
   useEffect(() => {
     if (open && order) {
       reset({ status: order.status, paymentStatus: order.paymentStatus });

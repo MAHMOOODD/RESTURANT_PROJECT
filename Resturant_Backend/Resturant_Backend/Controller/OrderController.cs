@@ -204,7 +204,7 @@ namespace Resturant_Backend.Controller
             var orderToShow = _mapper.Map<GetOrderDto>(order);
 
 
-            // إشعار فوري لصاحب الأوردر ولكل الأدمنز
+            // send a notification to the user if the order belongs to them
 
             await _hubContext.Clients.Group($"user-{order.AppuserId}")
      .SendAsync("OrderStatusUpdated", orderToShow);

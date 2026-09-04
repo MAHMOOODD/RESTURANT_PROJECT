@@ -18,10 +18,9 @@ export default function ConfirmEmail() {
   const token = searchParams.get("token");
 
   useEffect(() => {
-    // لو تم الاستدعاء قبل كده أو الـ params مش كاملين متنفذش
     if (called.current || !userId || !token) return;
 
-    called.current = true; // 👈 علم إن الطلب اتدبّس خلاص
+    called.current = true; 
 
     confirmEmail({ userId: userId, token: token })
       .unwrap()

@@ -19,7 +19,6 @@ export default function ReviewsSection() {
     return rawReviews
       .filter((rev: GetReviewDto) => rev.comment && rev.comment.trim() !== "")
       .map((rev: GetReviewDto) => {
-        // تحويل التاريخ سواء كان String قادم من JSON أو Date Object
         const dateObj = rev.createdAt ? new Date(rev.createdAt) : null;
         const isValidDate = dateObj && !isNaN(dateObj.getTime());
 

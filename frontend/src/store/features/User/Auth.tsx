@@ -17,7 +17,7 @@ import type {
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 export interface GetUserInfo {
-  id: string; // ⚠️ يتطلب إضافة الحقل ده في GetUserInfo.cs بالباك اند (راجع الشرح فوق)
+  id: string; 
   fullName?: string;
   address?: string;
   phoneNumber?: string;
@@ -92,10 +92,7 @@ export const authApi = createApi({
 
     GetAllUsers: builder.query<PagedResponse<GetUserInfo>, FiltersUsers>({
       query: (filters) => {
-        // بنبني الـ query string يدوي عشان الـ pagination كائن متداخل (nested object)،
-        // والـ serializer الافتراضي بتاع RTK Query (URLSearchParams) بيحوله لنص حرفي
-        // "[object Object]" بدل ما يفككه. صيغة النقطة (pagination.pageNumber) هي
-        // اللي ASP.NET Core بيقدر يربطها تلقائي لـ FiltersUsers.Pagination.
+     
         const params = new URLSearchParams();
 
         if (filters.pagination?.pageNumber !== undefined) {
@@ -107,10 +104,7 @@ export const authApi = createApi({
         if (filters.searchTerm) {
           params.set("searchTerm", filters.searchTerm);
         }
-        // ⚠️ الباك اند (FiltersUsers.cs) اسم الخاصية عنده "UserName" مش "SortByUsername"
-        // (شوف UserRepo.GetUsersAsync: filters.UserName) — لازم نبعت الباراميتر بنفس الاسم
-        // ده بالظبط عشان الـ Model Binder يقدر يربطه، وإلا هيفضل null دايماً والترتيب
-        // مش هيتفعّل خالص حتى لو الريكويست اتبعت صح.
+      
         if (filters.sortByUsername !== undefined) {
           params.set("userName", String(filters.sortByUsername));
         }
@@ -149,7 +143,7 @@ export const authApi = createApi({
         body: dto,
       }),
       transformResponse: (response: ApiResponse<null>) => response.message,
-      invalidatesTags: ["User"], // كانت ناقصة — من غيرها الجدول/الديتيلز ميترفريشوش بعد إضافة رول
+      invalidatesTags: ["User"], 
     }),
     RemoveRole: builder.mutation<string, AddRoleDto>({
       query: (dto) => ({

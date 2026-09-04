@@ -32,7 +32,9 @@ namespace Resturant_Backend.Helpers.PhotosHandle
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Height(500).Width(500).Crop("fill") // اختيارية: لتعديل مقاس الصورة تلقائياً عند الرفع
+
+                    // Resize the image to a maximum of 500x500 pixels while maintaining the aspect ratio (optional)
+                    Transformation = new Transformation().Height(500).Width(500).Crop("fill")
                 };
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }

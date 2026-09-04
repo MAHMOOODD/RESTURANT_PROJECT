@@ -18,7 +18,6 @@ const CategoryFilter = memo(function CategoryFilter({
   const { data: categories = [], isLoading } = useGetAllCategoriesQuery();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   
-  // إنشاء مرجع لتخزين مراجع أزرار الأقسام للوصول إليها برمجياً
   const categoryRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
 
   const isAr = i18n.language === "ar";
@@ -35,13 +34,11 @@ const CategoryFilter = memo(function CategoryFilter({
     ];
   }, [categories]);
 
-  // التمرير تلقائياً إلى العنصر المختار عند تحديثه أو تحميل المكون
   useEffect(() => {
     const selectedElement = categoryRefs.current[selectedCategoryId];
     if (selectedElement && scrollContainerRef.current) {
       const container = scrollContainerRef.current;
       
-      // حساب موقع العنصر بالنسبة لحاوية التمرير لجعله في المنتصف
       const scrollLeft =
         selectedElement.offsetLeft -
         container.offsetWidth / 2 +
@@ -54,7 +51,6 @@ const CategoryFilter = memo(function CategoryFilter({
     }
   }, [selectedCategoryId, categories]);
 
-  // دالة التمرير يميناً ويساراً للأزرار الجانبية
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
       const scrollAmount = 300;
@@ -80,7 +76,6 @@ const CategoryFilter = memo(function CategoryFilter({
 
   return (
     <div className="w-full h-full relative group px-2 sm:px-8">
-      {/* زر التمرير لليسار */}
       <button
         onClick={() => scroll("left")}
         className="hidden sm:flex absolute left-0 top-[40%] -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300 shadow-xl cursor-pointer active:scale-95 opacity-0 group-hover:opacity-100"
@@ -90,7 +85,6 @@ const CategoryFilter = memo(function CategoryFilter({
         <ChevronLeft className="w-5 h-5 " />
       </button>
 
-      {/* زر التمرير لليمين */}
       <button
         onClick={() => scroll("right")}
         className="hidden sm:flex absolute right-0 top-[40%] -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300 shadow-xl cursor-pointer active:scale-95 opacity-0 group-hover:opacity-100"
@@ -100,7 +94,6 @@ const CategoryFilter = memo(function CategoryFilter({
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* حاوية الأقسام */}
       <div
         ref={scrollContainerRef}
         className="flex mx-2 min-h-50 items-center gap-5 sm:gap-7 overflow-x-auto scroll-smooth py-2 px-2 justify-start sm:justify-start [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"

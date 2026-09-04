@@ -1,10 +1,8 @@
 import * as signalR from "@microsoft/signalr";
 
-// نشيل الـ /api من الآخر لو موجودة، لأن الـ Hub متسجل على root المسار (/hubs/orders) مش تحت /api
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5153/api";
 const HUB_URL = `${API_BASE.replace(/\/api\/?$/, "")}/hubs/orders`;
 
-// عدّل السطر ده لو الـ token عندك متخزن في مكان تاني (redux slice / cookie...)
 const getToken = () => localStorage.getItem("token") || "";
 
 export const orderHubConnection = new signalR.HubConnectionBuilder()
@@ -34,7 +32,6 @@ export const stopOrderHubConnection = async () => {
     }
   }
 };
-// صوت تنبيه من غير ما نحتاج ملف mp3 — beep بسيط بالـ Web Audio API
 export const playNotificationSound = () => {
   try {
     const AudioCtx =

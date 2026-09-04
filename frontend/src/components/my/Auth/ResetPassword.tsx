@@ -14,7 +14,6 @@ export default function ResetPassword() {
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
 
-  // 👁️ حالة التحكم في إظهار وإخفاء كلمة السر
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
@@ -45,7 +44,6 @@ export default function ResetPassword() {
 
   const tokenFromUrl = searchParams.get("token");
 
-  // استبدال المسافات بـ +
   const cleanToken = tokenFromUrl?.replace(/ /g, "+");
 
   const [resetPassword, { isLoading, error, isSuccess }] =
@@ -126,7 +124,7 @@ export default function ResetPassword() {
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* حقل كلمة السر الجديدة */}
+          {/* new password */}
           <div className="space-y-2 text-start">
             <label className="text-sm sm:text-base font-extrabold text-foreground">
               {t("auth.newPassword", "كلمة السر الجديدة")}
@@ -156,7 +154,7 @@ export default function ResetPassword() {
             )}
           </div>
 
-          {/* حقل تأكيد كلمة السر */}
+          {/* confirm password */}
           <div className="space-y-2 text-start">
             <label className="text-sm sm:text-base font-extrabold text-foreground">
               {t("auth.confirmPassword", "تأكيد كلمة السر")}

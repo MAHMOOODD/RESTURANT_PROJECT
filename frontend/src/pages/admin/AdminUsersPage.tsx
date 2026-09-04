@@ -15,9 +15,7 @@ export default function AdminUsersPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
-  // اللي بيتكتب فعليًا في الـ input
   const [searchInput, setSearchInput] = useState("");
-  // اللي بيتبعت فعليًا للـ API بعد الـ debounce
   const [searchQuery, setSearchQuery] = useState("");
 
   const [sortByUsername, setSortByUsername] = useState(false);
@@ -50,7 +48,6 @@ export default function AdminUsersPage() {
     setIsDialogOpen(true);
   };
 
-  // زرار الترتيب: off -> تصاعدي -> تنازلي -> off
   const handleToggleSort = () => {
     if (!sortByUsername) {
       setSortByUsername(true);

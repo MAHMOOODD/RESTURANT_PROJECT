@@ -104,7 +104,6 @@ export default function BentoItem({ product, spanClass }: BentoItemProps) {
       }}
       className={`group relative w-full bg-card/70 backdrop-blur-2xl border border-border/80 hover:border-primary/60 rounded-[2.5rem] p-5 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/15 flex flex-col justify-between overflow-hidden cursor-pointer ${spanClass}`}
     >
-      {/* قسم الصورة الكبيرة والبارزة */}
       <div className="relative aspect-video w-full rounded-[2rem] overflow-hidden bg-muted shadow-inner">
         <img
           src={displayImage}
@@ -115,10 +114,8 @@ export default function BentoItem({ product, spanClass }: BentoItemProps) {
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
         />
 
-        {/* Overlay تدريجي يوضح الكلام والتقييم فوق الصورة بشكل أنيق */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-        {/* التقييم فوق الصورة */}
         <div className="absolute top-4 inset-x-4 flex items-center justify-between z-10">
           {reviewsCount > 0 ? (
             <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white text-xs font-black shadow-xl">
@@ -144,7 +141,6 @@ export default function BentoItem({ product, spanClass }: BentoItemProps) {
         </h3>
 
         <div className="flex items-center justify-between pt-2">
-          {/* السعر */}
           <div className="flex flex-col">
             <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
               {t("products.price", "السعر")}
@@ -157,7 +153,6 @@ export default function BentoItem({ product, spanClass }: BentoItemProps) {
             </div>
           </div>
 
-          {/* زر إضافة للسلة */}
           <button
             disabled={!product.isAvailable || isPending}
             onClick={handleAddToCart(product.id)}

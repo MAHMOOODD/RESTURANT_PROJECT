@@ -43,7 +43,6 @@ export default function Products() {
     }
   }, [categoryParam]);
 
-  // Debounce السيرش عشان منبعتش ريكوست مع كل حرف
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery.trim());
@@ -51,7 +50,6 @@ export default function Products() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // رجوع لأول صفحة كل ما أي فلتر يتغير
   useEffect(() => {
     setTimeout(() => {
       
@@ -126,12 +124,12 @@ export default function Products() {
 
   return (
     <div className="min-h-screen bg-transparent text-foreground p-4 sm:p-8 lg:p-12 relative overflow-hidden">
-      {/* 🌟 Subtle Red Glowing Orbs (خلفية ضوئية ناعمة لتبريز المحتوى) */}
+      {/* 🌟 Subtle Red Glowing Orbs  */}
       <div className="absolute top-10 right-1/4 w-96 h-96 bg-primary/15 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
       <div className="absolute top-1/2 left-10 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* 🔍 Search Bar - بدون خلفية أو حدود خروجية */}
+        {/* 🔍 Search Bar */}
         <div className="sticky top-4 z-30 w-full">
           <ProductSearch
             searchQuery={searchQuery}
@@ -145,7 +143,7 @@ export default function Products() {
           />
         </div>
 
-        {/* 🏷️ Category Filter - بدون خلفية */}
+        {/* 🏷️ Category Filter*/}
         <div className="min-h-50 ">
           <CategoryFilter
             selectedCategoryId={selectedCategoryId}
@@ -179,7 +177,7 @@ export default function Products() {
           </span>
         </div>
 
-        {/* 🍔 Products Grid / Skeleton */}
+        {/* Products Grid / Skeleton */}
         {isLoading ? (
           <ProductSkeleton count={ITEMS_PER_PAGE} />
         ) : (

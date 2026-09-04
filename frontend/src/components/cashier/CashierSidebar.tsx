@@ -79,7 +79,6 @@ function SidebarContent({ isOpenMobile, onCloseMobile }: CashierSidebarProps) {
     }
   };
 
-  // مفيش Dashboard للكاشير — بس صفحة الطلب الجديد (POS) وصفحة الأوردرات
   const links = [
     {
       label: t("cashierSidebar.links.newOrder", "طلب جديد"),

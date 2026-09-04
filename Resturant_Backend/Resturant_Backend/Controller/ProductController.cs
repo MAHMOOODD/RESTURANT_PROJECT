@@ -18,7 +18,7 @@ namespace Resturant_Backend.Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IPhotoService _photoService; // 1. حقن خدمة الصور
+        private readonly IPhotoService _photoService;
 
         public ProductController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
         {
@@ -81,14 +81,14 @@ namespace Resturant_Backend.Controller
 
         [Authorize(Roles = $"{Role.Admin},{Role.Manager}")]
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromForm] AddProductDto productDto) // استخدام [FromForm] لاستقبال الملفات
+        public async Task<IActionResult> Add([FromForm] AddProductDto productDto)
         {
             var catExist = await _unitOfWork.CategoreisRepo.GetAsync(productDto.CategoryId);
             Ensure.NotNull(catExist, "Category Not Found");
 
             var productToAdd = _mapper.Map<Product>(productDto);
 
-            // رفع الصورة إلى Cloudinary
+            // upload the image if it exists
             if(productDto.ImageUrl != null && productDto.ImageUrl.Length > 0)
             {
                 var uploadResult = await _photoService.AddPhotoAsync(productDto.ImageUrl);
@@ -113,15 +113,13 @@ namespace Resturant_Backend.Controller
             var proToEdit = await _unitOfWork.ProductsRepo.GetAsync(id);
             Ensure.NotNull(proToEdit, "Product Not Found");
 
-            // 1. تحديث البيانات الأساسية فقط عبر AutoMapper
             _mapper.Map(editProductsDto, proToEdit);
 
             var imageFile = editProductsDto.ImageUrl;
 
-            // 2. معالجة الصورة فقط إذا تم إرسال ملف (سواء برفع جديد أو رغبة في الحذف)
+
             if(imageFile != null)
             {
-                // حذف الصورة القديمة مسبقاً إذا كانت موجودة (مشتركة بين الحالتين)
                 if(!string.IsNullOrEmpty(proToEdit.ImagePublicId))
                 {
                     await _photoService.DeletePhotoAsync(proToEdit.ImagePublicId);
@@ -129,7 +127,6 @@ namespace Resturant_Backend.Controller
 
                 if(imageFile.Length > 0)
                 {
-                    // 📸 حالة A: رفع صورة جديدة
                     var uploadResult = await _photoService.AddPhotoAsync(imageFile);
                     Ensure.Check(uploadResult.Error == null, uploadResult.Error?.Message ?? "Image upload failed");
 
@@ -138,12 +135,10 @@ namespace Resturant_Backend.Controller
                 }
                 else
                 {
-                    // 🗑️ حالة B: حذف الصورة (تم إرسال ملف فارغ بطول 0)
                     proToEdit.ImageUrl = null;
                     proToEdit.ImagePublicId = null;
                 }
             }
-            // 🔄 حالة C: إذا كان imageFile يساوي null، سيتم الإبقاء على القديمة تلقائياً دون الحاجة لكود إضافي لأن AutoMapper قام بنسخ البيانات (إن وجدت) أو يمكننا تركها كما هي.
 
             await _unitOfWork.SaveChangesAsync();
 
@@ -157,7 +152,6 @@ namespace Resturant_Backend.Controller
             var productToDelete = await _unitOfWork.ProductsRepo.GetAsync(id);
             Ensure.NotNull(productToDelete, "Product Not Found");
 
-            // حذف الصورة من سحابية Cloudinary عند حذف المنتج نهائياً
             if(!string.IsNullOrEmpty(productToDelete.ImagePublicId))
             {
                 await _photoService.DeletePhotoAsync(productToDelete.ImagePublicId);

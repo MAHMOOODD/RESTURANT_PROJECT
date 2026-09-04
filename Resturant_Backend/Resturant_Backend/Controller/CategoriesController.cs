@@ -48,7 +48,7 @@ namespace Resturant_Backend.Controller
         {
             var categoryToAdd = _mapper.Map<Category>(category);
 
-            // رفع الصورة لو مرفوعة
+            // update the image if it exists
             if(category.ImageUrl != null && category.ImageUrl.Length > 0)
             {
                 var uploadResult = await _photoService.AddPhotoAsync(category.ImageUrl);
@@ -74,15 +74,14 @@ namespace Resturant_Backend.Controller
             var categoryToEdit = await _unitOfWork.CategoreisRepo.GetAsync(id);
             Ensure.NotNull(categoryToEdit, "Category Not Found");
 
-            // 1. تحديث البيانات الأساسية أولاً عبر AutoMapper
+
             _mapper.Map(editCategoriesDto, categoryToEdit);
 
             var imageFile = editCategoriesDto.ImageUrl;
 
-            // 2. معالجة الصورة بشكل ذقي وموحد (مشابه للـ Products)
             if(imageFile != null)
             {
-                // حذف الصورة القديمة مسبقاً إذا كانت موجودة
+                //delete the old image from cloudinary if it exists
                 if(!string.IsNullOrEmpty(categoryToEdit.ImagePublicId))
                 {
                     await _photoService.DeletePhotoAsync(categoryToEdit.ImagePublicId);
@@ -90,7 +89,7 @@ namespace Resturant_Backend.Controller
 
                 if(imageFile.Length > 0)
                 {
-                    // 📸 رفع صورة جديدة
+                    // upload the new image to cloudinary
                     var uploadResult = await _photoService.AddPhotoAsync(imageFile);
                     Ensure.Check(uploadResult.Error == null, uploadResult.Error?.Message ?? "Image upload failed");
 
@@ -99,12 +98,12 @@ namespace Resturant_Backend.Controller
                 }
                 else
                 {
-                    // 🗑️ حذف الصورة تماماً (تم إرسال ملف فارغ بطول 0 من الـ Frontend)
+                    // delete the image if the new image file is empty (user wants to remove the image)
                     categoryToEdit.ImageUrl = null;
                     categoryToEdit.ImagePublicId = null;
                 }
             }
-            // لو imageFile بـ null، سيتم الإبقاء على الصورة القديمة تلقائياً
+            // the image remains unchanged if the new image file is null (user didn't provide a new image)
 
             await _unitOfWork.SaveChangesAsync();
             var catToShow = _mapper.Map<GetCategoriesDto>(categoryToEdit);
@@ -116,11 +115,11 @@ namespace Resturant_Backend.Controller
         [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            // تم تصحيح الترتيب: التأكد من وجود العنصر أولاً قبل الحذف
+            // check if the category exists
             var categoryToDelete = await _unitOfWork.CategoreisRepo.GetAsync(id);
             Ensure.NotNull(categoryToDelete, "Category Not Found");
 
-            // حذف الصورة من Cloudinary لو موجودة
+            // delete the image from cloudinary if it exists
             if(!string.IsNullOrEmpty(categoryToDelete.ImagePublicId))
             {
                 await _photoService.DeletePhotoAsync(categoryToDelete.ImagePublicId);

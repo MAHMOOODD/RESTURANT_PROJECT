@@ -16,9 +16,7 @@ export default function AdminOrdersPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<GetOrderDto | null>(null);
 
-  // اللي بيتكتب فعليًا في الـ input (بيتحدث فورًا مع كل حرف)
   const [searchInput, setSearchInput] = useState("");
-  // اللي بيتبعت فعليًا للـ API بعد الـ debounce
   const [searchQuery, setSearchQuery] = useState("");
 
   const [statusFilter, setStatusFilter] = useState<number | "all">("all");
@@ -27,7 +25,6 @@ export default function AdminOrdersPage() {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Debounce: استنى شوية بعد آخر حرف يكتبه اليوزر قبل ما تبعت الـ request فعليًا
   useEffect(() => {
     const timer = setTimeout(() => {
       setSearchQuery(searchInput.trim());
@@ -37,7 +34,6 @@ export default function AdminOrdersPage() {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  // السيرش + الفلترة (status / paymentStatus) كلهم Server-Side دلوقتي
   const { data: ordersData, isLoading } = useGetAllOrdersQuery({
     pagination: { pageNumber: currentPage, pageSize: ITEMS_PER_PAGE },
     searchTerm: searchQuery || undefined,

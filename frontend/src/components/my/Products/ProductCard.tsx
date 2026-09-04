@@ -109,7 +109,6 @@ export default function ProductCard({ product }: ProductCardProps) {
       onClick={goToDetails}
       className="group relative w-full bg-card/60 backdrop-blur-xl border border-border/60 hover:border-primary/50 rounded-[2.5rem] p-4 sm:p-5 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 flex flex-col justify-between overflow-hidden cursor-pointer"
     >
-      {/* الصورة العلوية */}
       <div className="relative h-64 sm:h-72 w-full rounded-[2rem] overflow-hidden bg-muted">
         <img
           src={displayImage}
@@ -153,7 +152,6 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      {/* التفاصيل والسعر */}
       <div className="p-2 pt-5 space-y-4">
         <h3 className="font-black text-xl sm:text-2xl text-foreground tracking-tight leading-snug line-clamp-1 group-hover:text-primary transition-colors duration-300">
           {productName}

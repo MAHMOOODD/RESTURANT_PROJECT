@@ -13,10 +13,9 @@ namespace Resturant_Backend.Interfaces
 
 
 
-        //new 
 
-        Task<RevenueSummaryDto
-            > GetRevenueSummaryAsync();
+
+        Task<RevenueSummaryDto> GetRevenueSummaryAsync();
         Task<OrdersSummaryDto> GetOrdersSummaryAsync();
         Task<List<RevenuePointDto>> GetRevenueTrendAsync(int days);
 

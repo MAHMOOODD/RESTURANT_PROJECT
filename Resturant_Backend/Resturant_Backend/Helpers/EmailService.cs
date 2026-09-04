@@ -18,22 +18,22 @@ public class EmailService : IEmailService
     {
         var email = new MimeMessage();
 
-        // 1. تحديد بيانات الراسل
+        // 1. setting the sender's email and display name  
         email.Sender = MailboxAddress.Parse(_emailSettings.Email);
         email.From.Add(new MailboxAddress(_emailSettings.DisplayName, _emailSettings.Email));
 
-        // 2. تحديد المستلم والعنوان
+        // 2. adding the recipient's email and subject
         email.To.Add(MailboxAddress.Parse(mailTo));
         email.Subject = subject;
 
-        // 3. بناء محتوى الرسالة بـ HTML
+        // 3. building the email body with HTML content
         var builder = new BodyBuilder
         {
             HtmlBody = body
         };
         email.Body = builder.ToMessageBody();
 
-        // 4. الاتصال بسيرفر Gmail والإرسال
+        // 4. connecting to the SMTP server, authenticating, sending the email, and disconnecting
         using var smtp = new MailKit.Net.Smtp.SmtpClient();
 
         await smtp.ConnectAsync(_emailSettings.Host, _emailSettings.Port, SecureSocketOptions.StartTls);

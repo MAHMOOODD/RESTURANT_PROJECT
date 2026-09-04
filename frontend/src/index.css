@@ -42,19 +42,15 @@ html,
 body {
   color-scheme: dark;
 
-  /* خلفية سوداء عميقة بدلاً من الرمادي الباهت */
   --background: #050407;
   --foreground: #ffffff;
 
-  /* كروت زجاجية مظلمة بتباين عالي وضبابية ممتازة */
   --card: rgba(18, 15, 23, 0.75);
   --card-foreground: #ffffff;
 
-  /* حدود وInputs واضحة جداً وتفصل العناصر بنعومة */
   --border: rgba(255, 255, 255, 0.12);
   --input: rgba(255, 255, 255, 0.15);
 
-  /* أحمر نيون مشهي وجذاب */
   --primary: #ff4d00;
   --primary-foreground: #ffffff;
 
@@ -65,7 +61,7 @@ body {
   --secondary-foreground: #ffffff;
 
   --muted: #171421;
-  --muted-foreground: #cbd5e1; /* رمادي فاتح مقروء جداً للعناوين الفرعية */
+  --muted-foreground: #cbd5e1; 
 
   --destructive: #f43f5e;
   --ring: #ff2a4b;

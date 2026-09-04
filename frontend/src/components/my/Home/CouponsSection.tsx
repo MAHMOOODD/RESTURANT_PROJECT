@@ -8,7 +8,6 @@ export default function CouponsSection() {
   const isAr = i18n.language === "ar";
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
-  // جلب الكوبونات من الـ API الحقيقي
   const { data: coupons = [], isLoading, isError } = useGetAllCouponsQuery();
 
 
@@ -26,7 +25,6 @@ export default function CouponsSection() {
     );
   }
 
-  // فلترة الكوبونات الفعالة فقط
 
   if (isError || coupons.length === 0) {
     return null;
