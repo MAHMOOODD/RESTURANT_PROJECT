@@ -9,7 +9,6 @@ import {
   Calendar,
   MapPin,
   Percent,
-  
   Clock,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -180,25 +179,45 @@ export function OrderDetailsDialog({
               </h4>
             </div>
             <div className="rounded-2xl border border-border/60 overflow-hidden">
-              {order.orderDetails.map((item, idx) => (
-                <div
-                  key={item.id}
-                  className={
-                    "flex items-center justify-between px-4 py-3 text-sm" +
-                    (idx !== order.orderDetails.length - 1
-                      ? " border-b border-border/40"
-                      : "")
-                  }
-                >
-                  <span className="font-semibold text-foreground">
-                    {t("adminOrders.defaultMealName", { id: item.productId })}
-                  </span>
-                  <span className="text-muted-foreground font-medium">
-                    {item.quantity} × {item.price.toLocaleString()}{" "}
-                    {t("adminOrders.currency")}
-                  </span>
-                </div>
-              ))}
+              {order.orderDetails.map((item, idx) => {
+                const name = isArabic ? item.productNameAr : item.productName;
+
+                return (
+                  <div
+                    key={item.id}
+                    className={
+                      "flex items-center gap-3 px-4 py-3 text-sm" +
+                      (idx !== order.orderDetails.length - 1
+                        ? " border-b border-border/40"
+                        : "")
+                    }
+                  >
+                    {item.productImageUrl ? (
+                      <img
+                        src={item.productImageUrl}
+                        alt={name || ""}
+                        className="w-9 h-9 rounded-lg object-cover border border-border/60 shrink-0"
+                      />
+                    ) : (
+                      <span className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center text-muted-foreground shrink-0">
+                        <Package className="w-4 h-4" />
+                      </span>
+                    )}
+
+                    <span className="font-semibold text-foreground flex-1 min-w-0 truncate">
+                      {name ||
+                        t("adminOrders.defaultMealName", {
+                          id: item.productId,
+                        })}
+                    </span>
+
+                    <span className="text-muted-foreground font-medium shrink-0">
+                      {item.quantity} × {item.price.toLocaleString()}{" "}
+                      {t("adminOrders.currency")}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

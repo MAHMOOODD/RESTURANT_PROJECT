@@ -18,9 +18,8 @@ import {
 
 // API Redux Hooks
 import { useGetMyOrdersQuery } from "@/store/features/orderApi";
-import { useGetAllProductsQuery } from "@/store/features/productApi";
 
-import type { GetAllProductDto, GetOrderDto } from "@/types/types";
+import type { GetOrderDto } from "@/types/types";
 import { OrderStatus, PaymentStatus } from "@/types/types";
 
 // Sub-components
@@ -29,11 +28,10 @@ import OrderItemsList from "@/components/my/order-details/OrderItemsList";
 import { useEffect } from "react";
 
 export default function OrderDetails() {
-
-
   useEffect(() => {
     scrollTo({ top: 0, behavior: "smooth" });
-  },[])
+  }, []);
+
   const { id } = useParams<{ id: string }>();
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
@@ -45,14 +43,8 @@ export default function OrderDetails() {
     isLoading: isOrdersLoading,
     isError,
   } = useGetMyOrdersQuery();
-  const { data: productsData, isLoading: isProductsLoading } =
-    useGetAllProductsQuery({});
 
   const order: GetOrderDto | undefined = myOrders.find((o) => o.id === orderId);
-
-  const productsList: GetAllProductDto[] = Array.isArray(productsData)
-    ? productsData
-    : productsData?.data || [];
 
   // (OrderStatus Enum)
   const getStatusConfig = (status: number) => {
@@ -133,7 +125,7 @@ export default function OrderDetails() {
     }
   };
 
-  if (isOrdersLoading || isProductsLoading) {
+  if (isOrdersLoading) {
     return (
       <div className="min-h-[75vh] flex flex-col items-center justify-center gap-6">
         <Loader2 className="w-16 h-16 text-primary animate-spin" />
@@ -261,7 +253,7 @@ export default function OrderDetails() {
           </div>
         </div>
 
-        <OrderItemsList order={order} productsList={productsList} />
+        <OrderItemsList order={order} />
       </div>
     </main>
   );

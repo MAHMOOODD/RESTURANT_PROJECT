@@ -5,7 +5,7 @@ import {
   type FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 import type { RootState } from "@/store/index";
-import { setCredentials, logout } from "@/store/features/User/authSlice";
+import { refreshMutex, refreshAccessToken } from "@/services/tokenRefresh";
 
 export type ApiError<TFields = Record<string, string[]>> = {
   status: number;
@@ -23,13 +23,6 @@ type ApiErrorResponse<TFields = Record<string, string[]>> = {
     errors: TFields | null;
   } | null;
 };
-
-interface RefreshTokenResponse {
-  token?: string;
-  data?: {
-    token?: string;
-  };
-}
 
 const rawBaseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5153/api",
@@ -49,6 +42,8 @@ export const baseQuery = <TFields = Record<string, string[]>>(): BaseQueryFn<
   ApiError<TFields>
 > => {
   return async (args, api, extraOptions) => {
+    await refreshMutex.waitForUnlock();
+
     let result = await rawBaseQuery(args, api, extraOptions);
 
     if (result.error && result.error.status === 401) {
@@ -57,43 +52,10 @@ export const baseQuery = <TFields = Record<string, string[]>>(): BaseQueryFn<
         url.includes("Account/RefreshToken") || url.includes("Account/Login");
 
       if (!isAuthEndpoint) {
-        const refreshResult = await rawBaseQuery(
-          {
-            url: "Account/RefreshToken",
-            method: "POST",
-          },
-          api,
-          extraOptions,
-        );
+        const newToken = await refreshAccessToken();
 
-        if (refreshResult.data) {
-          const res = refreshResult.data as RefreshTokenResponse;
-          const newToken = res?.data?.token || res?.token;
-
-          if (newToken) {
-            api.dispatch(setCredentials({ token: newToken }));
-
-            if (typeof args === "string") {
-              args = {
-                url: args,
-                headers: { authorization: `Bearer ${newToken}` },
-              };
-            } else {
-              args = {
-                ...args,
-                headers: {
-                  ...(args.headers as Record<string, string>),
-                  authorization: `Bearer ${newToken}`,
-                },
-              };
-            }
-
-            result = await rawBaseQuery(args, api, extraOptions);
-          } else {
-            api.dispatch(logout());
-          }
-        } else {
-          api.dispatch(logout());
+        if (newToken) {
+          result = await rawBaseQuery(args, api, extraOptions);
         }
       }
     }

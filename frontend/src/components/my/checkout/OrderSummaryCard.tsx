@@ -59,7 +59,8 @@ export function OrderSummaryCard({
                   {item.quantity}x
                 </span>
                 <span className="text-foreground font-bold line-clamp-1 max-w-[200px] text-sm">
-                  {productName || `${t("checkout.summary.meal_prefix")} #${item.productId}`}
+                  {productName ||
+                    `${t("checkout.summary.meal_prefix")} #${item.productId}`}
                 </span>
               </div>
               <span className="font-black text-foreground shrink-0 text-base">
@@ -90,8 +91,14 @@ export function OrderSummaryCard({
 
         {appliedCoupon && (
           <div className="flex justify-between items-center text-emerald-500 font-bold text-base animate-in fade-in duration-300">
-            <span>{t("checkout.summary.discount_label", { percent: appliedCoupon.discount })}</span>
-            <span>- {discountAmount.toFixed(2)} {t("checkout.currency")}</span>
+            <span>
+              {t("checkout.summary.discount_label", {
+                percent: appliedCoupon.discount,
+              })}
+            </span>
+            <span>
+              - {discountAmount.toFixed(2)} {t("checkout.currency")}
+            </span>
           </div>
         )}
 
@@ -103,7 +110,9 @@ export function OrderSummaryCard({
             </span>
             {appliedCoupon && (
               <span className="text-xs text-emerald-500 font-medium block mt-1">
-                {t("checkout.summary.you_saved", { amount: discountAmount.toFixed(2) })}
+                {t("checkout.summary.you_saved", {
+                  amount: discountAmount.toFixed(2),
+                })}
               </span>
             )}
           </div>
@@ -122,7 +131,11 @@ export function OrderSummaryCard({
         ) : (
           <>
             <CheckCircle2 className="w-6 h-6" />
-            <span>{t("checkout.summary.confirm_btn", { total: finalTotal.toFixed(2) })}</span>
+            <span>
+              {t("checkout.summary.confirm_btn", {
+                total: finalTotal.toFixed(2),
+              })}
+            </span>
           </>
         )}
       </button>

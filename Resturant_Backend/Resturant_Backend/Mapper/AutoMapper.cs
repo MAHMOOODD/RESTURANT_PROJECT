@@ -69,9 +69,10 @@ namespace Resturant_Backend.Mapper
     .ForMember(d => d.Change, opt => opt.MapFrom(s => s.AmountPaid - s.TotalPrice));
 
             // Order Details Mapping
-            CreateMap<OrderDetails, GetDetailsDto>();
-
-
+            CreateMap<OrderDetails, GetDetailsDto>()
+     .ForMember(d => d.ProductName, opt => opt.MapFrom(s => s.ProductName))
+     .ForMember(d => d.ProductNameAr, opt => opt.MapFrom(s => s.ProductNameAr))
+     .ForMember(d => d.ProductImageUrl, opt => opt.MapFrom(s => s.ProductImageUrl));
 
             //user Mapping
 

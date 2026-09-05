@@ -113,7 +113,7 @@
       "title": "Payment Method",
       "cod": "Cash on Delivery",
      
-    "card": "Pay with Card (Paymob)",
+    "card": "Pay with Card",
     "complete_payment": "Complete your payment"
   
     },

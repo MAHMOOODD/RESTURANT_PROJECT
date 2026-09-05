@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface PaginationProps {
   currentPage: number;
@@ -14,8 +15,12 @@ export default function Pagination({
 }: PaginationProps) {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.language === "ar";
+  useEffect(() => {
+    scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   if (totalPages <= 1) return null;
+
 
   return (
     <div className="flex items-center justify-center gap-3 pt-8">

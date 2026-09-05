@@ -147,20 +147,13 @@ public class Authservice : IAuthService
             Roles = rolesList.ToList()
         };
 
-        if(user.RefreshTokens.Any(t => t.IsActive))
-        {
-            var activeRefreshToken = user.RefreshTokens.First(t => t.IsActive);
-            authModel.RefreshToken = activeRefreshToken.Token;
-            authModel.RefreshTokenExpiration = activeRefreshToken.ExpiresOn;
-        }
-        else
-        {
-            var refreshToken = GenerateRefreshToken();
-            authModel.RefreshToken = refreshToken.Token;
-            authModel.RefreshTokenExpiration = refreshToken.ExpiresOn;
-            user.RefreshTokens.Add(refreshToken);
-            await _userManager.UpdateAsync(user);
-        }
+        // دايمًا نعمل refresh token جديد بمدة كاملة عند تسجيل الدخول
+        // (بدل ما نرجّع توكن قديم قرب ينتهي ونضطر نعمل refresh بعده بلحظات)
+        var refreshToken = GenerateRefreshToken();
+        authModel.RefreshToken = refreshToken.Token;
+        authModel.RefreshTokenExpiration = refreshToken.ExpiresOn;
+        user.RefreshTokens.Add(refreshToken);
+        await _userManager.UpdateAsync(user);
 
         return authModel;
     }

@@ -1,13 +1,28 @@
 import * as signalR from "@microsoft/signalr";
+import {
+  refreshAccessToken,
+  isTokenExpiringSoon,
+  getCurrentToken,
+} from "@/services/tokenRefresh";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5153/api";
 const HUB_URL = `${API_BASE.replace(/\/api\/?$/, "")}/hubs/orders`;
 
-const getToken = () => localStorage.getItem("token") || "";
+const getValidToken = async (): Promise<string> => {
+  const currentToken = await getCurrentToken();
+
+  if (currentToken && !isTokenExpiringSoon(currentToken)) {
+    return currentToken;
+  }
+
+  const newToken = await refreshAccessToken();
+  return newToken ?? "";
+};
 
 export const orderHubConnection = new signalR.HubConnectionBuilder()
   .withUrl(HUB_URL, {
-    accessTokenFactory: () => getToken(),
+    
+    accessTokenFactory: getValidToken,
   })
   .withAutomaticReconnect([0, 2000, 5000, 10000, 20000])
   .configureLogging(signalR.LogLevel.Warning)

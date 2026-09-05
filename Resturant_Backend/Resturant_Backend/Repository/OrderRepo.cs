@@ -20,6 +20,7 @@ namespace Resturant_Backend.Repository
         {
             var query = _context.Orders
                 .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.Product)
                 .AsQueryable();
 
             query = applyOrderState(query, filters.OrderStatus);
@@ -50,14 +51,15 @@ namespace Resturant_Backend.Repository
         public override async Task<Order?> GetAsync(int id)
         {
 
-            return await _context.Orders.Include(c => c.OrderDetails).FirstOrDefaultAsync(o => o.Id == id);
+            return await _context.Orders.Include(c => c.OrderDetails)
+                .ThenInclude(od => od.Product).FirstOrDefaultAsync(o => o.Id == id);
         }
 
 
         public List<Order> GetUserOrders(string id)
         {
 
-            return _context.Orders.Include(c => c.OrderDetails).Where(c => c.AppuserId == id).ToList();
+            return _context.Orders.Include(c => c.OrderDetails).ThenInclude(od => od.Product).Where(c => c.AppuserId == id).ToList();
 
         }
 

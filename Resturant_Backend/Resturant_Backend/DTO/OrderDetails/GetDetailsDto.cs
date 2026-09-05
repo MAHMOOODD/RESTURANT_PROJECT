@@ -11,5 +11,12 @@
         public int Quantity { get; set; }
 
         public decimal Price { get; set; }
+
+
+
+        // Additional properties for product details
+        public string? ProductName { get; set; }
+        public string? ProductNameAr { get; set; }
+        public string? ProductImageUrl { get; set; }
     }
 }

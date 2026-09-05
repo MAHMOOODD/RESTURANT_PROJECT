@@ -43,7 +43,7 @@ export default function CouponsSection() {
                 <Ticket className="w-5 h-5" />
                 <span>{t("coupons.exclusiveDiscount", "خصم حصري")}</span>
               </div>
-              <h4 className="text-2xl md:text-3xl font-black text-foreground leading-tight">
+              <h4 className="text-2xl font-black text-foreground leading-tight">
                 {t(
                   "coupons.discountTitle",
                   "خصم {{discount}} ج.م عند الطلب بـ {{min}} ج.م",

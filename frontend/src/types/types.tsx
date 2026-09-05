@@ -195,6 +195,9 @@ export interface GetDetailsDto {
   productId: number;
   quantity: number;
   price: number;
+  productName?: string;
+  productNameAr?: string;
+  productImageUrl?: string;
 }
 
 // ============ Products DTOs ============

@@ -82,7 +82,12 @@ namespace Resturant_Backend.Controller
                 {
                     ProductId = c.ProductId,
                     Quantity = c.Quantity,
-                    Price = c.Product.Price
+                    Price = c.Product.Price,
+                    ProductImageUrl = c.Product.ImageUrl,
+                    ProductName = c.Product.Name,
+                    ProductNameAr = c.Product.NameAr
+
+
                 }).ToList()
 
             };
@@ -268,7 +273,10 @@ namespace Resturant_Backend.Controller
                 {
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
-                    Price = product!.Price
+                    Price = product!.Price,
+                    ProductImageUrl = product.ImageUrl,
+                    ProductName = product.Name,
+                    ProductNameAr = product.NameAr
                 });
                 totalPrice += item.Quantity * product.Price;
             }
