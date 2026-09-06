@@ -109,7 +109,7 @@
     },
     "payment": {
       "title": "طريقة الدفع",
-      "cod": "الدفع نقداً عند الاستلام",
+      "cod": "الدفع نقداً عند الاستلام (Cash on Delivery)",
        "card": "الدفع بالكارت ",
     "complete_payment": "أكمل عملية الدفع"
     },
@@ -873,7 +873,7 @@
       "finalTotal": "الإجمالي النهائي",
       "amountPaidLabel": "المبلغ المدفوع",
       "amountPaidPlaceholder": "0",
-      "changeDue": "الفكة المستحقة",
+      "changeDue": " الباقي",
       "amountShort": "المبلغ ناقص",
       "submitBtn": "إتمام الأوردر",
       "submitting": "بيتم إنشاء الأوردر...",

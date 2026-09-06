@@ -238,14 +238,14 @@ namespace Resturant_Backend.Controller
                 this.UnauthorizedEx("غير مصرح لك بالوصول، يرجى تسجيل الدخول.");
             }
 
-            bool hasCustomerId = string.IsNullOrWhiteSpace(dto.CustomerId);
-            bool hasGuestInfo = string.IsNullOrWhiteSpace(dto.GuestName);
-            if(hasGuestInfo)
+            bool hasCustomerId = !string.IsNullOrWhiteSpace(dto.CustomerId);
+            bool hasGuestInfo = !string.IsNullOrWhiteSpace(dto.GuestName);
+            if(!hasGuestInfo && !hasCustomerId)
             {
                 this.UnauthorizedEx(" ادخل بيانات العميل المسجل أو اسم الزائر.");
             }
 
-            if(hasGuestInfo && hasCustomerId)
+            if(hasCustomerId)
             {
                 var customer = await _unitOfWork.UserRepo.GetUserInformationAsync(dto.CustomerId!);
                 Ensure.NotNull(customer, "العميل غير موجود.");

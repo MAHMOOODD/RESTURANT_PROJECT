@@ -38,7 +38,7 @@ export default function ReviewsSection() {
           verifiedOrder: true,
         };
       })
-      .slice(0, 5);
+      .slice(0, 6);
   }, [rawReviews, isAr, t]);
 
   if (isLoading) {

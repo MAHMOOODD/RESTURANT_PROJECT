@@ -70,8 +70,7 @@ export default function ResetPassword() {
       newPassword: data.NewPassword,
     })
       .unwrap()
-      .then((res) => {
-        console.log("Reset Password Response:", res);
+      .then(() => {
 
         setTimeout(() => {
           navigate("/auth"); // Redirect to login page after 3 seconds

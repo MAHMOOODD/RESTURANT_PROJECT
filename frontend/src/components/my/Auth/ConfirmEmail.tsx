@@ -24,7 +24,6 @@ export default function ConfirmEmail() {
 
     confirmEmail({ userId: userId, token: token })
       .unwrap()
-      .then((res) => console.log("Email confirmation response:", res))
       .catch((err) => console.error("Email confirmation error:", err));
   }, [userId, token, confirmEmail]);
 

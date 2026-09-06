@@ -60,13 +60,11 @@ export default function CategoriesSection() {
             onClick={() => scroll("left")}
             className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300 shadow-lg cursor-pointer active:scale-95"
             aria-label="Scroll left"
-            hidden={categories.length < 6}
           >
             {isAr ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
           </button>
           <button
             onClick={() => scroll("right")}
-            hidden={categories.length < 6}
             className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary transition-all duration-300 shadow-lg cursor-pointer active:scale-95"
             aria-label="Scroll right"
           >

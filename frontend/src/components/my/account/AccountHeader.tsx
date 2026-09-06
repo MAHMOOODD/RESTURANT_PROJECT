@@ -26,7 +26,6 @@ export function AccountHeader({
   handleImageChange,
 }: AccountHeaderProps) {
   const { t } = useTranslation();
-  console.log("AccountHeader roles:", roles); // Debugging line to check roles
 
   const getRoleBadgeStyle = (role: string) => {
     const normalized = role.toLowerCase();

@@ -34,13 +34,14 @@ export default function BentoProducts() {
   } = useGetAllProductsQuery({
     pagination: { pageNumber: 1, pageSize: 6 },
     sortBySelling: true,
+    ascending: false,
   });
 
-  const topProducts = productsRes?.data
-    ? [...productsRes.data].sort(
-        (a, b) => (b.sellCount || 0) - (a.sellCount || 0),
-      )
-    : [];
+  
+
+ 
+
+    console.log("Top Products:", productsRes);
 
   const handleAddToCart = (productId: number) => async () => {
     const cartItem = cartData?.find(
@@ -84,7 +85,7 @@ export default function BentoProducts() {
     );
   }
 
-  if (isError || topProducts.length === 0) {
+  if (isError || productsRes?.data.length === 0) {
     return null;
   }
 
@@ -99,7 +100,7 @@ export default function BentoProducts() {
       <BentoHeader />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {topProducts.map((prod) => {
+        {productsRes?.data.map((prod) => {
           const cartItem = cartData?.find(
             (item) => Number(item.productId) === Number(prod.id),
           );

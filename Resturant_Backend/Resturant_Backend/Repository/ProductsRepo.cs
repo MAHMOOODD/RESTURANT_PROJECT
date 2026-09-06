@@ -127,8 +127,8 @@ namespace Resturant_Backend.Repository
             if(price == true && selling == true)
             {
                 return ascending
-                    ? products.OrderBy(p => p.Price).ThenBy(p => p.SellCount)
-                    : products.OrderByDescending(p => p.Price).ThenBy(p => p.SellCount);
+                    ? products.OrderBy(p => p.SellCount).ThenBy(p => p.Price)
+                    : products.OrderByDescending(p => p.SellCount).ThenBy(p => p.Price);
             }
             if(price == true)
             {

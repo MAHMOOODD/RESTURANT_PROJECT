@@ -54,7 +54,6 @@ export default function Account() {
       phoneNumber: userInfo?.phoneNumber || "",
     },
   });
-  console.log("Account component userInfo:", userInfo); // Debugging line to check userInfo
 
   const currentImagePreview = localImagePreview || userInfo?.imageUrl || null;
 
@@ -93,12 +92,10 @@ export default function Account() {
         formData.append("ImageUrl", data.imageUrl);
       }
 
-      const response = await updateProfile(formData as unknown as UpdateProfileDto).unwrap();
+      await updateProfile(formData as unknown as UpdateProfileDto).unwrap();
       
       const successMessage =
-        typeof response === "string"
-          ? response
-          : t("account.updateSuccess", "تم تحديث البيانات بنجاح!");
+           t("account.updateSuccess", "تم تحديث البيانات بنجاح!");
 
       toast.success(successMessage);
       setEditingFields({ fullName: false, phoneNumber: false, address: false });

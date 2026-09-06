@@ -59,7 +59,7 @@ namespace Resturant_Backend.Repository
         public List<Order> GetUserOrders(string id)
         {
 
-            return _context.Orders.Include(c => c.OrderDetails).ThenInclude(od => od.Product).Where(c => c.AppuserId == id).ToList();
+            return _context.Orders.Include(c => c.OrderDetails).ThenInclude(od => od.Product).Where(c => c.AppuserId == id).OrderByDescending(c => c.CreatedAt).ToList();
 
         }
 

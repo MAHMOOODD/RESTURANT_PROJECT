@@ -47,7 +47,6 @@ export const Auth: React.FC = () => {
   const onLoginSubmit = async (data: LoginFormData) => {
     try {
       const response = await Login(data).unwrap();
-      console.log("Login response:", response);
 
       if (response?.data?.token) {
         dispatch(setCredentials({ token: response.data.token }));
@@ -64,8 +63,7 @@ export const Auth: React.FC = () => {
 
   const onRegisterSubmit = async (data: RegisterFormData) => {
     try {
-      const response = await Register(data).unwrap();
-      console.log("Register response:", response);
+      await Register(data).unwrap();
     } catch (error) {
       console.error("Register error:", error);
       throw error; // Rethrow the error to be handled in the modal
@@ -74,8 +72,7 @@ export const Auth: React.FC = () => {
 
   const onForgotSubmit = async (data: ForgotPasswordFormData) => {
     try {
-      const response = await ForgetPassword(data).unwrap();
-      console.log("Forgot Password response:", response);
+       await ForgetPassword(data).unwrap();
     } catch (error) {
       console.error("Forgot Password error:", error);
       throw error; // Rethrow the error to be handled in the modal
