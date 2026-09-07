@@ -28,7 +28,15 @@ namespace Resturant_Backend.Services
             var response = await _http.PostAsJsonAsync(
                 "https://accept.paymob.com/api/auth/tokens",
                 new { api_key = _settings.ApiKey });
-            var json = await response.Content.ReadFromJsonAsync<JsonElement>();
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+            if(!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException(
+                    $"Paymob auth failed ({(int)response.StatusCode}): {responseBody}");
+            }
+
+            var json = JsonSerializer.Deserialize<JsonElement>(responseBody);
             return json.GetProperty("token").GetString();
         }
 
@@ -44,7 +52,15 @@ namespace Resturant_Backend.Services
             };
             var response = await _http.PostAsJsonAsync(
                 "https://accept.paymob.com/api/ecommerce/orders", payload);
-            var json = await response.Content.ReadFromJsonAsync<JsonElement>();
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+            if(!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException(
+                    $"Paymob order registration failed ({(int)response.StatusCode}): {responseBody}");
+            }
+
+            var json = JsonSerializer.Deserialize<JsonElement>(responseBody);
             return json.GetProperty("id").GetInt32();
         }
 
@@ -63,7 +79,15 @@ namespace Resturant_Backend.Services
             };
             var response = await _http.PostAsJsonAsync(
                 "https://accept.paymob.com/api/acceptance/payment_keys", payload);
-            var json = await response.Content.ReadFromJsonAsync<JsonElement>();
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+            if(!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException(
+                    $"Paymob payment key request failed ({(int)response.StatusCode}): {responseBody}");
+            }
+
+            var json = JsonSerializer.Deserialize<JsonElement>(responseBody);
             return json.GetProperty("token").GetString();
         }
     }

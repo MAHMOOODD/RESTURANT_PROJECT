@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Trash2, Plus, Minus, Clock, Flame, Loader2 } from "lucide-react";
-import { useGetProductByIdQuery } from "@/store/features/productApi";
 import type { GetCartDto } from "@/types/types";
 
 const DEFAULT_FOOD_IMAGES = [
@@ -31,39 +30,17 @@ export function CartItemCard({
   const isAr = i18n.language === "ar";
   const [imgError, setImgError] = useState(false);
 
-  const { data: product, isLoading } = useGetProductByIdQuery(item.productId);
-
-  if (isLoading) {
-    return (
-      <div className="p-6 rounded-3xl bg-card/40 border-2 border-border/40 animate-pulse flex items-center justify-between gap-6">
-        <div className="flex items-center gap-6">
-          <div className="w-28 h-28 rounded-2xl bg-muted/60" />
-          <div className="space-y-3">
-            <div className="h-6 w-48 bg-muted/60 rounded-lg" />
-            <div className="h-4 w-36 bg-muted/60 rounded-md" />
-            <div className="h-5 w-24 bg-muted/60 rounded-md" />
-          </div>
-        </div>
-        <div className="h-12 w-36 bg-muted/60 rounded-2xl" />
-      </div>
-    );
-  }
-
   const productName = isAr
-    ? product?.nameAr || product?.name
-    : product?.name || product?.nameAr;
+    ? item.productNameAr || item.productName
+    : item.productName || item.productNameAr;
 
-  const productDesc = isAr
-    ? product?.descriptionAr || product?.description
-    : product?.description || product?.descriptionAr;
-
-  const unitPrice = product?.price ?? 0;
+  const unitPrice = item.productPrice ?? 0;
   const itemTotalPrice = unitPrice * item.quantity;
 
   const fallbackImg =
     DEFAULT_FOOD_IMAGES[item.productId % DEFAULT_FOOD_IMAGES.length];
   const finalImage =
-    imgError || !product?.imageUrl ? fallbackImg : product.imageUrl;
+    imgError || !item.productImageUrl ? fallbackImg : item.productImageUrl;
 
   return (
     <div className="group relative p-5 sm:p-6 rounded-3xl bg-card/60 backdrop-blur-xl border-2 border-border/70 hover:border-primary/60 transition-all duration-300 shadow-sm hover:shadow-2xl hover:shadow-primary/5 flex flex-col sm:flex-row items-center justify-between gap-6 overflow-hidden">
@@ -77,7 +54,7 @@ export function CartItemCard({
             onError={() => setImgError(true)}
             className="w-full h-full object-cover"
           />
-          {product?.sellCount && product.sellCount > 10 ? (
+          {item.productSellCount && item.productSellCount > 10 ? (
             <span className="absolute top-2 right-2 px-2.5 py-1 rounded-full bg-orange-500/90 text-white text-xs font-black backdrop-blur-md flex items-center gap-1 shadow-md">
               <Flame className="w-3.5 h-3.5 fill-white" />
               {t("cart.popular")}
@@ -90,17 +67,13 @@ export function CartItemCard({
             <h3 className="text-lg sm:text-xl font-black text-foreground group-hover:text-primary transition-colors">
               {productName || `${t("cart.meal_hash")} #${item.productId}`}
             </h3>
-            {product?.preparingTime ? (
+            {item.productPreparingTime ? (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 text-xs font-extrabold border border-amber-500/20">
                 <Clock className="w-3.5 h-3.5" />
-                {product.preparingTime} {t("cart.min")}
+                {item.productPreparingTime} {t("cart.min")}
               </span>
             ) : null}
           </div>
-
-          <p className="text-sm text-muted-foreground line-clamp-3 overflow-x-clip max-w-25 mt-1.5 leading-relaxed wrap-break-word font-medium">
-            {productDesc || t("cart.default_desc")}
-          </p>
 
           <div className="flex items-center gap-2.5 mt-3">
             <span className="text-base sm:text-lg font-black text-primary">

@@ -41,8 +41,16 @@ namespace Resturant_Backend.Mapper
 
             //cart Mapping
             CreateMap<Cart_Item, AddToCartDto>().ReverseMap();
-            CreateMap<Cart_Item, GetCartDto>().ReverseMap();
+            CreateMap<Cart_Item, GetCartDto>()
+                .ForMember(d => d.ProductName, opt => opt.MapFrom(s => s.Product != null ? s.Product.Name : null))
+                .ForMember(d => d.ProductNameAr, opt => opt.MapFrom(s => s.Product != null ? s.Product.NameAr : null))
+                .ForMember(d => d.ProductImageUrl, opt => opt.MapFrom(s => s.Product != null ? s.Product.ImageUrl : null))
+                .ForMember(d => d.ProductPrice, opt => opt.MapFrom(s => s.Product != null ? s.Product.Price : 0))
+                .ForMember(d => d.ProductPreparingTime, opt => opt.MapFrom(s => s.Product != null ? s.Product.PreparingTime : (int?)null))
+                .ForMember(d => d.ProductSellCount, opt => opt.MapFrom(s => s.Product != null ? s.Product.SellCount : (int?)null))
+                .ForMember(d => d.ProductIsAvailable, opt => opt.MapFrom(s => s.Product != null && s.Product.IsAvailable));
 
+            CreateMap<GetCartDto, Cart_Item>();
 
             //Coupon Mapping
             CreateMap<Coupon, GetCouponDto>().ReverseMap();

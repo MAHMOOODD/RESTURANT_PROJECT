@@ -8,7 +8,8 @@ import { orderApi } from "@/store/features/orderApi";
 import { couponApi } from "@/store/features/couponApi";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import notificationsReducer from "./features/notificationsSlice";
-import { addOrderNotification } from "./features/notificationsSlice";import {
+import { addOrderNotification, clearNotifications } from "./features/notificationsSlice";
+import {
   orderHubConnection,
   startOrderHubConnection,
   stopOrderHubConnection,
@@ -20,10 +21,16 @@ import { paymentApi } from "./features/paymentApi";
 
 const signalRMiddleware: Middleware = () => (next) => (action) => {
   if (setCredentials.match(action)) {
+    // clear out any notifications left behind by a previous user/session
+    // on this same browser before the new session's connection starts
+    store.dispatch(clearNotifications());
     startOrderHubConnection();
   }
   if (logout.match(action)) {
     stopOrderHubConnection();
+    // without this, the outgoing user's notifications stay in the Redux
+    // state and the next person to log in on this browser sees them too
+    store.dispatch(clearNotifications());
   }
   return next(action);
 };

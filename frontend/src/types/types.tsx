@@ -106,6 +106,13 @@ export interface GetCartDto {
   appUserId: string;
   productId: number;
   quantity: number;
+  productName?: string;
+  productNameAr?: string;
+  productImageUrl?: string;
+  productPrice: number;
+  productPreparingTime?: number;
+  productSellCount?: number;
+  productIsAvailable: boolean;
 }
 
 // ============ Categories DTOs ============

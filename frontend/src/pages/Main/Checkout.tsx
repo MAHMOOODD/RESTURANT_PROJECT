@@ -14,7 +14,6 @@ import { useGetCartQuery } from "@/store/features/cartApi";
 import { useGetUserInfoQuery } from "@/store/features/User/Auth";
 import { useAddOrderMutation } from "@/store/features/orderApi";
 import { useInitiatePaymentMutation } from "@/store/features/paymentApi";
-import { useGetAllProductsQuery } from "@/store/features/productApi";
 import { useGetAllCouponsQuery } from "@/store/features/couponApi";
 
 import { ShippingSection } from "@/components/my/checkout/ShippingSection";
@@ -26,7 +25,6 @@ import { toast } from "sonner";
 import { PaymentMethod } from "@/types/types";
 import type {
   AddOrderDto,
-  GetAllProductDto,
   GetCouponDto,
   PaymentMethod as PaymentMethodType,
 } from "@/types/types";
@@ -43,8 +41,6 @@ export default function Checkout() {
     isLoading: isUserLoading,
     isError: isUserError,
   } = useGetUserInfoQuery();
-  const { data: productsData, isLoading: isProductsLoading } =
-    useGetAllProductsQuery();
   const { data: couponsData, isLoading: isCouponsLoading } =
     useGetAllCouponsQuery();
 
@@ -59,20 +55,14 @@ export default function Checkout() {
   );
   const [iframeUrl, setIframeUrl] = useState<string | null>(null);
 
-  const productsList: GetAllProductDto[] = Array.isArray(productsData)
-    ? productsData
-    : productsData?.data || [];
   const couponsList: GetCouponDto[] = Array.isArray(couponsData)
     ? couponsData
     : [];
 
-  const getProductDetails = (productId: number) =>
-    productsList.find((p) => p.id === productId);
-
-  const subtotal = cartItems.reduce((acc, item) => {
-    const product = getProductDetails(item.productId);
-    return acc + (product?.price ?? 0) * item.quantity;
-  }, 0);
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + (item.productPrice ?? 0) * item.quantity,
+    0,
+  );
 
   const discountPercent = appliedCoupon ? appliedCoupon.discount : 0;
   const discountAmount = (subtotal * discountPercent) / 100;
@@ -119,6 +109,10 @@ export default function Checkout() {
       toast.error(t("checkout.toast.address_required"));
       return;
     }
+    if (!userInfo?.phoneNumber) {
+      toast.error(t("checkout.toast.phone_required"));
+      return;
+    }
     const orderDto: AddOrderDto = {
       userAddress: userInfo.address,
       coupon: appliedCoupon ? appliedCoupon.code : undefined,
@@ -139,7 +133,7 @@ export default function Checkout() {
     }
   };
 
-  if (isUserLoading || isCartLoading || isProductsLoading || isCouponsLoading) {
+  if (isUserLoading || isCartLoading || isCouponsLoading) {
     return (
       <div className="min-h-[75vh] flex flex-col items-center justify-center gap-6">
         <Loader2 className="w-16 h-16 text-primary animate-spin" />
@@ -254,13 +248,11 @@ export default function Checkout() {
         <div className="lg:col-span-5 sticky top-24">
           <OrderSummaryCard
             cartItems={cartItems}
-            productsList={productsList}
             subtotal={subtotal}
             discountAmount={discountAmount}
             finalTotal={finalTotal}
             appliedCoupon={appliedCoupon}
             isSubmitting={isSubmitting || isInitiatingPayment}
-            hasAddress={Boolean(userInfo.address)}
             onPlaceOrder={handlePlaceOrder}
           />
         </div>

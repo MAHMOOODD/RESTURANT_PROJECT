@@ -123,6 +123,10 @@ export default function Navbar() {
     } catch (err) {
       console.error("Logout failed:", err);
     } finally {
+      // إيقاف اتصال SignalR ومسح الإشعارات بيحصلوا تلقائيًا جوه
+      // signalRMiddleware في index.tsx لما يتعمل dispatch(logout()) هنا،
+      // فمفيش داعي نكررهم يدويًا (وده كان بيكسر الفانكشن أصلًا لأنهم
+      // متستخدمين من غير import)
       dispatch(logout());
       dispatch(authApi.util.resetApiState());
       navigate("/auth", { replace: true });

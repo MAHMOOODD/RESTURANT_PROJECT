@@ -1,36 +1,28 @@
 import { ShieldCheck, CheckCircle2, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import type { GetCartDto, GetCouponDto, GetAllProductDto } from "@/types/types";
+import type { GetCartDto, GetCouponDto } from "@/types/types";
 
 interface OrderSummaryCardProps {
   cartItems: GetCartDto[];
-  productsList: GetAllProductDto[];
   subtotal: number;
   discountAmount: number;
   finalTotal: number;
   appliedCoupon: GetCouponDto | null;
   isSubmitting: boolean;
-  hasAddress: boolean;
   onPlaceOrder: () => void;
 }
 
 export function OrderSummaryCard({
   cartItems,
-  productsList,
   subtotal,
   discountAmount,
   finalTotal,
   appliedCoupon,
   isSubmitting,
-  hasAddress,
   onPlaceOrder,
 }: OrderSummaryCardProps) {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
-
-  const getProductDetails = (productId: number) => {
-    return productsList.find((p) => p.id === productId);
-  };
 
   return (
     <div className="p-8 rounded-3xl bg-card/90 backdrop-blur-2xl border border-border/80 shadow-2xl relative overflow-hidden">
@@ -43,11 +35,9 @@ export function OrderSummaryCard({
       {/* details */}
       <div className="max-h-64 overflow-y-auto pr-2 mb-6 space-y-3 custom-scrollbar">
         {cartItems.map((item) => {
-          const product = getProductDetails(item.productId);
-          const itemPrice = product?.price ?? 0;
           const productName = isAr
-            ? product?.nameAr || product?.name
-            : product?.name || product?.nameAr;
+            ? item.productNameAr || item.productName
+            : item.productName || item.productNameAr;
 
           return (
             <div
@@ -64,7 +54,7 @@ export function OrderSummaryCard({
                 </span>
               </div>
               <span className="font-black text-foreground shrink-0 text-base">
-                {itemPrice * item.quantity} {t("checkout.currency")}
+                {item.productPrice * item.quantity} {t("checkout.currency")}
               </span>
             </div>
           );
@@ -123,7 +113,7 @@ export function OrderSummaryCard({
       <button
         type="button"
         onClick={onPlaceOrder}
-        disabled={isSubmitting || !hasAddress}
+        disabled={isSubmitting}
         className="w-full mt-8 flex items-center justify-center gap-3 py-5 rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground font-black text-base shadow-2xl shadow-primary/30 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
       >
         {isSubmitting ? (
