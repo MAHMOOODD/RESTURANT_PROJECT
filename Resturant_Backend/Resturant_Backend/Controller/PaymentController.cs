@@ -46,9 +46,9 @@ namespace Resturant_Backend.Controller
             var paymentToken = await _paymob.GetPaymentKeyAsync(authToken, paymobOrderId, amountCents,
                 new BillingData
                 {
-                    FirstName = order.Appuser.FullName,
-                    Email = order.Appuser.Email,
-                    PhoneNumber = order.Appuser.PhoneNumber
+                    FirstName = string.IsNullOrWhiteSpace(order.Appuser.FullName) ? "NA" : order.Appuser.FullName,
+                    Email = string.IsNullOrWhiteSpace(order.Appuser.Email) ? "NA" : order.Appuser.Email,
+                    PhoneNumber = string.IsNullOrWhiteSpace(order.Appuser.PhoneNumber) ? "NA" : order.Appuser.PhoneNumber
                 });
 
             order.PaymobOrderId = paymobOrderId;

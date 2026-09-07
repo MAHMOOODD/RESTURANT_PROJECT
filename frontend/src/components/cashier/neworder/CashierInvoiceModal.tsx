@@ -88,7 +88,7 @@ export function CashierInvoiceModal({ data, onClose }: Props) {
             <div className="flex flex-col gap-1.5">
               {data.items.map((item) => (
                 <div key={item.productId} className="flex items-center text-xs">
-                  <span className="flex-1 truncate pe-2">{item.name}</span>
+                  <span className="flex-1 truncate pe-2">{isArabic ? item.nameAr : item.name}</span>
                   <span className="w-10 text-center text-muted-foreground">{item.quantity}</span>
                   <span className="w-16 text-end font-bold">
                     {(item.price * item.quantity).toLocaleString()} {currency}

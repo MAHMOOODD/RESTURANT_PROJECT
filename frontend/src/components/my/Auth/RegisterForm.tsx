@@ -39,7 +39,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       fullName: "",
       address: "",

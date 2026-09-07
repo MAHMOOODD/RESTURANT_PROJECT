@@ -46,11 +46,16 @@ export const baseQuery = <TFields = Record<string, string[]>>(): BaseQueryFn<
 
     let result = await rawBaseQuery(args, api, extraOptions);
 
-    if (result.error && result.error.status === 401) {
+    if (
+      result.error &&
+      (result.error.status === 401 || result.error.status === 403)
+    ) {
       const url = typeof args === "string" ? args : args.url;
       const isAuthEndpoint =
         url.includes("Account/RefreshToken") || url.includes("Account/Login");
 
+      // Only worth refreshing on 403 once - if the fresh token still gets
+      // 403'd, it's a genuine permissions issue, not a stale-token issue.
       if (!isAuthEndpoint) {
         const newToken = await refreshAccessToken();
 
