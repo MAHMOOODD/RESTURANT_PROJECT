@@ -140,4 +140,4 @@ npm run dev
 
 ---
 
-© 2025 Mahmoud Salah. All rights reserved. This code is shared publicly for portfolio purposes only — copying, redistributing, or using it (in part or in whole) for commercial purposes without prior written permission is not allowed.
+© 2026 Mahmoud Salah. All rights reserved
