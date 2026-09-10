@@ -99,8 +99,5 @@ npm run dev
 
 **Mahmoud Salah** — Computer Science student, Cairo University, focused on full stack development.
 
----
 
-## 📄 License
 
-*(Add a license — e.g. MIT — if you intend to open-source or share this publicly.)*
