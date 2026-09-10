@@ -92,6 +92,9 @@ Restaurant_Project/
     └── .env.example
 ```
 
+> Note: the actual backend folder is currently named `Resturant_Backend` (typo). Consider renaming it to `Restaurant_Backend` for consistency — just remember to update any build scripts / CI config that reference the old path.
+
+---
 
 ## 🚀 Getting Started
 
@@ -134,3 +137,7 @@ npm run dev
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?logo=github&logoColor=white)](https://github.com/MAHMOOODD)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mahmoud-salah-b9a297338/)
+
+---
+
+© 2025 Mahmoud Salah. All rights reserved. This code is shared publicly for portfolio purposes only — copying, redistributing, or using it (in part or in whole) for commercial purposes without prior written permission is not allowed.
