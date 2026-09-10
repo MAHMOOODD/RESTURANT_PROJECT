@@ -194,7 +194,7 @@ export default function OrderDetails() {
         </div>
 
         <Link
-          to="/profile"
+          to="/orders"
           className="flex items-center gap-3 text-sm font-bold text-muted-foreground hover:text-primary transition-colors bg-card/60 px-6 py-3 rounded-2xl border border-border/60 shadow-sm"
         >
           {isAr ? (

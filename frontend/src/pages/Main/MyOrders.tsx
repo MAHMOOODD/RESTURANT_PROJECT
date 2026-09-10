@@ -109,7 +109,7 @@ export default function MyOrders() {
             <h1 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
               {t("myOrders.title", "طلباتي السابقة")}
             </h1>
-            <p className="text-sm text-muted-foreground font-medium mt-1">
+            <p className="text-sm text-muted-foreground font-medium mt-3">
               {t(
                 "myOrders.subtitle",
                 "تتبع حالة طلباتك الحالية والسابقة بكل سهولة",
